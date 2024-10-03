@@ -2,7 +2,7 @@
 
 Install `uv`: powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-Then go to cloned repository
+Then go to cloned repository5
 
 ```bash
 uv python install 3.12
