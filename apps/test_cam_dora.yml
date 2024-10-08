@@ -1,0 +1,22 @@
+nodes:
+  - id: camera
+    path: uv
+    args: run ../nodes/opencv_video_capture.py
+    inputs:
+      tick:
+        source: dora/timer/millis/16
+        queue_size: 1
+    outputs:
+      - image
+    env:
+      PATH: /dev/video0
+      IMAGE_WIDTH: 640
+      IMAGE_HEIGHT: 480
+
+  - id: plot
+    path: uv
+    args: run ../nodes/opencv_plot.py
+    inputs:
+      image:
+        source: camera/image
+        queue_size: 1

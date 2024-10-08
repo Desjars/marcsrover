@@ -1,0 +1,14 @@
+{
+  "mode": "peer",
+  "connect": {
+    "endpoints": []
+  },
+  "listen": {
+    "endpoints": []
+  },
+  "scouting": {
+    "multicast": {
+      "enabled": true
+    }
+  }
+}
