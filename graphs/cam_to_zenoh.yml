@@ -1,0 +1,19 @@
+nodes:
+  - id: camera
+    build: uv pip install ../node-hub/opencv-video-capture
+    path: opencv-video-capture
+    outputs:
+      - image
+    inputs:
+      tick: dora/timer/millis/16
+    env:
+      PATH: 0
+      IMAGE_WIDTH: 640 # optional, default is video capture width
+      IMAGE_HEIGHT: 480 # optional, default is video capture height
+
+  - id: zenoh-camera
+    path: ../nodes/zenoh_cam.py
+    inputs:
+      image:
+        source: camera/image
+        queue_size: 1

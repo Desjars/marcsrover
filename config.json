@@ -1,0 +1,12 @@
+{
+  "mode": "peer",
+  "connect": {
+    "endpoints": ["udp/138.195.245.174:7447", "udp/138.195.246.70:7447"]
+  },
+  "listen": {},
+  "scouting": {
+    "multicast": {
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,907 @@
+2024-10-03T08:46:15.086267Z  INFO dora: Starting in local mode
+2024-10-03T08:46:15.087267Z  INFO dora_daemon::coordinator: Connected to dora-coordinator at 127.0.0.1:53290
+2024-10-03T08:46:15.931596Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:46:16.468046Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192518e-f37a-74a2-a66b-02292baa8d4f`
+2024-10-03T08:46:16.546605Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192518e-f37a-74a2-a66b-02292baa8d4f/camera finished successfully
+2024-10-03T08:46:16.546891Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192518e-f37a-74a2-a66b-02292baa8d4f` finished on machine ``
+2024-10-03T08:50:16.942658Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:50:16.944562Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:50:17.516370Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925192-a0ee-75c6-901f-52598ef565d8`
+2024-10-03T08:50:17.596454Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925192-a0ee-75c6-901f-52598ef565d8/zenoh-camera finished successfully
+2024-10-03T08:50:17.601034Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925192-a0ee-75c6-901f-52598ef565d8/camera finished successfully
+2024-10-03T08:50:17.601244Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925192-a0ee-75c6-901f-52598ef565d8` finished on machine ``
+2024-10-03T08:51:56.282128Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:51:56.283693Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:51:56.850445Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925194-24f9-7a03-a0db-5c2b8cd83e34`
+2024-10-03T08:51:59.340927Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925194-24f9-7a03-a0db-5c2b8cd83e34/zenoh-camera finished successfully
+2024-10-03T08:51:59.831036Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925194-24f9-7a03-a0db-5c2b8cd83e34/camera finished successfully
+2024-10-03T08:51:59.831261Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925194-24f9-7a03-a0db-5c2b8cd83e34` finished on machine ``
+2024-10-03T08:53:32.400835Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:53:32.402673Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:53:32.975833Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925195-9c70-7640-af6a-21b928c5e2df`
+2024-10-03T08:53:58.789558Z  WARN dora_daemon: camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:53:58.816550Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925195-9c70-7640-af6a-21b928c5e2df` finished on machine ``
+2024-10-03T08:53:58.816694Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:53:58.816744Z  WARN run_inner{self.machine_id=}: dora_daemon: Timer event for unknown dataflow `01925195-9c70-7640-af6a-21b928c5e2df`
+2024-10-03T08:54:13.615959Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:54:13.618024Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:54:14.193364Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925196-3d6f-7fec-8051-5a9ea72c1226`
+2024-10-03T08:54:24.263318Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:54:24.264709Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:54:24.793317Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925196-6706-7385-8779-a9228ca3fc15`
+2024-10-03T08:54:30.284165Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925196-3d6f-7fec-8051-5a9ea72c1226/camera finished successfully
+2024-10-03T08:54:34.621198Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:54:34.642510Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925196-3d6f-7fec-8051-5a9ea72c1226` finished on machine ``
+2024-10-03T08:54:47.192369Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:54:47.193829Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:54:47.780421Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925196-c097-7985-b968-42f90a72b123`
+2024-10-03T08:54:51.502949Z  WARN dora_daemon: camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:54:51.530063Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925196-6706-7385-8779-a9228ca3fc15` finished on machine ``
+2024-10-03T08:54:51.530158Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:55:01.769975Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925196-c097-7985-b968-42f90a72b123/camera finished successfully
+2024-10-03T08:55:03.787629Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:55:03.789266Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:55:04.376852Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925197-016a-7852-aa01-1cfe249af4d8`
+2024-10-03T08:55:06.283839Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:55:06.303921Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925196-c097-7985-b968-42f90a72b123` finished on machine ``
+2024-10-03T08:55:06.304171Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:55:10.166988Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925197-016a-7852-aa01-1cfe249af4d8/camera finished successfully
+2024-10-03T08:55:10.167245Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925197-016a-7852-aa01-1cfe249af4d8` finished on machine ``
+2024-10-03T08:55:11.017197Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:55:11.018984Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:55:11.506389Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925197-1da8-7380-a757-49c307580bcd`
+2024-10-03T08:55:27.914681Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925197-1da8-7380-a757-49c307580bcd/camera finished successfully
+2024-10-03T08:55:32.253283Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:55:32.288534Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925197-1da8-7380-a757-49c307580bcd` finished on machine ``
+2024-10-03T08:55:32.288677Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:56:02.921908Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:56:02.923629Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:56:03.511365Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925197-e869-7250-a3a9-eb282e8e9095`
+2024-10-03T08:56:14.809031Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:56:14.810852Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:56:15.360650Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925198-16d8-795d-98c9-ef759909b489`
+2024-10-03T08:56:16.491108Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925197-e869-7250-a3a9-eb282e8e9095/camera finished successfully
+2024-10-03T08:56:17.776460Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925198-16d8-795d-98c9-ef759909b489/camera finished successfully
+2024-10-03T08:56:17.776649Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925198-16d8-795d-98c9-ef759909b489` finished on machine ``
+2024-10-03T08:56:18.677455Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:56:18.678991Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:56:19.146583Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925198-25f4-70db-bd74-546d75f4f407`
+2024-10-03T08:56:21.038207Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:56:21.053856Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925197-e869-7250-a3a9-eb282e8e9095` finished on machine ``
+2024-10-03T08:56:21.053942Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:56:21.519775Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925198-25f4-70db-bd74-546d75f4f407/camera finished successfully
+2024-10-03T08:56:21.519977Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925198-25f4-70db-bd74-546d75f4f407` finished on machine ``
+2024-10-03T08:56:25.014881Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:56:25.016574Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:56:25.597683Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925198-3eb6-7295-a978-3a9b83cc136e`
+2024-10-03T08:56:42.338838Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925198-3eb6-7295-a978-3a9b83cc136e/camera finished successfully
+2024-10-03T08:56:46.336874Z  WARN run_inner{self.machine_id=}: dora_daemon: failed to report drop token `DropToken(01925198-41d6-7865-9d49-72a6fdb726a2)` to owner `camera`
+
+Caused by:
+    no subscribe channel for node `camera`
+
+Location:
+    /project/binaries/daemon/src/lib.rs:1647:37
+2024-10-03T08:56:46.392454Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925198-3eb6-7295-a978-3a9b83cc136e` finished on machine ``
+2024-10-03T08:57:11.728124Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:57:11.729844Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:57:12.275010Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925198-f52f-7a34-9115-775afe395492`
+2024-10-03T08:57:28.254862Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925198-f52f-7a34-9115-775afe395492/camera finished successfully
+2024-10-03T08:57:32.678372Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:57:32.705710Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925198-f52f-7a34-9115-775afe395492` finished on machine ``
+2024-10-03T08:57:32.705804Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:57:44.223771Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:57:44.225566Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:57:44.811474Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925199-741f-7c3f-8060-1437c2b2da73`
+2024-10-03T08:57:59.120022Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925199-741f-7c3f-8060-1437c2b2da73/camera finished successfully
+2024-10-03T08:58:00.311835Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:00.313645Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:00.903299Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925199-b2f7-79fe-9bf2-334fa1569ffd`
+2024-10-03T08:58:02.870372Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925199-b2f7-79fe-9bf2-334fa1569ffd/camera finished successfully
+2024-10-03T08:58:02.870606Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925199-b2f7-79fe-9bf2-334fa1569ffd` finished on machine ``
+2024-10-03T08:58:03.604820Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:03.606386Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:03.637998Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:58:03.662968Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925199-741f-7c3f-8060-1437c2b2da73` finished on machine ``
+2024-10-03T08:58:03.663042Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:58:04.098561Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925199-bfd4-71d5-a151-7f2b590e042b`
+2024-10-03T08:58:15.059704Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:15.061602Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:15.597254Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925199-ec93-705e-b4f8-8153aa89d0e9`
+2024-10-03T08:58:17.139017Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925199-ec93-705e-b4f8-8153aa89d0e9/camera finished successfully
+2024-10-03T08:58:17.139235Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925199-ec93-705e-b4f8-8153aa89d0e9` finished on machine ``
+2024-10-03T08:58:17.566354Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:17.568097Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:18.038744Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `01925199-f65d-7604-8bb2-cfdbea75b18c`
+2024-10-03T08:58:19.445598Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925199-f65d-7604-8bb2-cfdbea75b18c/camera finished successfully
+2024-10-03T08:58:19.445735Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925199-f65d-7604-8bb2-cfdbea75b18c` finished on machine ``
+2024-10-03T08:58:21.062383Z  INFO run_inner{self.machine_id=}: dora_daemon: node 01925199-bfd4-71d5-a151-7f2b590e042b/camera finished successfully
+2024-10-03T08:58:21.322396Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:21.324017Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:21.801288Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-0509-7c3f-b49b-6c03d4e2dcdb`
+2024-10-03T08:58:23.224946Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-0509-7c3f-b49b-6c03d4e2dcdb/camera finished successfully
+2024-10-03T08:58:23.225159Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-0509-7c3f-b49b-6c03d4e2dcdb` finished on machine ``
+2024-10-03T08:58:24.085278Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:24.086495Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:24.550535Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-0fd4-7eb4-bc27-491d506bf96d`
+2024-10-03T08:58:25.543538Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:58:25.567041Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `01925199-bfd4-71d5-a151-7f2b590e042b` finished on machine ``
+2024-10-03T08:58:25.567157Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:58:26.002243Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-0fd4-7eb4-bc27-491d506bf96d/camera finished successfully
+2024-10-03T08:58:26.002455Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-0fd4-7eb4-bc27-491d506bf96d` finished on machine ``
+2024-10-03T08:58:32.341149Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:32.342849Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:32.923543Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-3014-7f59-91af-df4c08bfe33d`
+2024-10-03T08:58:39.060286Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-3014-7f59-91af-df4c08bfe33d/zenoh-camera finished successfully
+2024-10-03T08:58:39.554551Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-3014-7f59-91af-df4c08bfe33d/camera finished successfully
+2024-10-03T08:58:39.554782Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-3014-7f59-91af-df4c08bfe33d` finished on machine ``
+2024-10-03T08:58:46.403385Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:58:46.405015Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:58:46.950930Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-6702-71fd-b142-9fcd869e97ce`
+2024-10-03T08:58:48.797288Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-6702-71fd-b142-9fcd869e97ce/zenoh-camera finished successfully
+2024-10-03T08:58:49.189836Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-6702-71fd-b142-9fcd869e97ce/camera finished successfully
+2024-10-03T08:58:49.190038Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-6702-71fd-b142-9fcd869e97ce` finished on machine ``
+2024-10-03T08:59:00.716525Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:59:00.718217Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:59:01.294496Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-9eeb-7fcb-8f1d-3d9703e1cce4`
+2024-10-03T08:59:13.031124Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:59:13.032982Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:59:13.577562Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-cf05-7bbd-8d0b-24644efdc761`
+2024-10-03T08:59:13.921630Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-9eeb-7fcb-8f1d-3d9703e1cce4/camera finished successfully
+2024-10-03T08:59:16.536984Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-cf05-7bbd-8d0b-24644efdc761/camera finished successfully
+2024-10-03T08:59:16.537202Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-cf05-7bbd-8d0b-24644efdc761` finished on machine ``
+2024-10-03T08:59:18.473608Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:59:18.501070Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-9eeb-7fcb-8f1d-3d9703e1cce4` finished on machine ``
+2024-10-03T08:59:18.501293Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T08:59:19.670782Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T08:59:19.672430Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T08:59:20.264116Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519a-e8f6-7ea5-9e57-2aed5dccf285`
+2024-10-03T08:59:52.182644Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519a-e8f6-7ea5-9e57-2aed5dccf285/camera finished successfully
+2024-10-03T08:59:56.606206Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T08:59:56.626618Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519a-e8f6-7ea5-9e57-2aed5dccf285` finished on machine ``
+2024-10-03T08:59:56.626699Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:01:30.231297Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:01:30.233004Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:01:30.820645Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519c-e6f6-78e4-a348-b0bc0b84e408`
+2024-10-03T09:01:51.330260Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519c-e6f6-78e4-a348-b0bc0b84e408/camera finished successfully
+2024-10-03T09:01:51.557398Z  WARN run_inner{self.machine_id=}: dora_daemon: failed to report drop token `DropToken(0192519c-ea1e-7e00-aead-502cfd03568e)` to owner `camera`
+
+Caused by:
+    no subscribe channel for node `camera`
+
+Location:
+    /project/binaries/daemon/src/lib.rs:1647:37
+2024-10-03T09:01:51.634832Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519c-e6f6-78e4-a348-b0bc0b84e408` finished on machine ``
+2024-10-03T09:02:10.819763Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:02:10.821297Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:02:11.395606Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519d-8583-7afd-8563-d511be59cebf`
+2024-10-03T09:02:34.057596Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519d-8583-7afd-8563-d511be59cebf/camera finished successfully
+2024-10-03T09:02:38.083880Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:02:38.119704Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519d-8583-7afd-8563-d511be59cebf` finished on machine ``
+2024-10-03T09:02:38.119844Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:02:45.127003Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:02:45.128792Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:02:45.761936Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519e-0b86-76d5-a907-245d1fc7b83f`
+2024-10-03T09:03:02.397206Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519e-0b86-76d5-a907-245d1fc7b83f/camera finished successfully
+2024-10-03T09:03:06.766422Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:03:06.817000Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519e-0b86-76d5-a907-245d1fc7b83f` finished on machine ``
+2024-10-03T09:03:06.817123Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:03:08.185566Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:03:08.187494Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:03:08.822132Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519e-6598-7c0e-aa7f-2be426a537be`
+2024-10-03T09:03:28.834287Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519e-6598-7c0e-aa7f-2be426a537be/camera finished successfully
+2024-10-03T09:03:30.622141Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:03:30.644191Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519e-6598-7c0e-aa7f-2be426a537be` finished on machine ``
+2024-10-03T09:03:30.644330Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:04:02.129013Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:02.130768Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:02.789259Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519f-3850-7901-84aa-51149cf1fafd`
+2024-10-03T09:04:14.001642Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:14.003282Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:14.653893Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519f-66b1-7a71-bd23-d7b5bcd372cf`
+2024-10-03T09:04:20.225490Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519f-66b1-7a71-bd23-d7b5bcd372cf/camera finished successfully
+2024-10-03T09:04:20.225805Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519f-66b1-7a71-bd23-d7b5bcd372cf` finished on machine ``
+2024-10-03T09:04:20.999272Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:21.001877Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:21.541253Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519f-8206-70f9-add5-dd4811141f02`
+2024-10-03T09:04:22.667213Z  WARN dora_daemon: camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:04:22.667345Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:04:22.685622Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:04:22.687498Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519f-3850-7901-84aa-51149cf1fafd` finished on machine ``
+2024-10-03T09:04:22.687590Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:04:23.166122Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519f-8206-70f9-add5-dd4811141f02/camera finished successfully
+2024-10-03T09:04:23.166318Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519f-8206-70f9-add5-dd4811141f02` finished on machine ``
+2024-10-03T09:04:24.252212Z  INFO run_inner{self.machine_id=}: dora_daemon: received destroy command -> exiting
+2024-10-03T09:04:26.138877Z  INFO dora: Starting in local mode
+2024-10-03T09:04:26.139964Z  INFO dora_daemon::coordinator: Connected to dora-coordinator at 127.0.0.1:53290
+2024-10-03T09:04:27.556172Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:27.558153Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:28.193968Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519f-9ba3-7671-a0d7-639b48d77049`
+2024-10-03T09:04:47.631048Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:47.633602Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:48.294191Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `0192519f-ea0e-7769-a9b2-99accd68f85f`
+2024-10-03T09:04:50.269378Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519f-ea0e-7769-a9b2-99accd68f85f/camera finished successfully
+2024-10-03T09:04:50.269574Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519f-ea0e-7769-a9b2-99accd68f85f` finished on machine ``
+2024-10-03T09:04:51.062533Z  INFO run_inner{self.machine_id=}: dora_daemon: node 0192519f-9ba3-7671-a0d7-639b48d77049/camera finished successfully
+2024-10-03T09:04:51.211156Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:04:51.229372Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `0192519f-9ba3-7671-a0d7-639b48d77049` finished on machine ``
+2024-10-03T09:04:51.229549Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:04:53.282446Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:04:53.284107Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:04:53.917300Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a0-0021-7015-8470-b404615b9498`
+2024-10-03T09:05:12.273342Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a0-0021-7015-8470-b404615b9498/camera finished successfully
+2024-10-03T09:05:13.027514Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:05:13.055579Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a0-0021-7015-8470-b404615b9498` finished on machine ``
+2024-10-03T09:05:13.055662Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:05:15.823634Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:05:15.825922Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:05:16.478873Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a0-582e-7f00-8387-42e133cce046`
+2024-10-03T09:05:31.802445Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a0-582e-7f00-8387-42e133cce046/camera finished successfully
+2024-10-03T09:05:36.255986Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:05:36.398132Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a0-582e-7f00-8387-42e133cce046` finished on machine ``
+2024-10-03T09:05:36.398328Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:06:20.319742Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:06:20.321700Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:06:20.953901Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a1-541f-7daa-ac22-2178f95eb2b1`
+2024-10-03T09:06:37.648948Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a1-541f-7daa-ac22-2178f95eb2b1/camera finished successfully
+2024-10-03T09:06:42.187826Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:06:42.213481Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a1-541f-7daa-ac22-2178f95eb2b1` finished on machine ``
+2024-10-03T09:06:42.213603Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:07:50.760470Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:07:50.762275Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:07:51.401902Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a2-b567-70d1-aa26-27736989afbe`
+2024-10-03T09:08:19.385186Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a2-b567-70d1-aa26-27736989afbe/camera finished successfully
+2024-10-03T09:08:23.580244Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:08:23.581611Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:08:23.791696Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:08:23.819410Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a2-b567-70d1-aa26-27736989afbe` finished on machine ``
+2024-10-03T09:08:23.819554Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:08:24.209809Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a3-359b-7a08-a812-4400544ce4f3`
+2024-10-03T09:08:42.507285Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a3-359b-7a08-a812-4400544ce4f3/camera finished successfully
+2024-10-03T09:08:47.023865Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:08:47.047972Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a3-359b-7a08-a812-4400544ce4f3` finished on machine ``
+2024-10-03T09:08:47.048105Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:09:29.474244Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:09:29.476101Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:09:30.120764Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a4-3701-78c9-9175-ef955d6165c4`
+2024-10-03T09:11:24.553237Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:11:24.554813Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:11:25.198934Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a5-f888-7609-a1d0-b1ac01d75ff5`
+2024-10-03T09:11:30.293851Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a4-3701-78c9-9175-ef955d6165c4/camera finished successfully
+2024-10-03T09:11:33.858359Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a5-f888-7609-a1d0-b1ac01d75ff5/camera finished successfully
+2024-10-03T09:11:33.858626Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a5-f888-7609-a1d0-b1ac01d75ff5` finished on machine ``
+2024-10-03T09:11:34.578346Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:11:34.579838Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:11:34.714515Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:11:34.745973Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a4-3701-78c9-9175-ef955d6165c4` finished on machine ``
+2024-10-03T09:11:34.746046Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:11:34.746161Z  WARN run_inner{self.machine_id=}: dora_daemon: Timer event for unknown dataflow `019251a4-3701-78c9-9175-ef955d6165c4`
+2024-10-03T09:11:35.155545Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a6-1fb1-79b4-8fb4-5d4d7ab7ae16`
+2024-10-03T09:12:23.474176Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:12:23.475960Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:12:24.010470Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a6-deb1-7351-9f7c-10683f127d85`
+2024-10-03T09:12:26.627484Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a6-deb1-7351-9f7c-10683f127d85/camera finished successfully
+2024-10-03T09:12:26.627690Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a6-deb1-7351-9f7c-10683f127d85` finished on machine ``
+2024-10-03T09:12:27.118790Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:12:27.120581Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:12:27.662504Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a6-ecee-7544-9a6c-78032ab6ae29`
+2024-10-03T09:12:28.961442Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a6-ecee-7544-9a6c-78032ab6ae29/camera finished successfully
+2024-10-03T09:12:28.961658Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a6-ecee-7544-9a6c-78032ab6ae29` finished on machine ``
+2024-10-03T09:12:32.374321Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a6-1fb1-79b4-8fb4-5d4d7ab7ae16/camera finished successfully
+2024-10-03T09:12:32.586261Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:12:32.587773Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:12:33.184477Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a7-0249-70f8-80e2-4f028d200023`
+2024-10-03T09:12:34.658012Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a7-0249-70f8-80e2-4f028d200023/camera finished successfully
+2024-10-03T09:12:34.658266Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a7-0249-70f8-80e2-4f028d200023` finished on machine ``
+2024-10-03T09:12:36.727966Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:12:36.751381Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a6-1fb1-79b4-8fb4-5d4d7ab7ae16` finished on machine ``
+2024-10-03T09:12:36.751456Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:12:39.433977Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:12:39.435569Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:12:40.068640Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a7-1d09-7a2d-b286-a95e7c49690f`
+2024-10-03T09:13:39.954234Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a7-1d09-7a2d-b286-a95e7c49690f/camera finished successfully
+2024-10-03T09:13:44.478703Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:13:44.506252Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a7-1d09-7a2d-b286-a95e7c49690f` finished on machine ``
+2024-10-03T09:13:44.506399Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:14:05.082387Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:05.084372Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:05.715728Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a8-6b99-7c4e-a56b-9f62ab780fb6`
+2024-10-03T09:14:21.763744Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a8-6b99-7c4e-a56b-9f62ab780fb6/camera finished successfully
+2024-10-03T09:14:21.910700Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:21.912432Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:22.546449Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a8-ad56-76ba-a82a-490abd7312fc`
+2024-10-03T09:14:24.941161Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a8-ad56-76ba-a82a-490abd7312fc/camera finished successfully
+2024-10-03T09:14:24.941417Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a8-ad56-76ba-a82a-490abd7312fc` finished on machine ``
+2024-10-03T09:14:25.176731Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:25.178293Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:25.702824Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a8-ba18-780e-b092-a83f2ba7ffc3`
+2024-10-03T09:14:26.281236Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:14:26.311046Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a8-6b99-7c4e-a56b-9f62ab780fb6` finished on machine ``
+2024-10-03T09:14:26.311181Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:14:27.121575Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a8-ba18-780e-b092-a83f2ba7ffc3/camera finished successfully
+2024-10-03T09:14:27.121771Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a8-ba18-780e-b092-a83f2ba7ffc3` finished on machine ``
+2024-10-03T09:14:30.799861Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:30.801778Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:31.417016Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a8-d00f-7ced-a167-b620c1102f62`
+2024-10-03T09:14:44.512472Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:44.514385Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:45.122395Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-059f-7cdd-aee3-0a3b4f179a54`
+2024-10-03T09:14:46.497487Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-059f-7cdd-aee3-0a3b4f179a54/camera finished successfully
+2024-10-03T09:14:46.497690Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-059f-7cdd-aee3-0a3b4f179a54` finished on machine ``
+2024-10-03T09:14:49.302722Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:49.304314Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:49.471413Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a8-d00f-7ced-a167-b620c1102f62/camera finished successfully
+2024-10-03T09:14:49.956200Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-1856-77b8-9cb1-4bd100ca5ffd`
+2024-10-03T09:14:51.267530Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-1856-77b8-9cb1-4bd100ca5ffd/camera finished successfully
+2024-10-03T09:14:51.267728Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-1856-77b8-9cb1-4bd100ca5ffd` finished on machine ``
+2024-10-03T09:14:53.905848Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:14:53.925641Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a8-d00f-7ced-a167-b620c1102f62` finished on machine ``
+2024-10-03T09:14:53.925746Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:14:56.536550Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:14:56.538032Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:14:57.171572Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-3497-7f00-97bb-789822871765`
+2024-10-03T09:15:10.391302Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:15:10.393221Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:15:11.020451Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-6ab6-7c30-a3df-f6296623465d`
+2024-10-03T09:15:12.680367Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-6ab6-7c30-a3df-f6296623465d/camera finished successfully
+2024-10-03T09:15:12.680642Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-6ab6-7c30-a3df-f6296623465d` finished on machine ``
+2024-10-03T09:15:12.797111Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-3497-7f00-97bb-789822871765/camera finished successfully
+2024-10-03T09:15:17.326890Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:15:17.360865Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-3497-7f00-97bb-789822871765` finished on machine ``
+2024-10-03T09:15:17.361005Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:15:20.854907Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:15:20.856579Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:15:21.525372Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-9396-79f7-9ae7-a79a132ec057`
+2024-10-03T09:15:39.393019Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:15:39.394518Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:15:40.023709Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-dc00-7f81-9c4f-ff5eae062444`
+2024-10-03T09:15:41.631517Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-9396-79f7-9ae7-a79a132ec057/camera finished successfully
+2024-10-03T09:15:42.097807Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-dc00-7f81-9c4f-ff5eae062444/camera finished successfully
+2024-10-03T09:15:42.098087Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-dc00-7f81-9c4f-ff5eae062444` finished on machine ``
+2024-10-03T09:15:46.117997Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:15:46.138521Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-9396-79f7-9ae7-a79a132ec057` finished on machine ``
+2024-10-03T09:15:46.138633Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:15:47.267695Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:15:47.272167Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:15:47.905164Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251a9-fac2-7198-9653-82058494744c`
+2024-10-03T09:16:28.305462Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:16:28.306968Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:16:28.907255Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251aa-9b10-77eb-8ce6-1c32db9f553c`
+2024-10-03T09:16:30.241162Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251aa-9b10-77eb-8ce6-1c32db9f553c/camera finished successfully
+2024-10-03T09:16:30.241359Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251aa-9b10-77eb-8ce6-1c32db9f553c` finished on machine ``
+2024-10-03T09:16:31.503640Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251a9-fac2-7198-9653-82058494744c/camera finished successfully
+2024-10-03T09:16:31.514774Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:16:31.516350Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:16:32.035733Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251aa-a79a-7f89-ba94-7500c4c785f4`
+2024-10-03T09:16:33.343576Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251aa-a79a-7f89-ba94-7500c4c785f4/camera finished successfully
+2024-10-03T09:16:33.343791Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251aa-a79a-7f89-ba94-7500c4c785f4` finished on machine ``
+2024-10-03T09:16:35.993889Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:16:36.141262Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251a9-fac2-7198-9653-82058494744c` finished on machine ``
+2024-10-03T09:16:36.141390Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:16:42.872808Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:16:42.874500Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:16:43.511524Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251aa-d3f8-7680-be58-704e58373649`
+2024-10-03T09:17:06.769842Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251aa-d3f8-7680-be58-704e58373649/camera finished successfully
+2024-10-03T09:17:11.166774Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:17:11.193922Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251aa-d3f8-7680-be58-704e58373649` finished on machine ``
+2024-10-03T09:17:11.194021Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:17:20.964982Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:17:20.966844Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:17:21.616148Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ab-68c4-7553-87cd-8082bb58abfc`
+2024-10-03T09:17:35.199944Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:17:35.201867Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:17:35.844140Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ab-a05f-7626-8025-e8f466cc4ae7`
+2024-10-03T09:17:38.160687Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ab-a05f-7626-8025-e8f466cc4ae7/camera finished successfully
+2024-10-03T09:17:38.160946Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ab-a05f-7626-8025-e8f466cc4ae7` finished on machine ``
+2024-10-03T09:17:39.255733Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ab-68c4-7553-87cd-8082bb58abfc/camera finished successfully
+2024-10-03T09:17:40.768816Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:17:40.770404Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:17:41.422982Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ab-b620-7b04-b9a7-8324d0060cae`
+2024-10-03T09:17:43.414643Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ab-b620-7b04-b9a7-8324d0060cae/camera finished successfully
+2024-10-03T09:17:43.415121Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ab-b620-7b04-b9a7-8324d0060cae` finished on machine ``
+2024-10-03T09:17:43.794143Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:17:43.821670Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ab-68c4-7553-87cd-8082bb58abfc` finished on machine ``
+2024-10-03T09:17:43.821825Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:17:52.545439Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:17:52.547120Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:17:53.184074Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ab-e420-72e8-99ed-f49498ea28fc`
+2024-10-03T09:18:15.288099Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ab-e420-72e8-99ed-f49498ea28fc/camera finished successfully
+2024-10-03T09:18:19.771492Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:18:19.795296Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ab-e420-72e8-99ed-f49498ea28fc` finished on machine ``
+2024-10-03T09:18:19.795441Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:18:32.745749Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:18:32.747503Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:18:33.384777Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ac-8129-73b4-9a94-dcec27d32b6d`
+2024-10-03T09:19:00.025522Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ac-8129-73b4-9a94-dcec27d32b6d/camera finished successfully
+2024-10-03T09:19:04.475855Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:19:04.502955Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ac-8129-73b4-9a94-dcec27d32b6d` finished on machine ``
+2024-10-03T09:19:04.503093Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:22:21.058717Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:22:21.060326Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:22:21.701565Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251af-fd02-7476-80b3-939c523caff8`
+2024-10-03T09:22:34.363699Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251af-fd02-7476-80b3-939c523caff8/camera finished successfully
+2024-10-03T09:22:38.828627Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:22:38.855741Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251af-fd02-7476-80b3-939c523caff8` finished on machine ``
+2024-10-03T09:22:38.855863Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:22:52.763957Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:22:52.765948Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:22:53.393497Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b0-78db-7d72-a1af-aef43443c6f3`
+2024-10-03T09:23:05.337104Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:23:05.338948Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:23:05.846431Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b0-a9f8-7c0d-b373-68183c3bff4b`
+2024-10-03T09:23:14.771840Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b0-78db-7d72-a1af-aef43443c6f3/camera finished successfully
+2024-10-03T09:23:19.292359Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:23:19.316410Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b0-78db-7d72-a1af-aef43443c6f3` finished on machine ``
+2024-10-03T09:23:19.316545Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:23:21.836264Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:23:21.837781Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:23:22.486561Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b0-ea6b-75c9-97f7-9e7382a7edba`
+2024-10-03T09:23:28.046896Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b0-a9f8-7c0d-b373-68183c3bff4b/camera finished successfully
+2024-10-03T09:23:32.477536Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:23:32.493114Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b0-a9f8-7c0d-b373-68183c3bff4b` finished on machine ``
+2024-10-03T09:23:32.493353Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:23:50.228190Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b0-ea6b-75c9-97f7-9e7382a7edba/camera finished successfully
+2024-10-03T09:23:54.721041Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:23:54.742443Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b0-ea6b-75c9-97f7-9e7382a7edba` finished on machine ``
+2024-10-03T09:23:54.742526Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:24:21.646331Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:24:21.647978Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:24:22.269400Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b1-d40d-7e41-8880-cd7b1b792c72`
+2024-10-03T09:24:46.165350Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b1-d40d-7e41-8880-cd7b1b792c72/camera finished successfully
+2024-10-03T09:24:49.320997Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:24:49.322799Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:24:49.961134Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b2-4028-7f89-9bf8-dd9481e893af`
+2024-10-03T09:24:50.566684Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:24:50.598428Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:24:50.598857Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b1-d40d-7e41-8880-cd7b1b792c72` finished on machine ``
+2024-10-03T09:26:03.329474Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b2-4028-7f89-9bf8-dd9481e893af/camera finished successfully
+2024-10-03T09:26:07.796297Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:26:07.830194Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b2-4028-7f89-9bf8-dd9481e893af` finished on machine ``
+2024-10-03T09:26:07.830387Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:28:28.329362Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:28:28.331206Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:28:28.966215Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b5-97a8-7fe0-a28f-69ab2d6cddb2`
+2024-10-03T09:29:22.183435Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b5-97a8-7fe0-a28f-69ab2d6cddb2/camera finished successfully
+2024-10-03T09:29:26.751252Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:29:26.778344Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b5-97a8-7fe0-a28f-69ab2d6cddb2` finished on machine ``
+2024-10-03T09:29:26.778504Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:30:05.025782Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:30:05.027372Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:30:05.665920Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b7-1161-76a8-822d-751d7272b00a`
+2024-10-03T09:30:19.998807Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b7-1161-76a8-822d-751d7272b00a/camera finished successfully
+2024-10-03T09:30:24.370983Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:30:24.512526Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b7-1161-76a8-822d-751d7272b00a` finished on machine ``
+2024-10-03T09:30:24.512724Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:31:48.398467Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:31:48.400285Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:31:49.049245Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251b8-a52d-775f-99d6-fe0a7a942d80`
+2024-10-03T09:33:05.395819Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251b8-a52d-775f-99d6-fe0a7a942d80/camera finished successfully
+2024-10-03T09:33:09.868128Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:33:09.890204Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251b8-a52d-775f-99d6-fe0a7a942d80` finished on machine ``
+2024-10-03T09:33:09.890314Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:34:03.185180Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:34:03.186808Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:34:03.775529Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251ba-b3b0-732d-b6c1-0d4412c59955`
+2024-10-03T09:34:19.164605Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251ba-b3b0-732d-b6c1-0d4412c59955/camera finished successfully
+2024-10-03T09:34:23.464892Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:34:23.499253Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251ba-b3b0-732d-b6c1-0d4412c59955` finished on machine ``
+2024-10-03T09:34:23.499397Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:35:21.327601Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:35:21.329450Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:35:21.964712Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251bb-e4ef-7fdd-976f-43972131e6c3`
+2024-10-03T09:35:41.931302Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251bb-e4ef-7fdd-976f-43972131e6c3/camera finished successfully
+2024-10-03T09:35:46.044113Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:35:46.045890Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:35:46.404832Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:35:46.428712Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251bb-e4ef-7fdd-976f-43972131e6c3` finished on machine ``
+2024-10-03T09:35:46.428825Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:35:46.705821Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251bc-457b-70cd-81d2-4fb02128de19`
+2024-10-03T09:36:39.389815Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:36:39.391527Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:36:40.030509Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251bd-15dd-7227-bb21-c3af7f187a2f`
+2024-10-03T09:36:46.072369Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251bc-457b-70cd-81d2-4fb02128de19/camera finished successfully
+2024-10-03T09:36:50.489264Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:36:50.510165Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251bc-457b-70cd-81d2-4fb02128de19` finished on machine ``
+2024-10-03T09:36:50.510300Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:37:03.340343Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251bd-15dd-7227-bb21-c3af7f187a2f/camera finished successfully
+2024-10-03T09:37:07.398960Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:37:07.400536Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:37:07.871961Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:37:07.889884Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251bd-15dd-7227-bb21-c3af7f187a2f` finished on machine ``
+2024-10-03T09:37:07.889938Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T09:37:08.029384Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251bd-8346-7cab-bc58-dfa82a3b3910`
+2024-10-03T09:37:26.531749Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: /home/enzo/Documents/marcsrover/.venv/bin/opencv-video-capture
+2024-10-03T09:37:26.533486Z  INFO run_inner{self.machine_id=}: dora_daemon::spawn: spawning: "/home/enzo/Documents/marcsrover/.venv/bin/python3" /home/enzo/Documents/marcsrover/nodes/zenoh_cam.py
+2024-10-03T09:37:27.168956Z  INFO run_inner{self.machine_id=}: dora_daemon: all nodes are ready, starting dataflow `019251bd-ce03-7cfb-84b5-f72f930b3435`
+2024-10-03T09:37:27.688579Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251bd-8346-7cab-bc58-dfa82a3b3910/camera finished successfully
+2024-10-03T09:37:32.178730Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T09:37:32.193591Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251bd-8346-7cab-bc58-dfa82a3b3910` finished on machine ``
+2024-10-03T09:37:32.193683Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
+2024-10-03T13:45:46.575626Z  INFO run_inner{self.machine_id=}: dora_daemon: node 019251bd-ce03-7cfb-84b5-f72f930b3435/camera finished successfully
+2024-10-03T13:45:50.956396Z  WARN dora_daemon: zenoh-camera was killed due to not stopping within the 15s grace period
+2024-10-03T13:45:50.979463Z  INFO run_inner{self.machine_id=}: dora_daemon: Dataflow `019251bd-ce03-7cfb-84b5-f72f930b3435` finished on machine ``
+2024-10-03T13:45:50.979569Z  WARN dora_daemon::node_communication: failed to send NextFinishedDropTokens reply: NextDropEvents([])
+
+Caused by:
+   0: failed to send reply to node `zenoh-camera`
+   1: failed to send DaemonReply
+   2: Broken pipe (os error 32)
+
+Location:
+    binaries/daemon/src/node_communication/tcp.rs:91:14
