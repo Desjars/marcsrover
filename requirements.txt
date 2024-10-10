@@ -1,6 +1,6 @@
-dora-rs==0.3.6
 numpy==2.0.0
 opencv-python>=4.1.1
 eclipse-zenoh==0.11.0
 dearpygui==1.11.1
 pycdr2==1.0.0
+pyrplidar==0.1.2

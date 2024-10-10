@@ -50,6 +50,7 @@ lancer dans un terminal, la commande:
 ```bash
 adb shell
 su p26
+cd ~
 curl -s https://astral.sh/uv/install.sh | bash
 git clone https://github.com/Desjars/marcsrover.git
 cd ~/marcsrover
@@ -79,4 +80,5 @@ Enfin, envoyez le fichier modifié sur la carte RB5 avec la commande:
 
 ```bash
 adb push wpa_supplicant.conf /data/misc/wifi/
+adb reboot
 ```

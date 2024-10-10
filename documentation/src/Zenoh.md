@@ -17,7 +17,6 @@ Pour cela vous devez être connecté au même réseau que les autres ordinateurs
   },
   "listen": {
     "endpoints": [
-      "udp/0.0.0.0:7447"
     ]
   },
   "scouting": {
