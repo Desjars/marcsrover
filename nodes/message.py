@@ -27,3 +27,11 @@ class LidarScan(IdlStruct):
     range_min: float
     range_max: float
 """
+
+"""
+example of a Joystick message
+@dataclass
+class Joystick(IdlStruct):
+    axes: List[float]
+    buttons: List[uint32]
+"""

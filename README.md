@@ -7,63 +7,12 @@ facilement utilisable et modifiable.
 
 Nous tenons à remercier Qualcomm pour leur soutien et leur aide dans ce projet.
 
-# Installation
+# Documentation
 
-Nous voulons utiliser des technologies récentes pour ce véhicule, et se passser de mauvais outils comme ROS. Nous avons donc décidé
-d'utiliser Dora-RS, un framework de robotique open-source, et Zenoh, un middleware de communication.
+Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.
 
-Le véhicule doit pouvoir se programmer entièrement en Python, et pour cela nous allors utiliser le gestionnaire de projet `uv` pour
-installer le bon python et les bonnes bibliothèques.
+# Prochaines tâches
 
-## Installation de `uv`
-
-Sur windows, ouvrez un terminal powershell et tapez la commande suivante:
-
-```bash
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
-
-```bash
-curl -s https://astral.sh/uv/install.sh | bash
-```
-
-## Installation de Python 3.12.6
-
-Pour installer Python 3.12.6, tapez la commande suivante:
-
-```bash
-uv python install 3.12.6
-```
-
-## Installation du CLI `dora`
-
-Sur windows, ouvrez un terminal powershell et tapez la commande suivante:
-
-```bash
-powershell -c "irm https://raw.githubusercontent.com/dora-rs/dora/main/install.ps1 | iex"
-```
-
-Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/dora-rs/dora/main/install.sh | bash
-```
-
-# Utilisation
-
-Tout ce qu'il faut est probablement déjà sur le véhicule, il faut désormais récupérer les logiciels de contrôle du véhicule côté host, il vous faut alors
-cloner ce dépôt.
-
-```bash
-git clone https://github.com/Desjars/marcsrover.git
-```
-
-Ensuite, il vous faut accéder au dossier du projet avec un terminal, et installer les dépendances avec `uv`:
-
-```bash
-cd ~/???/marcsrover
-uv venv
-uv pip install -r requirements.txt
-```
+- Faire la capture des informations du LiDAR dans un noeud Zenoh dans ce [fichier](nodes/capture_lidar.py), et bien penser à rajouter le [format de message](nodes/message.py)
+- Faire l'affichage des informations du LiDAR avec DearPyGui dans ce [fichier](nodes/stream_lidar.py)
+- Encapsuler le code de Brice/Yassine pour le joystick dans un noeud Zenoh dans ce [fichier](nodes/capture_joystick.py), et bien penser à rajouter le [format de message](nodes/message.py)
