@@ -7,6 +7,7 @@ facilement utilisable et modifiable.
 
 Nous tenons à remercier Qualcomm pour leur soutien et leur aide dans ce projet.
 
+
 # Documentation
 
 Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.
