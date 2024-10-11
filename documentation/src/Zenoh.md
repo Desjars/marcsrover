@@ -17,6 +17,7 @@ Pour cela vous devez être connecté au même réseau que les autres ordinateurs
   },
   "listen": {
     "endpoints": [
+      "udp/localhost:0"
     ]
   },
   "scouting": {
@@ -34,4 +35,35 @@ import zenoh
 
 config = zenoh.Config.from_file("zenoh_config.json")
 session = zenoh.open(config)
+```
+
+**Note**: Il est possible de ne pas réussir à faire communiquer des noeuds entre eux lorsqu'on n'a pas de connexion internet. C'est parce que le
+protocole de réseau local n'active pas forcément le multicast, et donc il faut l'activer.
+
+Sur Ubuntu, il faut créer un service qui se lancera au démarage:
+
+```bash
+sudo nano /etc/systemd/system/multicast-lo.service
+```
+
+Et y écrire:
+
+```bash
+[Unit]
+Description=Enable Multicast on Loopback
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ip link set lo multicast on
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Ensuite il faut activer le service:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable multicast-lo.service
+sudo systemctl start multicast-lo.service
 ```
