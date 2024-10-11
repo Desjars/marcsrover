@@ -4,7 +4,7 @@
     "endpoints": []
   },
   "listen": {
-    "endpoints": []
+    "endpoints": ["udp/localhost:0", "udp/127.0.0.1:0"]
   },
   "scouting": {
     "multicast": {
