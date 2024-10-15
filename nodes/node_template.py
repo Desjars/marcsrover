@@ -4,7 +4,7 @@ import threading
 
 import zenoh
 
-class Monitoring:
+class NodeTemplate:
     def __init__(self):
 
         # Register signal handlers
@@ -20,8 +20,8 @@ class Monitoring:
         config = zenoh.Config.from_file("zenoh_config.json")
         self.session = zenoh.open(config)
 
-        # Create zenoh pub/subs
-        self.stop_handler = self.session.declare_publisher("marcsrover/stop")
+        # Create zenoh pub/sub
+        self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.zenoh_stop_signal)
 
     def run(self):
         while True:
@@ -51,10 +51,15 @@ class Monitoring:
         self.running = False
         self.mutex.release()
 
-        self.stop_handler.put([])
-
         # Put your cleanup code here
 
+    def zenoh_stop_signal(self, sample):
+        # Stop the node
+
+        self.mutex.acquire()
+        self.running = False
+        self.mutex.release()
+
 if __name__ == "__main__":
-    monitoring = Monitoring()
-    monitoring.run()
+    node = NodeTemplate()
+    node.run()

@@ -1,15 +1,18 @@
 import signal
-import zenoh
 import time
+import threading
+
+import zenoh
 
 class SwitchController:
     def __init__(self):
 
         # Register signal handlers
-        signal.signal(signal.SIGINT, self.stop)
-        signal.signal(signal.SIGTERM, self.stop)
+        signal.signal(signal.SIGINT, self.ctrl_c_signal)
+        signal.signal(signal.SIGTERM, self.ctrl_c_signal)
 
         self.running = True
+        self.mutex = threading.Lock()
 
         # Create monitoring variables
 
@@ -17,22 +20,45 @@ class SwitchController:
         config = zenoh.Config.from_file("zenoh_config.json")
         self.session = zenoh.open(config)
 
-        # Create zenoh subscriber
-        self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.handle_zenoh_stop)
+        # Create zenoh pub/sub
+        self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.zenoh_stop_signal)
 
     def run(self):
-        while self.running:
+        while True:
+            # Check if the node should stop
+
+            self.mutex.acquire()
+            running = self.running
+            self.mutex.release()
+
+            if not running:
+                break
+
+            # Put your update code here
+
             time.sleep(1)
 
-        print("Switch Controller Stopped")
-        exit(1)
+        self.close()
 
-    def stop(self, signum, frame):
-        pass
+    def close(self):
+        self.stop_handler.undeclare()
+        self.session.close()
 
-    def handle_zenoh_stop(self, sample):
-        print ("Stopping Switch Controller")
+    def ctrl_c_signal(self, signum, frame):
+        # Stop the node
+
+        self.mutex.acquire()
         self.running = False
+        self.mutex.release()
+
+        # Put your cleanup code here
+
+    def zenoh_stop_signal(self, sample):
+        # Stop the node
+
+        self.mutex.acquire()
+        self.running = False
+        self.mutex.release()
 
 if __name__ == "__main__":
     controller = SwitchController()
