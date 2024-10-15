@@ -13,6 +13,12 @@ class CameraFrame(IdlStruct):
     width: uint32
     height: uint32
 
+@dataclass
+class JoyStick(IdlStruct):
+    axes: List[float]
+    buttons: List[uint32]
+    balls: List[float]
+
 """
 example of a LidarScan message
 @dataclass
