@@ -16,7 +16,7 @@ class Monitoring:
         self.running = True
         self.mutex = threading.Lock()
 
-        # Create monitoring variables
+        # Create node variables
 
         self.width = 640
         self.height = 480

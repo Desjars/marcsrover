@@ -17,7 +17,7 @@ class Lidar:
         self.running = True
         self.mutex = threading.Lock()
 
-        # Create monitoring variables
+        # Create node variables
         self.lidar = PyRPlidar()
         self.lidar.connect(port, bauderate, timeout)
 

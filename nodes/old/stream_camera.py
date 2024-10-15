@@ -5,7 +5,7 @@ import numpy as np
 import dearpygui.dearpygui as dpg
 
 # We import the CameraFrame message from the message module
-from message import CameraFrame
+from message import D435I
 
 # We create a class to encapsulate the camera stream, dearpygui and zenoh setup
 class StreamCamera:
@@ -28,7 +28,7 @@ class StreamCamera:
 
     # The camera_callback method is where we receive the camera frames from Zenoh
     def camera_callback(self, sample):
-        frame = CameraFrame.deserialize(sample.value.payload)
+        frame = D435I.deserialize(sample.value.payload)
         image = np.frombuffer(bytes(frame.frame), dtype=np.uint8)
         image = cv2.imdecode(image, 1)
 

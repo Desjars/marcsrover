@@ -18,7 +18,7 @@ class Controller:
         self.running = True
         self.mutex = threading.Lock()
 
-        # Create monitoring variables
+        # Create node variables
         pygame.init()
         pygame.event.set_blocked((MOUSEMOTION, MOUSEBUTTONUP, MOUSEBUTTONDOWN))
 

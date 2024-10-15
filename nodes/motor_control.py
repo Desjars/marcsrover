@@ -14,7 +14,7 @@ class MotorControl:
         self.running = True
         self.mutex = threading.Lock()
 
-        # Create monitoring variables
+        # Create node variables
 
         # Create zenoh session
         config = zenoh.Config.from_file("zenoh_config.json")

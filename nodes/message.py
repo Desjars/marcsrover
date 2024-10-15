@@ -4,12 +4,13 @@ import numpy as np
 import json
 
 from pycdr2 import IdlStruct
-from pycdr2.types import uint32, float32
+from pycdr2.types import uint32, float32, uint8
 from typing import List
 
 @dataclass
-class CameraFrame(IdlStruct):
-    frame: bytes
+class D435I(IdlStruct):
+    rgb: List[uint8]
+    depth: List[float32]
     width: uint32
     height: uint32
 

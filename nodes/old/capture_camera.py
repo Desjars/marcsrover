@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 # We import the CameraFrame message from the message module
-from message import CameraFrame
+from message import D435I
 
 # We create a class to encapsulate the camera capture and zenoh setup
 class CaptureCamera:
@@ -47,10 +47,10 @@ class CaptureCamera:
             frame = cv2.resize(frame, (self.width, self.height))
             frame = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])[1].tobytes()
 
-            frame = CameraFrame(frame=frame, width=self.width, height=self.height)
+            frame = D435I(frame=frame, width=self.width, height=self.height)
 
             # Publish the frame to Zenoh, serialized as a CameraFrame message
-            self.camera_publisher.put(CameraFrame.serialize(frame))
+            self.camera_publisher.put(D435I.serialize(frame))
 
 if __name__ == "__main__":
     capture_camera = CaptureCamera(path="/dev/video0", width=640, height=480)
