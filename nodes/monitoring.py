@@ -4,6 +4,8 @@ import threading
 
 import zenoh
 
+import dearpygui.dearpygui as dpg
+
 class Monitoring:
     def __init__(self):
 
@@ -16,15 +18,29 @@ class Monitoring:
 
         # Create monitoring variables
 
+        self.width = 640
+        self.height = 480
+
+        dpg.create_context()
+        dpg.create_viewport(title='MARCSRover', width=self.width, height=self.height)
+        dpg.setup_dearpygui()
+
+        with dpg.window(tag="LiDAR"):
+            pass
+
         # Create zenoh session
         config = zenoh.Config.from_file("zenoh_config.json")
         self.session = zenoh.open(config)
 
         # Create zenoh pub/subs
         self.stop_handler = self.session.declare_publisher("marcsrover/stop")
+        self.lidar_sub = self.session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
 
     def run(self):
-        while True:
+        dpg.show_viewport()
+        while dpg.is_dearpygui_running():
+            dpg.render_dearpygui_frame()
+
             # Check if the node should stop
 
             self.mutex.acquire()
@@ -34,15 +50,16 @@ class Monitoring:
             if not running:
                 break
 
-            # Put your update code here
-
-            time.sleep(1)
-
+        dpg.destroy_context()
         self.close()
 
     def close(self):
+        self.stop_handler.put([])
         self.stop_handler.undeclare()
         self.session.close()
+
+    def lidar_callback(self, sample):
+        dpg.draw_rectangle((200, 200), (300, 300), parent="LiDAR", color=(255, 255, 0, 255), fill=(255, 0, 0, 255))
 
     def ctrl_c_signal(self, signum, frame):
         # Stop the node
@@ -50,8 +67,6 @@ class Monitoring:
         self.mutex.acquire()
         self.running = False
         self.mutex.release()
-
-        self.stop_handler.put([])
 
         # Put your cleanup code here
 
