@@ -2,7 +2,7 @@
 
 Nous allons utiliser des outils modernes pour programmer le véhicule:
 
-- Python 3.12.6
+- Python 3.11.10
 - UV (python package manager)
 - Zenoh
 
@@ -22,20 +22,12 @@ Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
 curl -s https://astral.sh/uv/install.sh | bash
 ```
 
-### Installation de Python 3.12.6
+### Installation de Python 3.11.10
 
-Pour installer Python 3.12.6, tapez la commande suivante:
-
-```bash
-uv python install 3.12.6
-```
-
-### Installation des dépendances
-
-Pour installer les dépendances, tapez la commande suivante:
+Pour installer Python 3.11.10, tapez la commande suivante:
 
 ```bash
-uv pip install -r requirements.txt
+uv python install 3.11.10
 ```
 
 ## Carte RB5
@@ -54,7 +46,7 @@ cd ~
 curl -s https://astral.sh/uv/install.sh | bash
 git clone https://github.com/Desjars/marcsrover.git
 cd ~/marcsrover
-uv venv
+uv venv --python 3.11.10
 uv pip install -r requirements.txt
 ```
 
