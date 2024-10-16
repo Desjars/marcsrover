@@ -3,6 +3,7 @@ import time
 import threading
 
 import zenoh
+import cv2
 
 import pyrealsense2 as rs
 import numpy as np
@@ -53,9 +54,14 @@ class Realsense:
             if not ret:
                 continue
 
+            color_frame = cv2.imencode(".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
+
+            depth_frame = cv2.normalize(depth_frame, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1)
+            depth_frame = cv2.imencode(".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
+
             image = D435I(
-                rgb=color_frame.ravel(),
-                depth=depth_frame.ravel(),
+                rgb=color_frame,
+                depth=depth_frame,
                 width=640,
                 height=480
                 )

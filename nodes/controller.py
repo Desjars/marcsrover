@@ -6,7 +6,7 @@ import pygame
 from pygame.constants import JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN, JOYBUTTONUP, JOYHATMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, MOUSEMOTION
 import zenoh
 
-from message import JoyStick
+from message import JoyStickController
 
 class Controller:
     def __init__(self):
@@ -53,7 +53,7 @@ class Controller:
         # Create zenoh pub/sub
         self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.zenoh_stop_signal)
 
-        self.joystick_pub = self.session.declare_publisher("marcsrover/joystick")
+        self.controller_pub = self.session.declare_publisher("marcsrover/controller")
 
     def run(self):
         while True:
@@ -88,14 +88,14 @@ class Controller:
                 elif event.type == JOYBUTTONDOWN:
                     self.button[event.button] = 1
 
-            joystick = JoyStick(axes=self.axis, buttons=self.button, balls=self.ball)
-            self.joystick_pub.put(JoyStick.serialize(joystick))
+            joystick = JoyStickController(axes=self.axis, buttons=self.button, balls=self.ball)
+            self.controller_pub.put(JoyStickController.serialize(joystick))
 
         self.close()
 
     def close(self):
         self.stop_handler.undeclare()
-        self.joystick_pub.undeclare()
+        self.controller_pub.undeclare()
         self.session.close()
         pygame.quit()
 

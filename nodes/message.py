@@ -9,13 +9,13 @@ from typing import List
 
 @dataclass
 class D435I(IdlStruct):
-    rgb: List[uint8]
-    depth: List[float32]
+    rgb: bytes
+    depth: bytes
     width: uint32
     height: uint32
 
 @dataclass
-class JoyStick(IdlStruct):
+class JoyStickController(IdlStruct):
     axes: List[float32]
     buttons: List[uint32]
     balls: List[float32]
