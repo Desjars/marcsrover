@@ -67,10 +67,11 @@ class Monitoring:
         self.close()
 
     def close(self):
-        # self.stop_handler.put([])
+        self.stop_handler.put([])
         self.stop_handler.undeclare()
         self.lidar_sub.undeclare()
         self.realsense_sub.undeclare()
+        self.controller_sub.undeclare()
         self.session.close()
 
         dpg.destroy_context()

@@ -56,6 +56,7 @@ class Realsense:
 
             color_frame = cv2.imencode(".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
 
+            min, max, _, _ = cv2.minMaxLoc(depth_frame)
             depth_frame = cv2.normalize(depth_frame, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1)
             depth_frame = cv2.imencode(".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
 
@@ -63,7 +64,8 @@ class Realsense:
                 rgb=color_frame,
                 depth=depth_frame,
                 width=640,
-                height=480
+                height=480,
+                depth_factor=max / 255.0
                 )
 
             self.realsense_publisher.put(D435I.serialize(image))

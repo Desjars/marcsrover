@@ -13,6 +13,7 @@ class D435I(IdlStruct):
     depth: bytes
     width: uint32
     height: uint32
+    depth_factor: float32
 
 @dataclass
 class JoyStickController(IdlStruct):
