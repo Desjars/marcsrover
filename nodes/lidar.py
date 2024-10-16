@@ -102,5 +102,5 @@ class Lidar:
         self.mutex.release()
 
 if __name__ == "__main__":
-    node = Lidar(port='/dev/tty.usbserial-8440', bauderate=256000, timeout=3, pwm=500)
+    node = Lidar(port='/dev/ttyUSB0', bauderate=256000, timeout=3, pwm=500)
     node.run()

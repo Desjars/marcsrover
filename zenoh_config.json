@@ -1,10 +1,10 @@
 {
   "mode": "peer",
   "connect": {
-    "endpoints": []
+    "endpoints": ["udp/169.254.4.1:7447"]
   },
   "listen": {
-    "endpoints": ["udp/localhost:0", "udp/127.0.0.1:0"]
+    "endpoints": ["udp/localhost:0", "udp/127.0.0.1:0", "udp/169.254.4.2:0"]
   },
   "scouting": {
     "multicast": {

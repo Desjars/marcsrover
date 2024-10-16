@@ -74,3 +74,12 @@ Enfin, envoyez le fichier modifié sur la carte RB5 avec la commande:
 adb push wpa_supplicant.conf /data/misc/wifi/
 adb reboot
 ```
+
+
+# Temporaire
+
+```
+cmake .. -DBUILD_PYTHON_BINDINGS=bool:true -DPYTHON_EXECUTABLE=~/marcsrover/realsense/bin/python  -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DPYTHON_INCLUDE_DIR=$(python -c "import sysconfig; print(sysconfig.get_path('include'))")  -DPYTHON_LIBRARY=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+```
+
+link : [ça](https://github.com/IntelRealSense/librealsense/blob/development/doc/installation_raspbian.md#raspbianraspberrypi3-installation)
