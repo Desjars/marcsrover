@@ -1,6 +1,7 @@
 # Flash de la carte RB5
 
-Cette section vous guidera à travers les étapes nécessaires pour flasher la carte RB5, à savoir que ce n'est pas nécessaire de la flasher, il est très probable que le système linux soit déjà installé sur la RB5.
+Cette section vous guidera à travers les étapes nécessaires pour flasher la carte RB5, à savoir que ce n'est pas nécessaire de la flasher,
+il est très probable que le système linux soit déjà installé sur la RB5.
 
 ## Prérequis
 

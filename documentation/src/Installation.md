@@ -2,7 +2,7 @@
 
 Nous allons utiliser des outils modernes pour programmer le véhicule:
 
-- Python 3.11.10
+- Python 3.12.6
 - UV (python package manager)
 - Zenoh
 
@@ -22,12 +22,20 @@ Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
 curl -s https://astral.sh/uv/install.sh | bash
 ```
 
-### Installation de Python 3.11.10
+### Installation de Python 3.12.6
 
-Pour installer Python 3.11.10, tapez la commande suivante:
+Pour installer Python 3.12.6, tapez la commande suivante:
 
 ```bash
-uv python install 3.11.10
+uv python install 3.12.6
+```
+
+```bash
+cd ~
+git clone https://github.com/Desjars/marcsrover.git
+cd ~/marcsrover
+uv venv --python 3.12.6
+uv pip install -r requirements.txt
 ```
 
 ## Carte RB5
@@ -41,45 +49,10 @@ lancer dans un terminal, la commande:
 
 ```bash
 adb shell
-su p26
+su pXX # Remplacez pXX par votre nom d'utilisateur, e.g p26, p27, p28, etc.
 cd ~
-curl -s https://astral.sh/uv/install.sh | bash
 git clone https://github.com/Desjars/marcsrover.git
 cd ~/marcsrover
-uv venv --python 3.11.10
+uv venv --python 3.12.6
 uv pip install -r requirements.txt
 ```
-
-**Note**: pour cloner le dépôt et installer les dépendances, vous devez avoir un accès internet sur la carte RB5, pour ce faire, sur votre ordinateur host, éxécutez la commande suivante:
-
-```bash
-adb pull /data/misc/wifi/wpa_supplicant.conf
-```
-
-Puis éditez le fichier `wpa_supplicant.conf` pour ajouter votre réseau wifi, de la forme:
-
-```python
-network={
-ssid="NomDuWifi"
- key_mgmt=WPA-PSK
- pairwise=TKIP CCMP
- group=TKIP CCMP
- psk="MotDePasseDuWifi"
-}
-```
-
-Enfin, envoyez le fichier modifié sur la carte RB5 avec la commande:
-
-```bash
-adb push wpa_supplicant.conf /data/misc/wifi/
-adb reboot
-```
-
-
-# Temporaire
-
-```
-cmake .. -DBUILD_PYTHON_BINDINGS=bool:true -DPYTHON_EXECUTABLE=~/marcsrover/realsense/bin/python  -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DPYTHON_INCLUDE_DIR=$(python -c "import sysconfig; print(sysconfig.get_path('include'))")  -DPYTHON_LIBRARY=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
-```
-
-link : [ça](https://github.com/IntelRealSense/librealsense/blob/development/doc/installation_raspbian.md#raspbianraspberrypi3-installation)
