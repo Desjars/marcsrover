@@ -13,13 +13,13 @@ Nous allons utiliser des outils modernes pour programmer le véhicule:
 Sur windows, ouvrez un terminal powershell et tapez la commande suivante:
 
 ```bash
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
 Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
 
 ```bash
-curl -s https://astral.sh/uv/install.sh | bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ### Installation de Python 3.12.6

@@ -21,7 +21,7 @@ sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:git-core/ppa
 sudo apt-get update
 sudo apt-get install git curl cmake
-curl -s https://astral.sh/uv/install.sh | bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ## Installation des drivers
