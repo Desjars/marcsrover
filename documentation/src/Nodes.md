@@ -58,64 +58,73 @@ Merci de suivre la structure, en l'adaptant. Elle doit contenir:
 - L'intégration des messages dans le noeud
 - La création d'une classe pour encapsuler le noeud
 - La création d'une méthode `run` pour lancer le noeud
+- La création d'une méthode `close` pour fermer le noeud
 - L'ouverture d'une session `Zenoh` etc...
 
 ```python
-import dataclasses
+import signal
+import time
+import threading
+
 import zenoh
-import cv2
-import numpy as np
 
-# We import the CameraFrame message from the message module
-from message import CameraFrame
+class NodeTemplate:
+    def __init__(self):
 
-# We create a class to encapsulate the camera capture and zenoh setup
-class CaptureCamera:
-    def __init__(self, topic= "marcsrover/camera", path="/dev/video0", width=640, height=480):
-        # Camera VideoCapture setup with OpenCV
+        # Register signal handlers
+        signal.signal(signal.SIGINT, self.ctrl_c_signal)
+        signal.signal(signal.SIGTERM, self.ctrl_c_signal)
 
-        if isinstance(path, str) and path.isnumeric():
-            path = int(path)
+        self.running = True
+        self.mutex = threading.Lock()
 
-        self.video_capture = cv2.VideoCapture(path)
-        self.width = width
-        self.height = height
+        # Create node variables
 
-        # Zenoh setup
-
+        # Create zenoh session
         config = zenoh.Config.from_file("zenoh_config.json")
         self.session = zenoh.open(config)
 
-        self.camera_publisher = self.session.declare_publisher(topic)
+        # Create zenoh pub/sub
+        self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.zenoh_stop_signal)
 
-    # The run method is where we capture the camera frames and publish them to Zenoh
     def run(self):
         while True:
-            ret, frame = self.video_capture.read()
+            # Check if the node should stop
 
-            if not ret:
-                frame = np.zeros((self.height, self.width, 3), dtype=np.uint8)
-                cv2.putText(
-                    frame,
-                    f"Error: no frame for this camera.",
-                    (int(30), int(30)),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.50,
-                    (255, 255, 255),
-                    1,
-                    1,
-                )
+            self.mutex.acquire()
+            running = self.running
+            self.mutex.release()
 
+            if not running:
+                break
 
-            frame = cv2.resize(frame, (self.width, self.height))
-            frame = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])[1].tobytes()
+            # Put your update code here
 
-            frame = CameraFrame(frame=frame, width=self.width, height=self.height)
+            time.sleep(1)
 
-            # Publish the frame to Zenoh, serialized as a CameraFrame message
-            self.camera_publisher.put(CameraFrame.serialize(frame))
+        self.close()
+
+    def close(self):
+        self.stop_handler.undeclare()
+        self.session.close()
+
+    def ctrl_c_signal(self, signum, frame):
+        # Stop the node
+
+        self.mutex.acquire()
+        self.running = False
+        self.mutex.release()
+
+        # Put your cleanup code here
+
+    def zenoh_stop_signal(self, sample):
+        # Stop the node
+
+        self.mutex.acquire()
+        self.running = False
+        self.mutex.release()
 
 if __name__ == "__main__":
-    capture_camera = CaptureCamera(path="/dev/video0", width=640, height=480)
-    capture_camera.run()
+    node = NodeTemplate()
+    node.run()
 ```
