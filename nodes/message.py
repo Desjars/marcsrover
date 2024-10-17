@@ -4,34 +4,25 @@ import numpy as np
 import json
 
 from pycdr2 import IdlStruct
-from pycdr2.types import uint32
+from pycdr2.types import uint32, float32, uint8
 from typing import List
 
 @dataclass
-class CameraFrame(IdlStruct):
-    frame: bytes
+class D435I(IdlStruct):
+    rgb: bytes
+    depth: bytes
     width: uint32
     height: uint32
+    depth_factor: float32
 
-"""
-example of a LidarScan message
+@dataclass
+class JoyStickController(IdlStruct):
+    axes: List[float32]
+    buttons: List[uint32]
+    balls: List[float32]
+
 @dataclass
 class LidarScan(IdlStruct):
-    ranges: List[float]
-    intensities: List[float]
-    angle_min: float
-    angle_max: float
-    angle_increment: float
-    time_increment: float
-    scan_time: float
-    range_min: float
-    range_max: float
-"""
-
-"""
-example of a Joystick message
-@dataclass
-class Joystick(IdlStruct):
-    axes: List[float]
-    buttons: List[uint32]
-"""
+    qualities: List[float32]
+    angles: List[float32]
+    distances: List[float32]

@@ -29,6 +29,8 @@ Pour cela vous devez être connecté au même réseau que les autres ordinateurs
 }
 ```
 
+Pour plus de détails sur la configuration de Zenoh, vous pouvez consulter la documentation []
+
 Ensuite dans un noeud Python il faudra écrire:
 
 ```python

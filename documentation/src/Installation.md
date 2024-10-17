@@ -30,11 +30,11 @@ Pour installer Python 3.12.6, tapez la commande suivante:
 uv python install 3.12.6
 ```
 
-### Installation des dépendances
-
-Pour installer les dépendances, tapez la commande suivante:
-
 ```bash
+cd ~
+git clone https://github.com/Desjars/marcsrover.git
+cd ~/marcsrover
+uv venv --python 3.12.6
 uv pip install -r requirements.txt
 ```
 
@@ -49,36 +49,10 @@ lancer dans un terminal, la commande:
 
 ```bash
 adb shell
-su p26
+su pXX # Remplacez pXX par votre nom d'utilisateur, e.g p26, p27, p28, etc.
 cd ~
-curl -s https://astral.sh/uv/install.sh | bash
 git clone https://github.com/Desjars/marcsrover.git
 cd ~/marcsrover
-uv venv
+uv venv --python 3.12.6
 uv pip install -r requirements.txt
-```
-
-**Note**: pour cloner le dépôt et installer les dépendances, vous devez avoir un accès internet sur la carte RB5, pour ce faire, sur votre ordinateur host, éxécutez la commande suivante:
-
-```bash
-adb pull /data/misc/wifi/wpa_supplicant.conf
-```
-
-Puis éditez le fichier `wpa_supplicant.conf` pour ajouter votre réseau wifi, de la forme:
-
-```python
-network={
-ssid="NomDuWifi"
- key_mgmt=WPA-PSK
- pairwise=TKIP CCMP
- group=TKIP CCMP
- psk="MotDePasseDuWifi"
-}
-```
-
-Enfin, envoyez le fichier modifié sur la carte RB5 avec la commande:
-
-```bash
-adb push wpa_supplicant.conf /data/misc/wifi/
-adb reboot
 ```
