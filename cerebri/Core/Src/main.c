@@ -18,15 +18,17 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "sounds.h"
+#include <string.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,6 +40,9 @@
 /* USER CODE BEGIN PD */
 #define BP_PRESSED 0
 #define BP_RELEASED 1
+
+#define MAX_BUFFER_SIZE 100
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,13 +53,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t receive[1];
+uint8_t buffer[MAX_BUFFER_SIZE];
+uint16_t buffer_index = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void buzzer_start_frequency_Hz(float frequency_Hz);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -96,22 +103,32 @@ int main(void)
   MX_TIM4_Init();
   MX_USART1_UART_Init();
   MX_TIM6_Init();
-  MX_I2C1_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
-  MX_TIM3_Init();
+  MX_USART2_UART_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+	HAL_UART_Receive_IT(&huart2,receive,1);
+	uint8_t Test[] = "Sending Data";
+	HAL_UART_Transmit(&huart2,Test,sizeof(Test),10);// Sending in normal mode
+	HAL_UART_Receive_IT(&huart2,receive,1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	//buzzer_start_frequency_Hz(261.63);
+	while (1)
+	{
+		uint32_t bp1 = HAL_GPIO_ReadPin(BP1_GPIO_Port, BP1_Pin);
+		if (bp1 == BP_PRESSED)
+		{
+			buzzer_play(NOTE_DO3);
+		} else if (bp1 == BP_RELEASED)
+		{
+			buzzer_stop();
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+	}
   /* USER CODE END 3 */
 }
 
@@ -162,15 +179,42 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-//Periode max 65 535 µs => Frequence entre 15 et 1 MHz
-void buzzer_start_frequency_Hz(float frequency_Hz){
-	uint32_t periode_buzzer;
-	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
-	periode_buzzer = 1000000/frequency_Hz;
-	htim4.Instance->ARR=periode_buzzer+1;
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, periode_buzzer/2);
+
+void processMessage(uint8_t *message)
+{
+    if (message[0] == 's' && message[6] == 'd')
+    {
+        char speed_str[6] = {message[1], message[2], message[3], message[4], message[5], '\0'};
+        uint32_t speed = atoi(speed_str);
+
+        char direction_str[4] = {message[7], message[8], message[9], '\0'};
+        uint32_t direction = atoi(direction_str);
+
+
+    }
 }
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    buffer[buffer_index++] = receive[0];
+
+    if (receive[0] == '\n' || buffer_index >= MAX_BUFFER_SIZE)
+    {
+        buffer[buffer_index] = '\0';
+
+        processMessage(buffer);
+        HAL_UART_Transmit(huart, buffer, strlen((const char*)buffer), 10);
+
+        buffer_index = 0;
+    }
+
+    HAL_UART_Receive_IT(huart, receive, 1);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+
+}
 /* USER CODE END 4 */
 
 /**
