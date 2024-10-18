@@ -57,18 +57,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define USART2_TX_Pin GPIO_PIN_2
-#define USART2_TX_GPIO_Port GPIOA
-#define USART2_RX_Pin GPIO_PIN_3
-#define USART2_RX_GPIO_Port GPIOA
+#define LED3_Pin GPIO_PIN_2
+#define LED3_GPIO_Port GPIOA
+#define LED4_Pin GPIO_PIN_7
+#define LED4_GPIO_Port GPIOA
+#define BP2_Pin GPIO_PIN_0
+#define BP2_GPIO_Port GPIOB
+#define PWM_PROPULSION_Pin GPIO_PIN_8
+#define PWM_PROPULSION_GPIO_Port GPIOA
+#define PWM_DIRECTION_Pin GPIO_PIN_11
+#define PWM_DIRECTION_GPIO_Port GPIOA
+#define BP1_Pin GPIO_PIN_12
+#define BP1_GPIO_Port GPIOA
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14
 #define T_SWCLK_GPIO_Port GPIOA
-#define T_SWO_Pin GPIO_PIN_3
-#define T_SWO_GPIO_Port GPIOB
-#define LD2_Pin GPIO_PIN_8
-#define LD2_GPIO_Port GPIOB
+#define BUZZER_Pin GPIO_PIN_6
+#define BUZZER_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

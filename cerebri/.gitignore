@@ -43,3 +43,5 @@
 
 # Libraries
 /lib
+Debug/
+Release/
