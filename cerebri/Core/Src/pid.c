@@ -1,5 +1,9 @@
 #include "pid.h"
 
+#include <string.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define DISTANCE_1_TOUR_AXE_TRANSMISSION_MM 500 // Example value, replace with actual one
 
@@ -8,14 +12,58 @@ static uint32_t intervals_array_us[16] = {0};
 
 static float distance_per_interval_us = DISTANCE_1_TOUR_AXE_TRANSMISSION_MM * 1000 / 16.0;
 static uint32_t sum_intervals_us = 0;
-static uint32_t index = 0;
+static uint32_t counter = 0;
 static uint8_t flag = 0;
 
 float measured_speed_m_s = 0;
 float measured_speed_mm_s = 0;
-float speed_setpoint_m_s = 0; // Speed setpoint, defined elsewhere
 
 uint32_t watchdog_counter = 0;
+
+int32_t cmd_speed_mm_s;
+int32_t cmd_steer_mm_s;
+
+uint8_t receive[1];
+uint8_t buffer[MAX_BUFFER_SIZE];
+uint16_t buffer_index = 0;
+
+void init_serial()
+{
+	HAL_UART_Receive_IT(&huart2,receive,1);
+	uint8_t Test[] = "Message format: sXXXXXdXXX\\n";
+	HAL_UART_Transmit(&huart2,Test,sizeof(Test),10);// Sending in normal mode
+	HAL_UART_Receive_IT(&huart2,receive,1);
+}
+
+void processMessage(uint8_t *message)
+{
+    if (message[0] == 's' && message[6] == 'd')
+    {
+        char speed_str[6] = {message[1], message[2], message[3], message[4], message[5], '\0'};
+        cmd_speed_mm_s = atoi(speed_str) - 4000;
+
+        char direction_str[4] = {message[7], message[8], message[9], '\0'};
+        cmd_steer_mm_s = atoi(direction_str);
+    }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    buffer[buffer_index++] = receive[0];
+
+    if (receive[0] == '\n' || buffer_index >= MAX_BUFFER_SIZE)
+    {
+        buffer[buffer_index] = '\0';
+
+        processMessage(buffer);
+		//HAL_UART_Transmit(huart, buffer, strlen((const char*)buffer), 10);
+
+        buffer_index = 0;
+    }
+
+    HAL_UART_Receive_IT(huart, receive, 1);
+}
+
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
 {
@@ -33,22 +81,22 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
         if ((current_measure_us > (previous_measure_us + 100000)) || ((current_measure_us - 100000) > previous_measure_us))
         {
             // Reset interval array and index
-            for (index = 0; index < 16; index++)
+            for (counter = 0; counter < 16; counter++)
             {
-                intervals_array_us[index] = 0;
+                intervals_array_us[counter] = 0;
             }
-            index = 0;
+            counter = 0;
         }
         else // Otherwise, we are in continuous rotation
         {
             flag = 1;
             // Save the new interval
-            intervals_array_us[index] = current_measure_us - previous_measure_us;
+            intervals_array_us[counter] = current_measure_us - previous_measure_us;
 
             // Calculate the sum of intervals up to 100 ms or 16 intervals
             sum_intervals_us = 0;
             num_intervals = 0;
-            i = index;
+            i = counter;
             do {
                 if (intervals_array_us[i] == 0)
                     break;
@@ -59,7 +107,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
             } while ((sum_intervals_us < 100000) && (num_intervals < 16));
 
             // Increment index with wrap-around at 16
-            index = (index + 1) % 16;
+            counter = (counter + 1) % 16;
 
             // Calculate the speed in m/s (avoid division by zero)
             if (sum_intervals_us > 0)
@@ -100,7 +148,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     }
 
     // Setpoint for speed control
-    setpoint = speed_setpoint_m_s;
+    setpoint = cmd_speed_mm_s / 1000.0;
 
     // If the watchdog timer exceeds 2 seconds, stop the motor
     if (watchdog_counter >= 100)

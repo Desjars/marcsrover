@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "sounds.h"
+#include "pid.h"
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
@@ -42,8 +43,6 @@
 #define BP_PRESSED 0
 #define BP_RELEASED 1
 
-#define MAX_BUFFER_SIZE 100
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,13 +53,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t receive[1];
-uint8_t buffer[MAX_BUFFER_SIZE];
-uint16_t buffer_index = 0;
-
-uint32_t cmd_speed;
-uint32_t cmd_steer;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,13 +103,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-	  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-	HAL_UART_Receive_IT(&huart2,receive,1);
-	uint8_t Test[] = "Sending Data";
-	HAL_UART_Transmit(&huart2,Test,sizeof(Test),10);// Sending in normal mode
-	HAL_UART_Receive_IT(&huart2,receive,1);
+	HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+
+	init_serial();
 
   /* USER CODE END 2 */
 
@@ -187,35 +177,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-void processMessage(uint8_t *message)
-{
-    if (message[0] == 's' && message[6] == 'd')
-    {
-        char speed_str[6] = {message[1], message[2], message[3], message[4], message[5], '\0'};
-        cmd_speed = atoi(speed_str);
-
-        char direction_str[4] = {message[7], message[8], message[9], '\0'};
-        cmd_steer = atoi(direction_str);
-    }
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    buffer[buffer_index++] = receive[0];
-
-    if (receive[0] == '\n' || buffer_index >= MAX_BUFFER_SIZE)
-    {
-        buffer[buffer_index] = '\0';
-
-        processMessage(buffer);
-        HAL_UART_Transmit(huart, buffer, strlen((const char*)buffer), 10);
-
-        buffer_index = 0;
-    }
-
-    HAL_UART_Receive_IT(huart, receive, 1);
-}
 
 /* USER CODE END 4 */
 
