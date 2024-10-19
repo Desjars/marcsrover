@@ -17,9 +17,15 @@ class D435I(IdlStruct):
 
 @dataclass
 class JoyStickController(IdlStruct):
-    axes: List[float32]
+    axis: List[float32]
     buttons: List[uint32]
     balls: List[float32]
+
+@dataclass
+class Motor(IdlStruct):
+    speed: float32
+    steering: float32
+    gear: uint8
 
 @dataclass
 class LidarScan(IdlStruct):

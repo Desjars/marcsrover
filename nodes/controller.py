@@ -88,7 +88,7 @@ class Controller:
                 elif event.type == JOYBUTTONDOWN:
                     self.button[event.button] = 1
 
-            joystick = JoyStickController(axes=self.axis, buttons=self.button, balls=self.ball)
+            joystick = JoyStickController(axis=self.axis, buttons=self.button, balls=self.ball)
             self.controller_pub.put(JoyStickController.serialize(joystick))
 
         self.close()

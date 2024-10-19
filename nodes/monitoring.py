@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import dearpygui.dearpygui as dpg
 
-from message import D435I, JoyStickController, LidarScan
+from message import D435I, JoyStickController, LidarScan, Motor
 
 class Monitoring:
     def __init__(self):
@@ -43,6 +43,11 @@ class Monitoring:
             with dpg.drawlist(width=640, height=480) as self.lidar_canvas:
                 pass
 
+        with dpg.window(label="Controller", width=640, height=480, pos=(640, 480)):
+            dpg.add_slider_float(label="Speed", tag="Speed", width=150, min_value=-4000, max_value=4000, default_value=0)
+            dpg.add_slider_float(label="Steering", tag="Steering", width=150, min_value=-90, max_value=90, default_value=0)
+            dpg.add_slider_int(label="Gear", tag="Gear", width=150, min_value=1, max_value=10, default_value=5)
+
         # Create zenoh session
         config = zenoh.Config.from_file("zenoh_config.json")
         self.session = zenoh.open(config)
@@ -51,7 +56,7 @@ class Monitoring:
         self.stop_handler = self.session.declare_publisher("marcsrover/stop")
         self.lidar_sub = self.session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
         self.realsense_sub = self.session.declare_subscriber("marcsrover/realsense", self.realsense_callback)
-        self.controller_sub = self.session.declare_subscriber("marcsrover/controller", self.controller_callback)
+        self.motor_sub = self.session.declare_subscriber("marcsrover/motor", self.motor_callback)
 
     def run(self):
         dpg.show_viewport()
@@ -70,11 +75,11 @@ class Monitoring:
         self.close()
 
     def close(self):
-        self.stop_handler.put([])
+        # self.stop_handler.put([])
         self.stop_handler.undeclare()
         self.lidar_sub.undeclare()
         self.realsense_sub.undeclare()
-        self.controller_sub.undeclare()
+        self.motor_sub.undeclare()
         self.session.close()
 
         dpg.destroy_context()
@@ -134,8 +139,13 @@ class Monitoring:
         texture_data = np.true_divide(data, 255.0)
         dpg.set_value("realsense_depth", texture_data)
 
-    def controller_callback(self, sample):
-        controller = JoyStickController.deserialize(sample.value.payload)
+    def motor_callback(self, sample):
+        motor = Motor.deserialize(sample.value.payload)
+
+        dpg.set_value("Steering", motor.steering)
+        dpg.set_value("Speed", motor.speed)
+        dpg.set_value("Gear", motor.gear)
+
 
     def ctrl_c_signal(self, signum, frame):
         # Stop the node
