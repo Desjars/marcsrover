@@ -21,7 +21,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "ax12.h"
+#include "pid.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -53,6 +53,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint32_t counter = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,7 +64,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int error_code;
 /* USER CODE END 0 */
 
 /**
@@ -103,11 +104,16 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+  	HAL_TIM_Base_Start_IT(&htim2);
 	HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+	HAL_TIM_Base_Start_IT(&htim6);
 
 	init_serial();
+
+	uint32_t state = 0;
+	uint32_t last_state = 0;
 
   /* USER CODE END 2 */
 
@@ -116,6 +122,8 @@ int main(void)
 	while (1)
 	{
 		uint32_t bp1 = HAL_GPIO_ReadPin(BP1_GPIO_Port, BP1_Pin);
+		uint32_t bp2 = HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin);
+
 		if (bp1 == BP_PRESSED)
 		{
 			buzzer_play(NOTE_DO3);
@@ -123,6 +131,40 @@ int main(void)
 		{
 			buzzer_stop();
 		}
+
+		if (bp2 == BP_PRESSED)
+		{
+			state = 1;
+
+			if (counter == 0) {
+				uint8_t message[] = "s05500d000";
+				processMessage(message);
+			} else if (counter == 1) {
+				uint8_t message[] = "s00000d000";
+				processMessage(message);
+			} else if (counter >= 2) {
+				uint8_t message[] = "s02500d000";
+				processMessage(message);
+			}
+
+		} else if (bp2 == BP_RELEASED)
+		{
+			state = 0;
+
+			if (last_state != state) {
+				counter += 1;
+
+				if (counter > 4) {
+					counter = 0;
+				}
+
+				uint8_t message[] = "s04000d000";
+				processMessage(message);
+			}
+		}
+
+		last_state = state;
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define DISTANCE_1_TOUR_AXE_TRANSMISSION_MM 500 // Example value, replace with actual one
+#define DISTANCE_1_TOUR_AXE_TRANSMISSION_MM 79
 
 static uint32_t previous_measure_us = 0;
 static uint32_t intervals_array_us[16] = {0};
@@ -21,7 +21,7 @@ float measured_speed_mm_s = 0;
 uint32_t watchdog_counter = 0;
 
 int32_t cmd_speed_mm_s;
-int32_t cmd_steer_mm_s;
+int32_t cmd_steer;
 
 uint8_t receive[1];
 uint8_t buffer[MAX_BUFFER_SIZE];
@@ -43,8 +43,14 @@ void processMessage(uint8_t *message)
         cmd_speed_mm_s = atoi(speed_str) - 4000;
 
         char direction_str[4] = {message[7], message[8], message[9], '\0'};
-        cmd_steer_mm_s = atoi(direction_str);
+        cmd_steer = atoi(direction_str) - 90;
+
+        watchdog_counter = 0;
     }
+}
+
+void move_ax12() {
+	AX12_set_goal(200);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -95,7 +101,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
 
             // Calculate the sum of intervals up to 100 ms or 16 intervals
             sum_intervals_us = 0;
-            num_intervals = 0;
             i = counter;
             do {
                 if (intervals_array_us[i] == 0)
@@ -110,7 +115,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
             counter = (counter + 1) % 16;
 
             // Calculate the speed in m/s (avoid division by zero)
-            if (sum_intervals_us > 0)
+            if (sum_intervals_us != 0)
             {
                 measured_speed_m_s = distance_per_interval_us * num_intervals / sum_intervals_us;
                 measured_speed_mm_s = 1000 * measured_speed_m_s; // Convert to mm/s
@@ -129,7 +134,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 
     float current_speed, setpoint, error;
     static float previous_command = 0, previous_error = 0;
-    static uint32_t reverse_flag = 0;
     HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1); // Turn on LED for feedback
 
     // Capture the measured speed or set to 0 if no valid measurement
@@ -164,27 +168,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if (setpoint == 0)
     {
         send_normalized_cmd(0); // Stop motor
-        reverse_flag = 0;
-    }
-    else if (setpoint < 0 && reverse_flag == 0)
-    {
-    	send_normalized_cmd(-10.0); // Initial reverse command
-        reverse_flag++;
-    }
-    else if (setpoint < 0 && reverse_flag == 1)
-    {
-        reverse_flag++;
-        send_normalized_cmd(0); // Stop motor after initial reverse
-    }
-    else if (setpoint < 0 && reverse_flag == 2)
-    {
-        command = Kp * setpoint; // Apply reverse speed
-        send_normalized_cmd(command);
-    }
-    else
-    {
-    	send_normalized_cmd(command); // Apply forward speed
-        reverse_flag = 0;
+    } else {
+    	if (setpoint <= -2.0) {
+    		send_normalized_cmd(-10.0);
+    	} else if (setpoint < 0.0) {
+    		error = setpoint + current_speed;
+    	    command = previous_command + Kp * ((1 + Te / (2*Ti)) * error + (Te/(2*Ti) - 1) * previous_error);
+
+    		send_normalized_cmd(command);
+    	} else {
+    		send_normalized_cmd(command);
+    	}
     }
 
     // Update previous values for the next cycle
