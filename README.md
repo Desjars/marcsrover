@@ -9,6 +9,28 @@ Nous tenons à remercier Qualcomm pour leur soutien et leur aide dans ce projet.
 
 # Documentation
 
+**End to End project**: Notre but a été de proposer un projet simple, après avoir cloné le repository et installé `uv`, tout se programme
+en python très facilement sans se soucier des dépendances, des versions de python etc... Le projet installera (avec `uv`) tout seul le bon
+python pour le bon système, créera un environnement virtuel et installera les dépendances souhaitées.
+
+## Sur la voiture
+
+Après avoir cloné le repository il faut éxécuter, **sur la voiture évidemment** :
+
+```bash
+uv sync --extra car
+uv run marcsrover-car
+```
+
+## Sur votre ordinateur
+
+Après avoir cloné le repository il faut éxécuter :
+
+```bash
+uv sync --extra host
+uv run marcsrover-host
+```
+
 Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.
 
 # Version 1.0: Véhicule non autonome

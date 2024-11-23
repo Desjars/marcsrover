@@ -13,7 +13,7 @@ def signal_handler(sig, frame):
     print("Interrupted")
 
 
-def run() -> None:
+def run(address_to_connect_to) -> None:
     zenoh.init_log_from_env_or("info")
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
@@ -24,9 +24,10 @@ def run() -> None:
     #
     # The following code connects to the Zenoh router running on the rover.
     #
-    # router_config.insert_json5("connect/endpoints", json.dumps([
-    #     "udp/...:7447"
-    # ]))
+    if address_to_connect_to is not None:
+        router_config.insert_json5(
+            "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7447"])
+        )
 
     with zenoh.open(router_config) as session:
         signal.signal(signal.SIGINT, signal_handler)

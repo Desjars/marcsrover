@@ -12,12 +12,17 @@ def signal_handler(sig, frame):
     print("Interrupted")
 
 
-def run() -> None:
+def run(address_to_listen_on) -> None:
     zenoh.init_log_from_env_or("info")
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
-    router_config.insert_json5("listen/endpoints", json.dumps(["udp/127.0.0.1:7447"]))
+    endpoints = ["udp/127.0.0.1:7447"]
+
+    if address_to_listen_on is not None:
+        endpoints.append(f"udp/{address_to_listen_on}:7447")
+
+    router_config.insert_json5("listen/endpoints", json.dumps(endpoints))
 
     with zenoh.open(router_config) as session:
         signal.signal(signal.SIGINT, signal_handler)
