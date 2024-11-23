@@ -1,0 +1,17 @@
+[project]
+name = "marcsrover"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Enzo Le Van", email = "dev@enzo-le-van.fr" } 
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+marcsrover = "marcsrover:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
