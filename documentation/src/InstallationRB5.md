@@ -56,7 +56,7 @@ uv venv --python 3.9.20 .realsense # this is a special environment for all users
 ```bash
 mkdir /home/librealsense/build
 cd /home/librealsense/build
-cmake .. -DBUILD_PYTHON_BINDINGS=bool:true -DPYTHON_EXECUTABLE=~/marcsrover/realsense/bin/python  -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DPYTHON_INCLUDE_DIR=/home/$USER/.local/share/uv/python/cpython-3.9.20-linux-aarch64-gnu/include/python3.9  -DPYTHON_LIBRARY=/install/lib
+cmake .. -DBUILD_PYTHON_BINDINGS=bool:true -DPYTHON_EXECUTABLE=/home/.realsense/bin/python  -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DPYTHON_INCLUDE_DIR=/home/$USER/.local/share/uv/python/cpython-3.9.20-linux-aarch64-gnu/include/python3.9  -DPYTHON_LIBRARY=/install/lib
 sudo make -j4
 sudo make install
 ```
