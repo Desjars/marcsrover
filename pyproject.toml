@@ -1,16 +1,24 @@
 [project]
 name = "marcsrover"
 version = "0.1.0"
-description = "Add your description here"
+description = "All software for the MARCS rover from CentraleSupélec P2026."
 readme = "README.md"
-authors = [
-    { name = "Enzo Le Van", email = "dev@enzo-le-van.fr" } 
-]
+authors = [{ name = "Enzo Le Van", email = "dev@enzo-le-van.fr" }]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "eclipse-zenoh>=1.0.3",
+    "numpy>=2.1.3",
+    "opencv-python>=4.10.0.84",
+    "pycdr2>=1.0.0",
+    "ruff>=0.8.0",
+]
 
 [project.scripts]
-marcsrover = "marcsrover:main"
+marcsrover-host = "marcsrover:main_host"
+marcsrover-car = "marcsrover:main_car"
+
+[project.optional-dependencies]
+host = ["dearpygui>=2.0.0", "pygame>=2.6.1"]
 
 [build-system]
 requires = ["hatchling"]
