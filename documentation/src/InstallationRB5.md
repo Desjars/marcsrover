@@ -15,6 +15,11 @@ L'idée est d'installer des paquets de base avec `apt`.
 
 ### Installer les outils
 
+**Je le répète, bous ne devez pas suivre cette section si tout est déjà installé, cette section n'est présente que dans le cas où vous êtes dans une situation
+où la carte RB5 a du être flashée de nouveau vierge. Vous risquez simplement de perdre beaucoup de temps si jamais vous faites une connerie sur l'installation**
+
+**Ce qu'il faut retenir c'est qu'il faut surtout créer un nouvel utilisateur pour centraliser votre code, et vous connecter au wifi.**
+
 ```bash
 su pXX # Remplacez XX par le numéro de votre promo
 sudo apt-get install software-properties-common
