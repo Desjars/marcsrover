@@ -19,6 +19,10 @@ marcsrover-car = "marcsrover:main_car"
 
 [project.optional-dependencies]
 host = ["dearpygui>=2.0.0", "pygame>=2.6.1"]
+car = [
+    "dynamixel-sdk>=3.7.31",
+    "pyrplidar>=0.1.2",
+]
 
 [build-system]
 requires = ["hatchling"]
