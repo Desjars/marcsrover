@@ -4,7 +4,7 @@ import json
 
 import threading
 
-from marcsrover.host.joystick_controller import launch_node as launch_joystick_node
+# from marcsrover.host.joystick_controller import launch_node as launch_joystick_node
 from marcsrover.host.monitor import launch_node as launch_monitor_node
 from marcsrover.common.opencv_camera import launch_node as launch_camera_node
 
@@ -38,8 +38,8 @@ def run(address_to_connect_to) -> None:
 
         stop_event = threading.Event()
 
-        joystick = threading.Thread(target=launch_joystick_node, args=(stop_event,))
-        joystick.start()
+        # joystick = threading.Thread(target=launch_joystick_node, args=(stop_event,))
+        # joystick.start()
 
         monitor = threading.Thread(target=launch_monitor_node, args=(stop_event,))
         monitor.start()
@@ -57,7 +57,7 @@ def run(address_to_connect_to) -> None:
         stop_event.set()
 
         opencv_camera.join()
-        joystick.join()
+        # joystick.join()
         monitor.join()
 
         session.close()

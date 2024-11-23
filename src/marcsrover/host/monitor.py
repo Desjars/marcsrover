@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import dearpygui.dearpygui as dpg
 
-from marcsrover.message import OpenCVCamera
+from marcsrover.message import LidarScan, OpenCVCamera
 
 
 class Node:
@@ -36,6 +36,8 @@ class Node:
                 "marcsrover/opencv-camera", self.opencv_camera_callback
             )
 
+            lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
+
             dpg.show_viewport()
 
             with dpg.texture_registry():
@@ -46,12 +48,29 @@ class Node:
             with dpg.window(label="OpenCV Camera", width=1280, height=480, pos=(0, 0)):
                 dpg.add_image("opencv-camera", pos=(0, 0))
 
+            with dpg.window(
+                label="LiDAR", tag="LiDAR", width=640, height=480, pos=(0, 480)
+            ):
+                dpg.add_slider_float(
+                    label="LiDAR Scale",
+                    tag="LiDAR Scale",
+                    width=150,
+                    min_value=1,
+                    max_value=200,
+                    default_value=100,
+                )
+
+                with dpg.drawlist(width=640, height=480) as self.lidar_canvas:
+                    pass
+
             while not stop_event.is_set() and dpg.is_dearpygui_running():
                 dpg.render_dearpygui_frame()
 
             dpg.destroy_context()
 
             camera.undeclare()
+            lidar.undeclare()
+
             session.close()
 
         print("Monitor node stopped")
@@ -68,6 +87,58 @@ class Node:
         texture_data = np.true_divide(data, 255.0)
         try:
             dpg.set_value("opencv-camera", texture_data)
+        except:
+            print("ERROR")
+
+    def lidar_callback(self, sample):
+        lidar_scale = dpg.get_value("LiDAR Scale")
+
+        lidar = LidarScan.deserialize(sample.payload.to_bytes())
+
+        try:
+            dpg.delete_item(self.lidar_canvas)
+            with dpg.drawlist(
+                width=640, height=480, parent="LiDAR"
+            ) as self.lidar_canvas:
+                radius = 190
+
+                dpg.draw_circle(
+                    center=(320, 230),
+                    radius=radius,
+                    color=(255, 255, 255, 255),
+                    thickness=1,
+                )
+                dpg.draw_circle(
+                    center=(320, 230), radius=5, color=(255, 0, 0, 255), thickness=5
+                )
+
+                for i in range(0, 360, 30):
+                    x = 320 + radius * np.cos(np.radians(i))
+                    y = 230 + radius * np.sin(np.radians(i))
+                    dpg.draw_line(
+                        (320, 230), (x, y), color=(255, 255, 255, 255), thickness=1
+                    )
+
+                    text_x = 320 + (radius + 20) * np.cos(np.radians(i)) - i * 20 / 360
+                    text_y = 230 + (radius + 20) * np.sin(np.radians(i)) - i * 20 / 360
+
+                    dpg.draw_text(
+                        (text_x, text_y), str(i), color=(255, 255, 255, 255), size=16
+                    )
+
+                for i in range(len(lidar.angles)):
+                    angle = lidar.angles[i]
+                    distance = lidar.distances[i]
+
+                    x = 320 + distance * np.cos(np.radians(angle)) * lidar_scale / 200
+                    y = 230 + distance * np.sin(np.radians(angle)) * lidar_scale / 200
+
+                    if np.sqrt((x - 320) ** 2 + (y - 230) ** 2) > radius:
+                        continue
+
+                    dpg.draw_circle(
+                        (int(x), int(y)), 1, color=(0, 0, 255, 255), thickness=5
+                    )
         except:
             print("ERROR")
 

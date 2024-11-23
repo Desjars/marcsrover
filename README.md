@@ -19,7 +19,7 @@ Après avoir cloné le repository il faut éxécuter, **sur la voiture évidemme
 
 ```bash
 uv sync --extra car
-uv run marcsrover-car
+uv run marcsrover-car IP_ADDRESS_OF_WIFI/ETH_INTERFACE_OF_THE_CAR
 ```
 
 ## Sur votre ordinateur
@@ -28,7 +28,7 @@ Après avoir cloné le repository il faut éxécuter :
 
 ```bash
 uv sync --extra host
-uv run marcsrover-host
+uv run marcsrover-host IP_ADDRESS_OF_WIFI/ETH_INTERFACE_OF_THE_CAR
 ```
 
 Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.
