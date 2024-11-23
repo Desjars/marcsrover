@@ -21,7 +21,6 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "pid.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -112,8 +111,11 @@ int main(void)
 
 	init_serial();
 
-	uint32_t state = 0;
-	uint32_t last_state = 0;
+	Dynamixel_SendPacket(0, 65, 1, 1);
+	Dynamixel_SendPacket(1, 65, 1, 1);
+
+	Dynamixel_SendPacket(0, 64, 1, 1);
+	Dynamixel_SendPacket(1, 64, 1, 1);
 
   /* USER CODE END 2 */
 
@@ -127,6 +129,11 @@ int main(void)
 		if (bp1 == BP_PRESSED)
 		{
 			buzzer_play(NOTE_DO3);
+
+			uint8_t reset[] = "s04000d000";
+			processMessage(reset);
+			uint8_t message[] = "s05500d000";
+			processMessage(message);
 		} else if (bp1 == BP_RELEASED)
 		{
 			buzzer_stop();
@@ -134,36 +141,11 @@ int main(void)
 
 		if (bp2 == BP_PRESSED)
 		{
-			state = 1;
-
-			if (counter == 0) {
-				uint8_t message[] = "s05500d000";
-				processMessage(message);
-			} else if (counter == 1) {
-				uint8_t message[] = "s00000d000";
-				processMessage(message);
-			} else if (counter >= 2) {
-				uint8_t message[] = "s02500d000";
-				processMessage(message);
-			}
-
-		} else if (bp2 == BP_RELEASED)
-		{
-			state = 0;
-
-			if (last_state != state) {
-				counter += 1;
-
-				if (counter > 4) {
-					counter = 0;
-				}
-
-				uint8_t message[] = "s04000d000";
-				processMessage(message);
-			}
+			uint8_t reset[] = "s04000d000";
+			processMessage(reset);
+			uint8_t message[] = "s01500d000";
+			processMessage(message);
 		}
-
-		last_state = state;
 
     /* USER CODE END WHILE */
 

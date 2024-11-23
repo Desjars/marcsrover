@@ -60,3 +60,37 @@ int AX12_write(int id, int start, int bytes, char* data) {
 
     return status[4];
 }
+// Fonction pour calculer le checksum du paquet Dynamixel
+uint8_t CalculateChecksum(uint8_t *packet, uint8_t length) {
+    uint16_t checksum = 0;
+    for (uint8_t i = 2; i < length; i++) { // Sauter les 2 premiers octets
+        checksum += packet[i];
+    }
+    return ~((uint8_t)checksum);
+}
+
+// Fonction pour envoyer un paquet Dynamixel
+void Dynamixel_SendPacket(uint8_t id, uint16_t address, uint32_t value, uint8_t data_length) {
+    uint8_t packet[10 + data_length]; // Paquet Dynamixel (header, ID, length, instruction, etc.)
+    uint8_t index = 0;
+
+    // Construction du paquet Dynamixel
+    packet[index++] = 0xFF;                     // Header 1
+    packet[index++] = 0xFF;                     // Header 2
+    packet[index++] = id;                       // ID du moteur
+    packet[index++] = data_length + 3;          // Longueur des données + Instruction + CRC
+    packet[index++] = 0x03;                     // Instruction "WRITE_DATA"
+    packet[index++] = address & 0xFF;           // Adresse basse
+    packet[index++] = (address >> 8) & 0xFF;    // Adresse haute
+    packet[index++] = value & 0xFF;             // Valeur basse
+    packet[index++] = (value >> 8) & 0xFF;      // Valeur
+    packet[index++] = (value >> 16) & 0xFF;     // Valeur
+    packet[index++] = (value >> 24) & 0xFF;     // Valeur haute
+
+    // Calculer le checksum
+    uint8_t checksum = CalculateChecksum(packet, index);
+    packet[index++] = checksum;
+
+    // Envoyer le paquet
+    HAL_UART_Transmit(&huart1, packet, index, 500);
+}

@@ -19,6 +19,7 @@ float measured_speed_m_s = 0;
 float measured_speed_mm_s = 0;
 
 uint32_t watchdog_counter = 0;
+uint32_t backward_counter = 0;
 
 int32_t cmd_speed_mm_s;
 int32_t cmd_steer;
@@ -162,22 +163,33 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     error = setpoint - current_speed;
 
     // PI controller calculation (Proportional-Integral controller)
-    float command = previous_command + Kp * ((1 + Te / (2*Ti)) * error + (Te/(2*Ti) - 1) * previous_error);
+    float command = 0;
 
     // Motor control logic
     if (setpoint == 0)
     {
         send_normalized_cmd(0); // Stop motor
+        error = 0;
     } else {
-    	if (setpoint <= -2.0) {
-    		send_normalized_cmd(-10.0);
-    	} else if (setpoint < 0.0) {
-    		error = setpoint + current_speed;
-    	    command = previous_command + Kp * ((1 + Te / (2*Ti)) * error + (Te/(2*Ti) - 1) * previous_error);
+    	if (setpoint > 0.0) {
+    		command = previous_command + Kp * ((1 + Te / (2*Ti)) * error + (Te/(2*Ti) - 1) * previous_error);
 
     		send_normalized_cmd(command);
+
+    		backward_counter = 0;
     	} else {
-    		send_normalized_cmd(command);
+    		if (backward_counter < 10) {
+        		backward_counter++;
+        		send_normalized_cmd(-10.0);
+    		} else if (backward_counter < 20) {
+    			backward_counter++;
+    			send_normalized_cmd(0.0);
+    		} else {
+        		error = setpoint + current_speed;
+        	    command = previous_command + Kp * ((1 + Te / (2*Ti)) * error + (Te/(2*Ti) - 1) * previous_error);
+
+        		send_normalized_cmd(command);
+    		}
     	}
     }
 
