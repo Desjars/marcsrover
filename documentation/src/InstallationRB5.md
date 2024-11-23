@@ -61,5 +61,12 @@ sudo make -j4
 sudo make install
 ```
 
+```bash
+cd /home/.realsense
+uv pip install numpy pycdr2 eclipse-zenoh opencv-python
+```
+
 Si vous rencontrez des problèmes lors de l'installation des drivers, vous pouvez consulter la
 [documentation officielle](https://github.com/IntelRealSense/librealsense/blob/development/doc/installation_raspbian.md#raspbianraspberrypi3-installation)
+
+Si l'installation de eclipse-zenoh ne fonctionne pas car aucune toolchain rust n'est présente, il faut installer rust et suivre les instructions, c'est juste un peu long mais globalement tout est automatique.
