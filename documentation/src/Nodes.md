@@ -11,18 +11,18 @@ Un noeud doit établir une connexion avec le serveur `Zenoh`, et publier des don
 ```python
 import zenoh
 
-config = zenoh.Config.from_file("zenoh_config.json")
+config = zenoh.Config.from_json5("{}")
 session = zenoh.open(config)
 ```
 
-## Publication de données
+### Publication de données
 
 Pour publier des données, il suffit de créer un `Publisher` et de publier des données.
 
 ```python
 import zenoh
 
-config = zenoh.Config.from_file("zenoh_config.json")
+config = zenoh.Config.from_json5("{}")
 session = zenoh.open(config)
 
 test_publisher = session.declare_publisher("marcsrover/test")
@@ -30,7 +30,7 @@ test_publisher = session.declare_publisher("marcsrover/test")
 test_publisher.put([0, 4, 8, 4, 3,9].tobytes())
 ```
 
-## Souscription à des données
+### Souscription à des données
 
 Pour souscrire à des données, il suffit de créer un `Subscriber` et de souscrire à des données.
 
@@ -50,81 +50,51 @@ while True:
     time.sleep(1)
 ```
 
-## Exemple complet
+## Architecture générale
 
-Merci de suivre la structure, en l'adaptant. Elle doit contenir:
+Ne tourne sur chaque composant (ordinateur host ou voiture), qu'un seul logiciel, ce dernier lancera lui même les différents noeuds programmés
+dans différents threads afin de simplifier la démarche.
 
-- La déclaration des messages dans le module `message.py`
-- L'intégration des messages dans le noeud
-- La création d'une classe pour encapsuler le noeud
-- La création d'une méthode `run` pour lancer le noeud
-- La création d'une méthode `close` pour fermer le noeud
-- L'ouverture d'une session `Zenoh` etc...
+Un noeud ressemble à ceci :
 
 ```python
-import signal
-import time
-import threading
-
 import zenoh
+import threading
+import json
 
-class NodeTemplate:
+
+class Node:
     def __init__(self):
+        self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
-        # Register signal handlers
-        signal.signal(signal.SIGINT, self.ctrl_c_signal)
-        signal.signal(signal.SIGTERM, self.ctrl_c_signal)
+        self.zenoh_config.insert_json5(
+            "connect/endpoints", json.dumps(["udp/127.0.0.1:7447"])
+        )
+        self.zenoh_config.insert_json5(
+            "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
+        )
 
-        self.running = True
-        self.mutex = threading.Lock()
+    def run(self, stop_event: threading.Event) -> None:
+        with zenoh.open(self.zenoh_config) as session:
+            while not stop_event.is_set():
+                pass
 
-        # Create node variables
+            session.close()
 
-        # Create zenoh session
-        config = zenoh.Config.from_file("zenoh_config.json")
-        self.session = zenoh.open(config)
+        print("Joystick node stopped")
 
-        # Create zenoh pub/sub
-        self.stop_handler = self.session.declare_subscriber("marcsrover/stop", self.zenoh_stop_signal)
 
-    def run(self):
-        while True:
-            # Check if the node should stop
+def launch_node(stop_event: threading.Event) -> None:
+    node = Node()
 
-            self.mutex.acquire()
-            running = self.running
-            self.mutex.release()
-
-            if not running:
-                break
-
-            # Put your update code here
-
-            time.sleep(1)
-
-        self.close()
-
-    def close(self):
-        self.stop_handler.undeclare()
-        self.session.close()
-
-    def ctrl_c_signal(self, signum, frame):
-        # Stop the node
-
-        self.mutex.acquire()
-        self.running = False
-        self.mutex.release()
-
-        # Put your cleanup code here
-
-    def zenoh_stop_signal(self, sample):
-        # Stop the node
-
-        self.mutex.acquire()
-        self.running = False
-        self.mutex.release()
-
-if __name__ == "__main__":
-    node = NodeTemplate()
-    node.run()
+    node.run(stop_event)
 ```
+
+Puis dans les fichiers `__init__.py` de chacun des modules `host` et `car`, nous lancons les différents noeuds :
+
+```python
+monitor = threading.Thread(target=launch_monitor_node, args=(stop_event,))
+monitor.start()
+```
+
+L'argument `stop_event` permet d'arrêter les différents noeuds en même temps depuis le terminal en appuyant sur `Ctrl+C`.

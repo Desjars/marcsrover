@@ -9,3 +9,10 @@ adduser <username> # Remplacez <username> par "pXX" où XX est le numéro de vot
 sudo adduser <username>
 sudo usermod -aG sudo <username>
 ```
+
+Donnez les droits de communication TTY et DIALOUT à l'utilisateur créé:
+
+```bash
+sudo usermod -aG tty <username>
+sudo usermod -aG dialout <username>
+```

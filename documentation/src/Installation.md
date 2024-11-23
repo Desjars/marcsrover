@@ -6,9 +6,10 @@ Nous allons utiliser des outils modernes pour programmer le véhicule:
 - UV (python package manager)
 - Zenoh
 
-## Ordinateur Host (votre ordinateur)
+**Cependant**, vous n'avez qu'à installer `uv` : cet outil se chargera tout seul d'installer exactement la bonne version de python au bon endroit,
+les dépendances nécessaires etc...
 
-### Installation de `uv`
+## Ordinateur Host (votre ordinateur)
 
 Sur windows, ouvrez un terminal powershell et tapez la commande suivante:
 
@@ -22,20 +23,11 @@ Sur linux/MacOS, ouvrez un terminal et tapez la commande suivante:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### Installation de Python 3.12.6
-
-Pour installer Python 3.12.6, tapez la commande suivante:
-
-```bash
-uv python install 3.12.6
-```
+Puis il faut cloner le repository:
 
 ```bash
 cd ~
 git clone https://github.com/Desjars/marcsrover.git
-cd ~/marcsrover
-uv venv --python 3.12.6
-uv pip install -r requirements.txt
 ```
 
 ## Carte RB5
@@ -50,9 +42,34 @@ lancer dans un terminal, la commande:
 ```bash
 adb shell
 su pXX # Remplacez pXX par votre nom d'utilisateur, e.g p26, p27, p28, etc.
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Puis il faut cloner le repository:
+
+```bash
 cd ~
 git clone https://github.com/Desjars/marcsrover.git
-cd ~/marcsrover
-uv venv --python 3.12.6
-uv pip install -r requirements.txt
 ```
+
+## Installation
+
+Comme il y'a plusieurs dépendances il est conseillé de faire cette étape sur un bon Wifi. Une fois le repository cloné vous devez vous y rendre:
+
+```bash
+cd ~/marcsrover
+```
+
+Puis lancer la commande suivante:
+
+### Ordinateur host
+```bash
+uv sync --extra host
+```
+
+### Carte RB5
+```bash
+uv sync --extra car
+```
+
+Cela va installer toutes les dépendances nécessaires pour le projet.
