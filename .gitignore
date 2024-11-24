@@ -165,3 +165,5 @@ out/
 zenoh_config.json
 
 uv.lock
+.metadata
+.ruff_cache
