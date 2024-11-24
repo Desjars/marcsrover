@@ -1,7 +1,7 @@
 [project]
 name = "marcsrover"
 version = "0.1.0"
-description = "All software for the MARCS rover from CentraleSupélec P2026."
+description = "Car and Host softwares for the MARCS rover from CentraleSupélec P2026."
 readme = "README.md"
 authors = [{ name = "Enzo Le Van", email = "dev@enzo-le-van.fr" }]
 requires-python = "==3.12.6"
