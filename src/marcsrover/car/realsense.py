@@ -6,19 +6,7 @@ import cv2
 import pyrealsense2.pyrealsense2 as rs
 import numpy as np
 
-from dataclasses import dataclass
-
-from pycdr2 import IdlStruct
-from pycdr2.types import float32, uint32
-
-
-@dataclass
-class D435I(IdlStruct):
-    rgb: bytes
-    depth: bytes
-    width: uint32
-    height: uint32
-    depth_factor: float32
+from marcsrover.message import D435I
 
 
 class Node:
@@ -90,6 +78,7 @@ class Node:
             self.pipeline.close()
 
         print("Realsense node stopped")
+
 
 def launch_node(stop_event: threading.Event) -> None:
     node = Node()

@@ -8,6 +8,7 @@ from marcsrover.car.rover import launch_node as launch_rover_node
 from marcsrover.car.lidar import launch_node as launch_lidar_node
 from marcsrover.car.realsense import launch_node as launch_realsense_node
 
+
 def signal_handler(sig, frame):
     print("Interrupted")
 

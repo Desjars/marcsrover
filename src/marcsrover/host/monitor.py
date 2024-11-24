@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import dearpygui.dearpygui as dpg
 
-from marcsrover.message import LidarScan, OpenCVCamera
+from marcsrover.message import LidarScan, OpenCVCamera, RoverControl
 
 
 class Node:
@@ -37,6 +37,9 @@ class Node:
             )
 
             lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
+            control = session.declare_subscriber(
+                "marcsrover/control", self.control_callback
+            )
 
             dpg.show_viewport()
 
@@ -62,6 +65,24 @@ class Node:
 
                 with dpg.drawlist(width=640, height=480) as self.lidar_canvas:
                     pass
+
+            with dpg.window(label="Controller", width=640, height=480, pos=(640, 480)):
+                dpg.add_slider_float(
+                    label="Speed",
+                    tag="Speed",
+                    width=150,
+                    min_value=-4000,
+                    max_value=4000,
+                    default_value=0,
+                )
+                dpg.add_slider_float(
+                    label="Steering",
+                    tag="Steering",
+                    width=150,
+                    min_value=-90,
+                    max_value=90,
+                    default_value=0,
+                )
 
             while not stop_event.is_set() and dpg.is_dearpygui_running():
                 dpg.render_dearpygui_frame()
@@ -139,6 +160,15 @@ class Node:
                     dpg.draw_circle(
                         (int(x), int(y)), 1, color=(0, 0, 255, 255), thickness=5
                     )
+        except:
+            print("ERROR")
+
+    def control_callback(self, sample):
+        motor = RoverControl.deserialize(sample.value.payload)
+
+        try:
+            dpg.set_value("Steering", motor.steering)
+            dpg.set_value("Speed", motor.speed)
         except:
             print("ERROR")
 
