@@ -3,13 +3,14 @@ import threading
 import json
 import cv2
 
-import pyrealsense2 as rs
+import pyrealsense2.pyrealsense2 as rs
 import numpy as np
 
 from dataclasses import dataclass
 
 from pycdr2 import IdlStruct
 from pycdr2.types import float32, uint32
+
 
 @dataclass
 class D435I(IdlStruct):
@@ -18,6 +19,7 @@ class D435I(IdlStruct):
     width: uint32
     height: uint32
     depth_factor: float32
+
 
 class Node:
     def __init__(self):
@@ -36,7 +38,6 @@ class Node:
         config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
         config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
-
         # Start streaming
         self.pipeline.start(config)
 
@@ -53,28 +54,34 @@ class Node:
 
         return True, depth_image, color_image
 
-    def run(self) -> None:
+    def run(self, stop_event: threading.Event) -> None:
         with zenoh.open(self.zenoh_config) as session:
             realsense = session.declare_publisher("marcsrover/realsense")
 
-            while True:
+            while not stop_event.is_set():
                 ret, depth_frame, color_frame = self.get_frame()
                 if not ret:
                     continue
 
-                color_frame = cv2.imencode(".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
+                color_frame = cv2.imencode(
+                    ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+                )[1].tobytes()
 
                 min, max, _, _ = cv2.minMaxLoc(depth_frame)
-                depth_frame = cv2.normalize(depth_frame, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1)
-                depth_frame = cv2.imencode(".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50])[1].tobytes()
+                depth_frame = cv2.normalize(
+                    depth_frame, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1
+                )
+                depth_frame = cv2.imencode(
+                    ".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+                )[1].tobytes()
 
                 bytes = D435I(
                     rgb=color_frame,
                     depth=depth_frame,
                     width=640,
                     height=480,
-                    depth_factor=max / 255.0
-                    ).serialize()
+                    depth_factor=max / 255.0,
+                ).serialize()
 
                 realsense.put(bytes)
 
@@ -84,8 +91,7 @@ class Node:
 
         print("Realsense node stopped")
 
+def launch_node(stop_event: threading.Event) -> None:
+    node = Node()
 
-
-node = Node()
-
-node.run()
+    node.run(stop_event)

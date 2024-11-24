@@ -4,6 +4,7 @@ from pycdr2 import IdlStruct
 from pycdr2.types import int32, float32, uint32
 from typing import List
 
+
 @dataclass
 class D435I(IdlStruct):
     rgb: bytes
@@ -11,6 +12,7 @@ class D435I(IdlStruct):
     width: uint32
     height: uint32
     depth_factor: float32
+
 
 @dataclass
 class OpenCVCamera(IdlStruct):

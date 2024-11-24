@@ -4,13 +4,13 @@ version = "0.1.0"
 description = "All software for the MARCS rover from CentraleSupélec P2026."
 readme = "README.md"
 authors = [{ name = "Enzo Le Van", email = "dev@enzo-le-van.fr" }]
-requires-python = ">=3.12"
+requires-python = "==3.12.6"
 dependencies = [
-    "eclipse-zenoh>=1.0.3",
-    "numpy>=2.1.3",
-    "opencv-python>=4.10.0.84",
-    "pycdr2>=1.0.0",
-    "ruff>=0.8.0",
+    "eclipse-zenoh==1.0.3",
+    "numpy==2.1.3",
+    "opencv-python==4.10.0.84",
+    "pycdr2==1.0.0",
+    "ruff==0.8.0",
 ]
 
 [project.scripts]
@@ -19,8 +19,18 @@ marcsrover-car = "marcsrover:main_car"
 marcsrover-realsense = "marcsrover:main_realsense"
 
 [project.optional-dependencies]
-host = ["dearpygui>=2.0.0", "pygame>=2.6.1"]
-car = ["dynamixel-sdk>=3.7.31", "pyrplidar>=0.1.2"]
+host = ["dearpygui==2.0.0", "pygame==2.6.1", "pyrealsense2==2.55.1"]
+car = ["dynamixel-sdk==3.7.31", "pyrplidar==0.1.2"]
+
+[tool.uv.sources]
+pyrealsense2 = [
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'x86_64'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'aarch64'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine != 'aarch64' and platform_machine != 'x86_64'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Darwin'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Windows'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system != 'Darwin' and platform_system != 'Linux' and platform_system != 'Windows'" },
+]
 
 [build-system]
 requires = ["hatchling"]

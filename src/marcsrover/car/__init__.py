@@ -6,7 +6,7 @@ import threading
 
 from marcsrover.car.rover import launch_node as launch_rover_node
 from marcsrover.car.lidar import launch_node as launch_lidar_node
-
+from marcsrover.car.realsense import launch_node as launch_realsense_node
 
 def signal_handler(sig, frame):
     print("Interrupted")
@@ -39,6 +39,9 @@ def run(address_to_listen_on) -> None:
         lidar = threading.Thread(target=launch_lidar_node, args=(stop_event,))
         lidar.start()
 
+        realsense = threading.Thread(target=launch_realsense_node, args=(stop_event,))
+        realsense.start()
+
         print("Press Ctrl+C to quit")
         signal.pause()
 
@@ -50,5 +53,6 @@ def run(address_to_listen_on) -> None:
 
         lidar.join()
         rover.join()
+        realsense.join()
 
         session.close()
