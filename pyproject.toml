@@ -25,12 +25,12 @@ car = ["dynamixel-sdk==3.7.31", "pyrplidar==0.1.2", "pyrealsense2==2.55.1"]
 pyrealsense2 = [
     { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'x86_64'" },
     { path = "", marker = "platform_system == 'Linux' and platform_machine == 'aarch64'" },
-    { path = "", marker = "platform_system == 'Linux' and platform_machine != 'aarch64' and platform_machine != 'x86_64'" },
     { path = "", marker = "platform_system == 'Darwin' and platform_machine == 'aarch64'" },
-    { path = "", marker = "platform_system == 'Darwin' and platform_machine != 'aarch64'" },
     { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-win_amd64.whl", marker = "platform_system == 'Windows'" },
 
     { path = "", marker = "platform_system != 'Darwin' and platform_system != 'Linux' and platform_system != 'Windows'" },
+    { path = "", marker = "platform_system == 'Linux' and platform_machine != 'aarch64' and platform_machine != 'x86_64'" },
+    { path = "", marker = "platform_system == 'Darwin' and platform_machine != 'aarch64'" },
 ]
 
 [build-system]

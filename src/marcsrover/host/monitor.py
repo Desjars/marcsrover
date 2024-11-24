@@ -91,6 +91,7 @@ class Node:
 
             camera.undeclare()
             lidar.undeclare()
+            control.undeclare()
 
             session.close()
 
