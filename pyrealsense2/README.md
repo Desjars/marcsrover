@@ -1,26 +1,19 @@
-[project]
-name = "marcsrover"
-version = "0.1.0"
-description = "Car and Host softwares for the MARCS rover from CentraleSupélec P2026."
-readme = "README.md"
-authors = [{ name = "Enzo Le Van", email = "dev@enzo-le-van.fr" }]
-requires-python = "==3.12.6"
-dependencies = [
-    "eclipse-zenoh==1.0.3",
-    "numpy==2.1.3",
-    "opencv-python==4.10.0.84",
-    "pycdr2==1.0.0",
-    "ruff==0.8.0",
-]
+Intel n'est pas très sympathique avec Python et les autres plateformes que windows, et donc ils proposent des wheels pour des
+vieilles versions de Python, et tout ce qui touche à autre chose que Windows x86 est compliqué à installer.
 
-[project.scripts]
-marcsrover-host = "marcsrover:main_host"
-marcsrover-car = "marcsrover:main_car"
+Précédemment nous avons build depuis les sources mais sur une carte comme la RB5 ou une raspberry pi, c'est très long (plusieurs heures).
 
-[project.optional-dependencies]
-host = ["dearpygui==2.0.0", "pygame==2.6.1", "pyrealsense2==2.55.1"]
-car = ["dynamixel-sdk==3.7.31", "pyrplidar==0.1.2"]
+Donc nous regroupons ici les wheels, que nous avons build soit à la main soit avec des CI/CD, pour les partager avec vous.
 
+- [x] Wheel pour Python3.12.6 pour Linux x86_64
+- [ ] Wheel pour Python3.12.6 pour Linux aarch64 (RB5 ou RPI)
+- [ ] Wheel pour Python3.12.6 et Windows x86_64
+- [ ] Wheel pour Python3.12.6 et MacOS aarch64
+- [ ] Wheel pour Python3.12.6 et MacOS x86_64
+
+Ensuite le fichier `pyproject.toml` se charge d'installer la bonne wheel en fonction de la plateforme :
+
+```toml
 [tool.uv.sources]
 pyrealsense2 = [
     { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'x86_64'" },
@@ -32,7 +25,4 @@ pyrealsense2 = [
 
     { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system != 'Darwin' and platform_system != 'Linux' and platform_system != 'Windows'" },
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+```
