@@ -7,9 +7,8 @@ Donc nous regroupons ici les wheels, que nous avons build soit à la main soit a
 
 - [x] Wheel pour Python3.12.6 pour Linux x86_64
 - [ ] Wheel pour Python3.12.6 pour Linux aarch64 (RB5 ou RPI)
-- [ ] Wheel pour Python3.12.6 et Windows x86_64
+- [x] Wheel pour Python3.12.6 et Windows x86_64
 - [ ] Wheel pour Python3.12.6 et MacOS aarch64
-- [ ] Wheel pour Python3.12.6 et MacOS x86_64
 
 Ensuite le fichier `pyproject.toml` se charge d'installer la bonne wheel en fonction de la plateforme :
 

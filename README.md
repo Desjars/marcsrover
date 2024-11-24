@@ -1,4 +1,4 @@
-# marcsrover
+# MarCSRover : la plateforme de développement pour les véhicules autonomes 100% Python 3.12
 
 Marcs Rover est un projet du pôle projet Véhicule Autonome de CentraleSupélec. Nous utilisons pour ce projet un ordinateur embarqué
 de chez Qualcomm, le RB5. Ce projet est un projet de recherche et développement, et a pour but de développer un véhicule autonome
@@ -6,6 +6,15 @@ capable de se déplacer dans un environnement urbain et de fournir une véritabl
 facilement utilisable et modifiable.
 
 Nous tenons à remercier Qualcomm pour leur soutien et leur aide dans ce projet.
+
+# Modernité
+
+Nous avons voulu proposer une plateforme de développement facile et moderne : tout se fait en Python 3.12, avec un outil de gestion
+(`uv`), un framework de communication IPC (`zenoh`) qui permet de développer la plateforme sous la forme d'un graph de tâches.
+
+J'ai également (Enzo Le Van) déployé un serveur de CI/CD pour construire les wheels de dépendances pour Python 3.12, et les partager
+sur ce repository (pour `pyrealsense2` notamment). Cela permettra à n'importe qui d'avoir sur son ordinateur tout ce qu'il faut pour développer,
+que ce soit sur Linux, Windows, MacOS (sauf MacOS x86_64) y compris sur la carte RB5.
 
 # Documentation
 

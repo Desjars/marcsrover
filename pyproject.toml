@@ -18,19 +18,19 @@ marcsrover-host = "marcsrover:main_host"
 marcsrover-car = "marcsrover:main_car"
 
 [project.optional-dependencies]
-host = ["dearpygui==2.0.0", "pygame==2.6.1", "pyrealsense2==2.55.1"]
-car = ["dynamixel-sdk==3.7.31", "pyrplidar==0.1.2"]
+host = ["dearpygui==2.0.0", "pygame==2.6.1"]
+car = ["dynamixel-sdk==3.7.31", "pyrplidar==0.1.2", "pyrealsense2==2.55.1"]
 
 [tool.uv.sources]
 pyrealsense2 = [
     { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'x86_64'" },
-    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine == 'aarch64'" },
-    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Linux' and platform_machine != 'aarch64' and platform_machine != 'x86_64'" },
-    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Darwin' and platform_machine == 'aarch64'" },
-    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system == 'Darwin' and platform_machine != 'aarch64'" },
-    { path = "pyrealsense2-2.55.1-cp312-cp312-win_amd64.whl", marker = "platform_system == 'Windows'" },
+    { path = "", marker = "platform_system == 'Linux' and platform_machine == 'aarch64'" },
+    { path = "", marker = "platform_system == 'Linux' and platform_machine != 'aarch64' and platform_machine != 'x86_64'" },
+    { path = "", marker = "platform_system == 'Darwin' and platform_machine == 'aarch64'" },
+    { path = "", marker = "platform_system == 'Darwin' and platform_machine != 'aarch64'" },
+    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-win_amd64.whl", marker = "platform_system == 'Windows'" },
 
-    { path = "pyrealsense2/pyrealsense2-2.55.1-cp312-cp312-linux_x86_64.whl", marker = "platform_system != 'Darwin' and platform_system != 'Linux' and platform_system != 'Windows'" },
+    { path = "", marker = "platform_system != 'Darwin' and platform_system != 'Linux' and platform_system != 'Windows'" },
 ]
 
 [build-system]

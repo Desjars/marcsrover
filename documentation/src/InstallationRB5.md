@@ -39,6 +39,8 @@ au cas où voici une commande exemple qui build pyrealsense2 pour python3.12 sur
 cmake .. -DBUILD_PYTHON_BINDINGS=bool:true -DPYTHON_EXECUTABLE=/home/enzo/Documents/marcsrover/.venv/bin/python  -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DPYTHON_INCLUDE_DIR=/home/enzo/Documents/marcsrover/.venv/include -DPYTHON_LIBRARY=/home/enzo/.local/share/uv/python/cpython-3.12.6-linux-x86_64-gnu/lib/libpython3.12.so -DBUILD_SHARED_LIBS=false
 ```
 
+Se fier aux CI/CD Github Actions pour voir comment les wheels sont build: [ici](https://github.com/Hennzau/librealsense)
+
 Il est indispensable d'installer les drivers de la IntelRealSenseD435i pour pouvoir utiliser la caméra. Passez cette section
 si vous ne voulez pas utiliser cette caméra.
 
