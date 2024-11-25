@@ -50,10 +50,10 @@ class Node:
 
             with dpg.texture_registry():
                 dpg.add_raw_texture(
-                    640, 480, [], tag="realsense-rgb", format=dpg.mvFormat_Float_rgb
+                    640, 480, [], tag="realsense-rgb", format=dpg.mvFormat_Float_rgba
                 )
                 dpg.add_raw_texture(
-                    640, 480, [], tag="realsense-depth", format=dpg.mvFormat_Float_rgb
+                    640, 480, [], tag="realsense-depth", format=dpg.mvFormat_Float_rgba
                 )
 
             with dpg.window(
@@ -131,8 +131,11 @@ class Node:
         realsense: D435I = D435I.deserialize(sample.payload.to_bytes())
         rgb = np.frombuffer(bytes(realsense.rgb), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2RGBA)
+
         depth = np.frombuffer(bytes(realsense.depth), dtype=np.uint8)
         depth = cv2.imdecode(depth, cv2.IMREAD_COLOR)
+        depth = cv2.cvtColor(depth, cv2.COLOR_RGB2RGBA)
 
         data = np.flip(rgb, 2)
         data = data.ravel()
