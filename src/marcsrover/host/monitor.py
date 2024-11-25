@@ -141,8 +141,7 @@ class Node:
         texture_data = np.true_divide(data, 255.0)
 
         try:
-            print(texture_data.shape)
-            # dpg.set_value("realsense-rgb", texture_data)
+            dpg.set_value("realsense-rgb", texture_data)
         except:
             print("ERROR")
 
@@ -153,8 +152,7 @@ class Node:
         texture_data = np.true_divide(data, 255.0)
 
         try:
-            print(texture_data.shape)
-            # dpg.set_value("realsense-depth", texture_data)
+            dpg.set_value("realsense-depth", texture_data)
         except:
             print("ERROR")
 

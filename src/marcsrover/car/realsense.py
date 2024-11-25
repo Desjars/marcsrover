@@ -32,20 +32,17 @@ class Node:
         self.pipeline.start(config)
 
     def get_frame(self) -> Tuple[bool, cv2.UMat | None, cv2.UMat | None]:
-        try:
-            frames = self.pipeline.wait_for_frames()
-            depth_frame = frames.get_depth_frame()
-            color_frame = frames.get_color_frame()
+        frames = self.pipeline.wait_for_frames()
+        depth_frame = frames.get_depth_frame()
+        color_frame = frames.get_color_frame()
 
-            depth_image = np.asanyarray(depth_frame.get_data())
-            color_image = np.asanyarray(color_frame.get_data())
+        depth_image = np.asanyarray(depth_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
 
-            if not depth_frame or not color_frame:
-                return False, None, None
-
-            return True, depth_image, color_image
-        except:
+        if not depth_frame or not color_frame:
             return False, None, None
+
+        return True, depth_image, color_image
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -89,9 +86,9 @@ class Node:
             except KeyboardInterrupt:
                 print("Realsense received KeyboardInterrupt")
 
+            self.pipeline.stop()
             realsense.undeclare()
             session.close()
-            self.pipeline.stop()
 
         print("Realsense node stopped")
 
