@@ -116,9 +116,10 @@ class Node:
         image: OpenCVCamera = OpenCVCamera.deserialize(sample.payload.to_bytes())
         rgb = np.frombuffer(bytes(image.frame), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+        rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2RGBA)
 
-        data = np.flip(rgb, 2)
-        data = data.ravel()
+        data = rgb.ravel()
         data = np.asarray(data, dtype="f")
 
         texture_data = np.true_divide(data, 255.0)
@@ -131,14 +132,15 @@ class Node:
         realsense: D435I = D435I.deserialize(sample.payload.to_bytes())
         rgb = np.frombuffer(bytes(realsense.rgb), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2RGBA)
 
         depth = np.frombuffer(bytes(realsense.depth), dtype=np.uint8)
         depth = cv2.imdecode(depth, cv2.IMREAD_COLOR)
+        depth = cv2.cvtColor(depth, cv2.COLOR_RGB2BGR)
         depth = cv2.cvtColor(depth, cv2.COLOR_RGB2RGBA)
 
-        data = np.flip(rgb, 2)
-        data = data.ravel()
+        data = rgb.ravel()
         data = np.asarray(data, dtype="f")
 
         texture_data = np.true_divide(data, 255.0)
@@ -148,8 +150,7 @@ class Node:
         except:
             print("ERROR")
 
-        data = np.flip(depth, 2)
-        data = data.ravel()
+        data = depth.ravel()
         data = np.asarray(data, dtype="f")
 
         texture_data = np.true_divide(data, 255.0)
