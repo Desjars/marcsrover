@@ -49,9 +49,9 @@ def run(address_to_listen_on) -> None:
             processes.append(
                 subprocess.Popen(["uv", "run", "src/marcsrover/car/realsense.py"])
             )
-            processes.append(
-                subprocess.Popen(["uv", "run", "src/marcsrover/car/rover.py"])
-            )
+            # processes.append(
+            #     subprocess.Popen(["uv", "run", "src/marcsrover/car/rover.py"])
+            # )
 
             print("Processes started. Press CTRL+C to terminate.")
 

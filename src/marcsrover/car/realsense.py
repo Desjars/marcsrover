@@ -58,8 +58,8 @@ class Node:
                     if color_frame is None or depth_frame is None:
                         continue
 
-                    color_frame = cv2.resize(color_frame, (160, 120))
-                    depth_frame = cv2.resize(depth_frame, (160, 120))
+                    color_frame = cv2.resize(color_frame, (320, 240))
+                    depth_frame = cv2.resize(depth_frame, (320, 240))
 
                     color_frame = cv2.imencode(
                         ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 40]
@@ -76,8 +76,8 @@ class Node:
                     bytes = D435I(
                         rgb=color_frame,
                         depth=depth_frame,
-                        width=160,
-                        height=120,
+                        width=320,
+                        height=240,
                         depth_factor=max / 255.0,
                     ).serialize()
 

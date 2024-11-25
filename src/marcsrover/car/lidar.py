@@ -75,6 +75,9 @@ class Node:
 
             session.close()
 
+            self.lidar.set_motor_pwm(0)
+            self.lidar.disconnect()
+
         print("LiDAR node stopped")
 
 

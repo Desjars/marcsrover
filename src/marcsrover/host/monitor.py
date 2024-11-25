@@ -1,6 +1,7 @@
 import zenoh
 import json
 import cv2
+import time
 
 import numpy as np
 import dearpygui.dearpygui as dpg
@@ -82,8 +83,8 @@ class Node:
                     label="Speed",
                     tag="Speed",
                     width=150,
-                    min_value=-4000,
-                    max_value=4000,
+                    min_value=-2000,
+                    max_value=2000,
                     default_value=0,
                 )
                 dpg.add_slider_float(
@@ -98,6 +99,7 @@ class Node:
             try:
                 while dpg.is_dearpygui_running():
                     dpg.render_dearpygui_frame()
+                    time.sleep(1 / 30)
             except KeyboardInterrupt:
                 print("Monitor received KeyboardInterrupt")
 
