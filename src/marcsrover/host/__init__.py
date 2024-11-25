@@ -1,15 +1,27 @@
 import zenoh
-import signal
 import json
+import subprocess
+import signal
+import sys
 
-import threading
+processes = []
 
-# from marcsrover.host.joystick_controller import launch_node as launch_joystick_node
-from marcsrover.host.monitor import launch_node as launch_monitor_node
+
+def terminate_processes():
+    """Termine tous les processus enfants."""
+    for process in processes:
+        try:
+            process.terminate()
+        except subprocess.TimeoutExpired:
+            process.kill()
 
 
 def signal_handler(sig, frame):
-    print("Interrupted")
+    print("Termination signal received. Shutting down processes...")
+
+    terminate_processes()
+
+    sys.exit(0)
 
 
 def run(address_to_connect_to) -> None:
@@ -18,11 +30,7 @@ def run(address_to_connect_to) -> None:
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
     router_config.insert_json5("listen/endpoints", json.dumps(["udp/127.0.0.1:7447"]))
-
-    # === HERE, CONNECT TO THE ZENOH ROUTER RUNNING ON THE ROVER ===
-    #
-    # The following code connects to the Zenoh router running on the rover.
-    #
+    router_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
     if address_to_connect_to is not None:
         router_config.insert_json5(
             "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7445"])
@@ -31,28 +39,24 @@ def run(address_to_connect_to) -> None:
     with zenoh.open(router_config) as session:
         signal.signal(signal.SIGINT, signal_handler)
 
-        # === Launch all nodes ===
-        #
-        # The following code launches all the nodes in the system.
+        try:
+            processes.append(
+                subprocess.Popen(["uv", "run", "src/marcsrover/host/monitor.py"])
+            )
+            processes.append(
+                subprocess.Popen(
+                    ["uv", "run", "src/marcsrover/common/opencv_camera.py"]
+                )
+            )
 
-        stop_event = threading.Event()
+            print("Processes started. Press CTRL+C to terminate.")
 
-        # joystick = threading.Thread(target=launch_joystick_node, args=(stop_event,))
-        # joystick.start()
+            for process in processes:
+                process.wait()
 
-        monitor = threading.Thread(target=launch_monitor_node, args=(stop_event,))
-        monitor.start()
-
-        print("Press Ctrl+C to quit")
-        signal.pause()
-
-        # === End nodes ===
-        #
-        # Interrupt all the nodes in the system.
-
-        stop_event.set()
-
-        # joystick.join()
-        monitor.join()
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            terminate_processes()
 
         session.close()

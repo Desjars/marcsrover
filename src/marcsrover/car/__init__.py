@@ -2,16 +2,27 @@ import zenoh
 import signal
 import json
 
-import threading
+import subprocess
+import sys
 
-from marcsrover.car.rover import launch_node as launch_rover_node
+processes = []
 
-# from marcsrover.car.lidar import launch_node as launch_lidar_node
-from marcsrover.car.realsense import launch_node as launch_realsense_node
+
+def terminate_processes():
+    """Termine tous les processus enfants."""
+    for process in processes:
+        try:
+            process.terminate()
+        except subprocess.TimeoutExpired:
+            process.kill()
 
 
 def signal_handler(sig, frame):
-    print("Interrupted")
+    print("Termination signal received. Shutting down processes...")
+
+    terminate_processes()
+
+    sys.exit(0)
 
 
 def run(address_to_listen_on) -> None:
@@ -29,32 +40,25 @@ def run(address_to_listen_on) -> None:
     with zenoh.open(router_config) as session:
         signal.signal(signal.SIGINT, signal_handler)
 
-        # === Launch all nodes ===
-        #
-        # The following code launches all the nodes in the system.
+        try:
+            processes.append(
+                subprocess.Popen(["uv", "run", "src/marcsrover/car/lidar.py"])
+            )
+            processes.append(
+                subprocess.Popen(["uv", "run", "src/marcsrover/car/realsense.py"])
+            )
+            processes.append(
+                subprocess.Popen(["uv", "run", "src/marcsrover/car/rover.py"])
+            )
 
-        stop_event = threading.Event()
+            print("Processes started. Press CTRL+C to terminate.")
 
-        rover = threading.Thread(target=launch_rover_node, args=(stop_event,))
-        rover.start()
+            for process in processes:
+                process.wait()
 
-        # lidar = threading.Thread(target=launch_lidar_node, args=(stop_event,))
-        # lidar.start()
-
-        realsense = threading.Thread(target=launch_realsense_node, args=(stop_event,))
-        realsense.start()
-
-        print("Press Ctrl+C to quit")
-        signal.pause()
-
-        # === End nodes ===
-        #
-        # Interrupt all the nodes in the system.
-
-        stop_event.set()
-
-        # lidar.join()
-        rover.join()
-        realsense.join()
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            terminate_processes()
 
         session.close()

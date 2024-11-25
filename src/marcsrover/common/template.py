@@ -1,5 +1,4 @@
 import zenoh
-import threading
 import json
 
 
@@ -13,18 +12,20 @@ class Node:
         self.zenoh_config.insert_json5(
             "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
         )
+        self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
 
-    def run(self, stop_event: threading.Event) -> None:
+    def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
-            while not stop_event.is_set():
-                pass
+            try:
+                while True:
+                    pass
+            except KeyboardInterrupt:
+                print("Received KeyboardInterrupt")
 
             session.close()
 
-        print("Joystick node stopped")
+        print("Node stopped")
 
 
-def launch_node(stop_event: threading.Event) -> None:
-    node = Node()
-
-    node.run(stop_event)
+node = Node()
+node.run()

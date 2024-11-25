@@ -1,5 +1,4 @@
 import zenoh
-import threading
 import json
 import pygame
 
@@ -54,49 +53,51 @@ class Node:
         for i in range(self.joy.get_numhats()):
             self.hat.append(self.joy.get_hat(i))
 
-    def run(self, stop_event: threading.Event) -> None:
+    def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             rover_control = session.declare_publisher("marcsrover/control")
+            try:
+                while True:
+                    events = pygame.event.get()
 
-            while not stop_event.is_set():
-                events = pygame.event.get()
+                    num_events = len(events)
+                    if num_events == 0:
+                        continue
 
-                num_events = len(events)
-                if num_events == 0:
-                    continue
+                    for event in events:
+                        if event.type == pygame.QUIT:
+                            break
+                        elif event.type == JOYAXISMOTION:
+                            self.axis[event.axis] = event.value
+                        elif event.type == JOYBALLMOTION:
+                            self.ball[event.ball] = event.rel
+                        elif event.type == JOYHATMOTION:
+                            self.hat[event.hat] = event.value
+                        elif event.type == JOYBUTTONUP:
+                            self.button[event.button] = 0
+                        elif event.type == JOYBUTTONDOWN:
+                            self.button[event.button] = 1
 
-                for event in events:
-                    if event.type == pygame.QUIT:
-                        break
-                    elif event.type == JOYAXISMOTION:
-                        self.axis[event.axis] = event.value
-                    elif event.type == JOYBALLMOTION:
-                        self.ball[event.ball] = event.rel
-                    elif event.type == JOYHATMOTION:
-                        self.hat[event.hat] = event.value
-                    elif event.type == JOYBUTTONUP:
-                        self.button[event.button] = 0
-                    elif event.type == JOYBUTTONDOWN:
-                        self.button[event.button] = 1
+                    steering_x = self.axis[1]
+                    steering_y = self.axis[0]
 
-                steering_x = self.axis[1]
-                steering_y = self.axis[0]
+                    steering = int(np.arctan2(steering_y, 1 - steering_x) * 180 / np.pi)
 
-                steering = int(np.arctan2(steering_y, 1 - steering_x) * 180 / np.pi)
+                    dec = self.button[6]
+                    inc = self.button[7]
 
-                dec = self.button[6]
-                inc = self.button[7]
+                    if dec and self.gear >= 2:
+                        self.gear -= 1
+                    if inc and self.gear <= 9:
+                        self.gear += 1
 
-                if dec and self.gear >= 2:
-                    self.gear -= 1
-                if inc and self.gear <= 9:
-                    self.gear += 1
+                    speed = int(-self.axis[3] * (self.gear * 200))
 
-                speed = int(-self.axis[3] * (self.gear * 200))
+                    bytes = RoverControl(speed, steering).serialize()
 
-                bytes = RoverControl(speed, steering).serialize()
-
-                rover_control.put(bytes)
+                    rover_control.put(bytes)
+            except KeyboardInterrupt:
+                print("Joystick node received KeyboardInterrupt")
 
             rover_control.undeclare()
 
@@ -105,7 +106,5 @@ class Node:
         print("Joystick node stopped")
 
 
-def launch_node(stop_event: threading.Event) -> None:
-    node = Node()
-
-    node.run(stop_event)
+node = Node()
+node.run()

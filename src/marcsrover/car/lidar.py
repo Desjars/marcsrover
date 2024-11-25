@@ -1,5 +1,4 @@
 import zenoh
-import threading
 import json
 import time
 
@@ -18,6 +17,7 @@ class Node:
         self.zenoh_config.insert_json5(
             "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
         )
+        self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
 
         self.lidar = PyRPlidar()
         self.lidar.connect("/dev/ttyUSB0", 256000, 3)
@@ -35,7 +35,7 @@ class Node:
         self.lidar.connect("/dev/ttyUSB0", 256000, 3)
         self.lidar.set_motor_pwm(500)
 
-    def run(self, stop_event: threading.Event) -> None:
+    def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             time.sleep(2)  # Wait for the lidar to start
             scan_generator = self.lidar.start_scan()
@@ -46,27 +46,29 @@ class Node:
 
             lidar_publisher = session.declare_publisher("marcsrover/lidar")
 
-            for count, scan in enumerate(scan_generator()):
-                if stop_event.is_set():
-                    break
+            try:
+                for count, scan in enumerate(scan_generator()):
+                    quality = scan.quality
+                    angle = scan.angle
+                    distance = scan.distance
 
-                quality = scan.quality
-                angle = scan.angle
-                distance = scan.distance
+                    if (
+                        angle < 1
+                    ):  # When the angle is less than 1, we have a full tour scan
+                        bytes = LidarScan(
+                            qualities=qualities, angles=angles, distances=distances
+                        ).serialize()
+                        lidar_publisher.put(bytes)
 
-                if angle < 1:  # When the angle is less than 1, we have a full tour scan
-                    bytes = LidarScan(
-                        qualities=qualities, angles=angles, distances=distances
-                    ).serialize()
-                    lidar_publisher.put(bytes)
+                        qualities = []
+                        angles = []
+                        distances = []
 
-                    qualities = []
-                    angles = []
-                    distances = []
-
-                qualities.append(quality)
-                angles.append(angle)
-                distances.append(distance)
+                    qualities.append(quality)
+                    angles.append(angle)
+                    distances.append(distance)
+            except KeyboardInterrupt:
+                print("LiDAR Received KeyboardInterrupt")
 
             lidar_publisher.undeclare()
 
@@ -75,7 +77,5 @@ class Node:
         print("LiDAR node stopped")
 
 
-def launch_node(stop_event: threading.Event) -> None:
-    node = Node()
-
-    node.run(stop_event)
+node = Node()
+node.run()

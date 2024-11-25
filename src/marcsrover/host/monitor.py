@@ -1,5 +1,4 @@
 import zenoh
-import threading
 import json
 import cv2
 
@@ -19,6 +18,7 @@ class Node:
         self.zenoh_config.insert_json5(
             "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
         )
+        self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
 
         dpg.create_context()
         dpg.create_viewport(
@@ -30,7 +30,7 @@ class Node:
         )
         dpg.setup_dearpygui()
 
-    def run(self, stop_event: threading.Event) -> None:
+    def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             realsense = session.declare_subscriber(
                 "marcsrover/realsense", self.realsense_callback
@@ -39,6 +39,10 @@ class Node:
             lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
             control = session.declare_subscriber(
                 "marcsrover/control", self.control_callback
+            )
+
+            camera = session.declare_subscriber(
+                "marcsrover/opencv-camera", self.opencv_camera_callback
             )
 
             dpg.show_viewport()
@@ -90,18 +94,22 @@ class Node:
                     default_value=0,
                 )
 
-            while not stop_event.is_set() and dpg.is_dearpygui_running():
-                dpg.render_dearpygui_frame()
+            try:
+                while dpg.is_dearpygui_running():
+                    dpg.render_dearpygui_frame()
+            except KeyboardInterrupt:
+                print("Monitor received KeyboardInterrupt")
 
             dpg.destroy_context()
 
             lidar.undeclare()
             control.undeclare()
             realsense.undeclare()
+            camera.undeclare()
 
             session.close()
 
-        print("Monitor node stopped")
+        print("Monitor stopped")
 
     def opencv_camera_callback(self, sample: zenoh.Sample) -> None:
         image: OpenCVCamera = OpenCVCamera.deserialize(sample.payload.to_bytes())
@@ -114,7 +122,7 @@ class Node:
 
         texture_data = np.true_divide(data, 255.0)
         try:
-            dpg.set_value("opencv-camera", texture_data)
+            dpg.set_value("realsense-rgb", texture_data)
         except:
             print("ERROR")
 
@@ -200,7 +208,7 @@ class Node:
             print("ERROR")
 
     def control_callback(self, sample):
-        motor = RoverControl.deserialize(sample.value.payload)
+        motor = RoverControl.deserialize(sample.payload.to_bytes())
 
         try:
             dpg.set_value("Steering", motor.steering)
@@ -209,7 +217,5 @@ class Node:
             print("ERROR")
 
 
-def launch_node(stop_event: threading.Event) -> None:
-    node = Node()
-
-    node.run(stop_event)
+node = Node()
+node.run()

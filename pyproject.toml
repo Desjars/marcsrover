@@ -14,8 +14,8 @@ dependencies = [
 ]
 
 [project.scripts]
-marcsrover-host = "marcsrover:main_host"
-marcsrover-car = "marcsrover:main_car"
+host = "marcsrover:main_host"
+car = "marcsrover:main_car"
 
 [project.optional-dependencies]
 host = ["dearpygui==2.0.0", "pygame==2.6.1"]
