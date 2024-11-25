@@ -26,7 +26,7 @@ class Node:
             "connect/endpoints", json.dumps(["udp/127.0.0.1:7447"])
         )
         self.zenoh_config.insert_json5(
-            "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
+            "listen/endpoints", json.dumps(["udp/0.0.0.0:0"])
         )
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
