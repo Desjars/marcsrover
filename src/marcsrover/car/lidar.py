@@ -13,7 +13,7 @@ class Node:
         self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
         self.zenoh_config.insert_json5(
-            "connect/endpoints", json.dumps(["udp/127.0.0.1:7447"])
+            "connect/endpoints", json.dumps(["udp/127.0.0.1:7446"])
         )
         self.zenoh_config.insert_json5(
             "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])

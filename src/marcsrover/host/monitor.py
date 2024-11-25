@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import dearpygui.dearpygui as dpg
 
-from marcsrover.message import LidarScan, OpenCVCamera, RoverControl
+from marcsrover.message import D435I, LidarScan, OpenCVCamera, RoverControl
 
 
 class Node:
@@ -32,8 +32,8 @@ class Node:
 
     def run(self, stop_event: threading.Event) -> None:
         with zenoh.open(self.zenoh_config) as session:
-            camera = session.declare_subscriber(
-                "marcsrover/opencv-camera", self.opencv_camera_callback
+            realsense = session.declare_subscriber(
+                "marcsrover/realsense", self.realsense_callback
             )
 
             lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
@@ -45,11 +45,17 @@ class Node:
 
             with dpg.texture_registry():
                 dpg.add_raw_texture(
-                    640, 480, [], tag="opencv-camera", format=dpg.mvFormat_Float_rgb
+                    640, 480, [], tag="realsense-rgb", format=dpg.mvFormat_Float_rgb
+                )
+                dpg.add_raw_texture(
+                    640, 480, [], tag="realsense-depth", format=dpg.mvFormat_Float_rgb
                 )
 
-            with dpg.window(label="OpenCV Camera", width=1280, height=480, pos=(0, 0)):
-                dpg.add_image("opencv-camera", pos=(0, 0))
+            with dpg.window(
+                label="Realsense Camera", width=1280, height=480, pos=(0, 0)
+            ):
+                dpg.add_image("realsense-rgb", pos=(0, 0))
+                dpg.add_image("realsense-depth", pos=(640, 0))
 
             with dpg.window(
                 label="LiDAR", tag="LiDAR", width=640, height=480, pos=(0, 480)
@@ -89,9 +95,9 @@ class Node:
 
             dpg.destroy_context()
 
-            camera.undeclare()
             lidar.undeclare()
             control.undeclare()
+            realsense.undeclare()
 
             session.close()
 
@@ -109,6 +115,35 @@ class Node:
         texture_data = np.true_divide(data, 255.0)
         try:
             dpg.set_value("opencv-camera", texture_data)
+        except:
+            print("ERROR")
+
+    def realsense_callback(self, sample: zenoh.Sample) -> None:
+        realsense: D435I = D435I.deserialize(sample.payload.to_bytes())
+        rgb = np.frombuffer(bytes(realsense.rgb), dtype=np.uint8)
+        rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        depth = np.frombuffer(bytes(realsense.depth), dtype=np.uint8)
+        depth = cv2.imdecode(depth, cv2.IMREAD_COLOR)
+
+        data = np.flip(rgb, 2)
+        data = data.ravel()
+        data = np.asarray(data, dtype="f")
+
+        texture_data = np.true_divide(data, 255.0)
+
+        try:
+            dpg.set_value("realsense-rgb", texture_data)
+        except:
+            print("ERROR")
+
+        data = np.flip(depth, 2)
+        data = data.ravel()
+        data = np.asarray(data, dtype="f")
+
+        texture_data = np.true_divide(data, 255.0)
+
+        try:
+            dpg.set_value("realsense-depth", texture_data)
         except:
             print("ERROR")
 

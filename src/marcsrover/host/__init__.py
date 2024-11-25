@@ -6,7 +6,6 @@ import threading
 
 # from marcsrover.host.joystick_controller import launch_node as launch_joystick_node
 from marcsrover.host.monitor import launch_node as launch_monitor_node
-from marcsrover.common.opencv_camera import launch_node as launch_camera_node
 
 
 def signal_handler(sig, frame):
@@ -26,7 +25,7 @@ def run(address_to_connect_to) -> None:
     #
     if address_to_connect_to is not None:
         router_config.insert_json5(
-            "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7447"])
+            "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7445"])
         )
 
     with zenoh.open(router_config) as session:
@@ -44,9 +43,6 @@ def run(address_to_connect_to) -> None:
         monitor = threading.Thread(target=launch_monitor_node, args=(stop_event,))
         monitor.start()
 
-        opencv_camera = threading.Thread(target=launch_camera_node, args=(stop_event,))
-        opencv_camera.start()
-
         print("Press Ctrl+C to quit")
         signal.pause()
 
@@ -56,7 +52,6 @@ def run(address_to_connect_to) -> None:
 
         stop_event.set()
 
-        opencv_camera.join()
         # joystick.join()
         monitor.join()
 
