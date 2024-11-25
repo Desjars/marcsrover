@@ -116,6 +116,7 @@ class Node:
         image: OpenCVCamera = OpenCVCamera.deserialize(sample.payload.to_bytes())
         rgb = np.frombuffer(bytes(image.frame), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        rgb = cv2.resize(rgb, (640, 480))
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2RGBA)
 
@@ -132,11 +133,13 @@ class Node:
         realsense: D435I = D435I.deserialize(sample.payload.to_bytes())
         rgb = np.frombuffer(bytes(realsense.rgb), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
+        rgb = cv2.resize(rgb, (640, 480))
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2RGBA)
 
         depth = np.frombuffer(bytes(realsense.depth), dtype=np.uint8)
         depth = cv2.imdecode(depth, cv2.IMREAD_COLOR)
+        depth = cv2.resize(depth, (640, 480))
         depth = cv2.cvtColor(depth, cv2.COLOR_RGB2BGR)
         depth = cv2.cvtColor(depth, cv2.COLOR_RGB2RGBA)
 

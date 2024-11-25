@@ -25,8 +25,8 @@ class Node:
         self.pipeline = rs.pipeline()
         config = rs.config()
 
-        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
+        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 15)
 
         # Start streaming
         self.pipeline.start(config)
@@ -58,27 +58,26 @@ class Node:
                     if color_frame is None or depth_frame is None:
                         continue
 
-                    color_frame = cv2.resize(color_frame, (640, 480))
+                    color_frame = cv2.resize(color_frame, (160, 120))
+                    depth_frame = cv2.resize(depth_frame, (160, 120))
 
                     color_frame = cv2.imencode(
-                        ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+                        ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 40]
                     )[1].tobytes()
-
-                    depth_frame = cv2.resize(depth_frame, (640, 480))
 
                     min, max, _, _ = cv2.minMaxLoc(depth_frame)
                     cv2.normalize(
                         depth_frame, depth_frame, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1
                     )
                     depth_frame = cv2.imencode(
-                        ".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+                        ".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 40]
                     )[1].tobytes()
 
                     bytes = D435I(
                         rgb=color_frame,
                         depth=depth_frame,
-                        width=640,
-                        height=480,
+                        width=160,
+                        height=120,
                         depth_factor=max / 255.0,
                     ).serialize()
 
