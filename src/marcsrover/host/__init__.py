@@ -45,11 +45,11 @@ def run(address_to_connect_to) -> None:
             processes.append(
                 subprocess.Popen(["uv", "run", "src/marcsrover/host/monitor.py"])
             )
-            processes.append(
-                subprocess.Popen(
-                    ["uv", "run", "src/marcsrover/common/opencv_camera.py"]
-                )
-            )
+            # processes.append(
+            #     subprocess.Popen(
+            #         ["uv", "run", "src/marcsrover/common/opencv_camera.py"]
+            #     )
+            # )
 
             print("Processes started. Press CTRL+C to terminate.")
 
