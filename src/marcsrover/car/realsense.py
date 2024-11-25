@@ -61,9 +61,13 @@ class Node:
                     if color_frame is None or depth_frame is None:
                         continue
 
+                    color_frame = cv2.resize(color_frame, (640, 480))
+
                     color_frame = cv2.imencode(
                         ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
                     )[1].tobytes()
+
+                    depth_frame = cv2.resize(depth_frame, (640, 480))
 
                     min, max, _, _ = cv2.minMaxLoc(depth_frame)
                     cv2.normalize(
