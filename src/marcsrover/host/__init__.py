@@ -29,8 +29,10 @@ def run(address_to_connect_to) -> None:
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
-    router_config.insert_json5("listen/endpoints", json.dumps(["udp/127.0.0.1:7447"]))
+    router_config.insert_json5("listen/endpoints", json.dumps(["udp/0.0.0.0:7447"]))
     router_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
+    router_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
+
     if address_to_connect_to is not None:
         router_config.insert_json5(
             "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7445"])

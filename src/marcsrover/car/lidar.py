@@ -18,6 +18,7 @@ class Node:
             "listen/endpoints", json.dumps(["udp/127.0.0.1:0"])
         )
         self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
+        self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
         self.lidar = PyRPlidar()
         self.lidar.connect("/dev/ttyUSB0", 256000, 3)

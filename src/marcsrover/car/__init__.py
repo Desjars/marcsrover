@@ -30,12 +30,14 @@ def run(address_to_listen_on) -> None:
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
-    endpoints = ["udp/127.0.0.1:7446"]
+    endpoints = ["udp/0.0.0.0:7446"]
 
     if address_to_listen_on is not None:
         endpoints.append(f"udp/{address_to_listen_on}:7445")
 
     router_config.insert_json5("listen/endpoints", json.dumps(endpoints))
+    router_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
+    router_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
 
     with zenoh.open(router_config) as session:
         signal.signal(signal.SIGINT, signal_handler)
