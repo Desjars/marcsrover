@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+BreezySLAM
 # Distribution / packaging
 .Python
 build/
