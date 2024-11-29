@@ -44,8 +44,8 @@ def run(address_to_listen_on) -> None:
 
         try:
             # processes.append(subprocess.Popen(["uv", "run", "lidar"]))
-            # processes.append(subprocess.Popen(["uv", "run", "realsense"]))
-            processes.append(subprocess.Popen(["uv", "run", "rover"]))
+            processes.append(subprocess.Popen(["uv", "run", "realsense"]))
+            # processes.append(subprocess.Popen(["uv", "run", "rover"]))
 
             print("Processes started. Press CTRL+C to terminate.")
 

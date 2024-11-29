@@ -11,7 +11,7 @@ from controller import Lidar, Camera, RangeFinder
 from dataclasses import dataclass
 
 from pycdr2 import IdlStruct
-from pycdr2.types import float32,int32
+from pycdr2.types import float32, int32
 from typing import List
 
 
@@ -25,6 +25,7 @@ class LidarScan(IdlStruct):
     qualities: List[float32]
     angles: List[float32]
     distances: List[float32]
+
 
 @dataclass
 class RoverControl(IdlStruct):
@@ -71,7 +72,9 @@ class Node:
             lidar = session.declare_publisher("marcsrover/lidar")
             camera = session.declare_publisher("marcsrover/opencv-camera")
 
-            control = session.declare_subscriber("marcsrover/control", self.control_callback)
+            control = session.declare_subscriber(
+                "marcsrover/control", self.control_callback
+            )
 
             try:
                 while self.driver.step() != -1:
@@ -126,6 +129,7 @@ class Node:
         self.steer = ((motor.steering + 90) * (16 - (-16)) / 180 + (-16)) * np.pi / 180
 
         self.mutex.release()
+
 
 def launch_node():
     node = Node()
