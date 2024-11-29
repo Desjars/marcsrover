@@ -2226,7 +2226,8 @@ Solid {
   }
 }
 Robot {
-  translation -2 -2 0.04
+  translation -2.000004177789582 -1.9999999999997038 0.0392897819816076
+  rotation -7.084586551923397e-08 -0.9999999999999976 -4.5935746478150556e-11 0.00010501014031503029
   children [
     Pose {
       translation 0.257 0.075 0
@@ -2234,12 +2235,14 @@ Robot {
       children [
         DEF LEFT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
+            position -4.855753018758736e-16
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
+            position -1.5487033700533098e-11
             axis 0 -1 0
             dampingConstant 5
           }
@@ -2377,6 +2380,8 @@ Robot {
                 }
                 physics Physics {
                 }
+                linearVelocity 3.307459837681705e-12 -2.7378035822779398e-15 1.0305639331567945e-10
+                angularVelocity -1.0090763504778215e-14 2.2648413969351985e-11 1.6569059186573221e-15
               }
             }
           }
@@ -2388,12 +2393,14 @@ Robot {
       children [
         DEF RIGHT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
+            position 4.870465077540563e-16
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
+            position -1.5494302289799197e-11
             axis 0 1 0
             dampingConstant 5
           }
@@ -2531,6 +2538,8 @@ Robot {
                 }
                 physics Physics {
                 }
+                linearVelocity 3.307571275726879e-12 2.6243671994624964e-15 1.0305639337390845e-10
+                angularVelocity -5.027551824882502e-15 2.2648663167091147e-11 1.6670884254470971e-15
               }
             }
           }
@@ -2543,6 +2552,7 @@ Robot {
       children [
         DEF LEFT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
+            position 1.5204976359150616e-11
             axis 0 -1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -2569,6 +2579,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
+                rotation 0 -1 0 0
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -2671,6 +2682,8 @@ Robot {
                 }
                 physics Physics {
                 }
+                linearVelocity -1.511393475747122e-12 -2.5702092992425323e-15 1.0879633535127871e-10
+                angularVelocity -3.5056181596816306e-17 2.226442554937329e-11 1.6649071876446049e-15
               }
             }
           }
@@ -2682,6 +2695,7 @@ Robot {
       children [
         DEF RIGHT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
+            position 1.5237097586033742e-11
             axis 0 1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -2708,6 +2722,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
+                rotation 0 1 0 0
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -2810,6 +2825,8 @@ Robot {
                 }
                 physics Physics {
                 }
+                linearVelocity -1.5112638994335111e-12 2.9120279088686185e-15 1.0879601231031398e-10
+                angularVelocity -1.5082651834782934e-14 2.226532215304216e-11 1.6860708429063628e-15
               }
             }
           }
@@ -2832,6 +2849,8 @@ Robot {
             }
           ]
           name "realsense_camera"
+          width 320
+          height 240
         }
         RangeFinder {
           translation 0.13 0 0.11
@@ -2839,6 +2858,9 @@ Robot {
             USE realsensebox
           ]
           name "realsense_depth"
+          width 320
+          height 240
+          maxRange 10
         }
         Accelerometer {
         }
@@ -2940,6 +2962,7 @@ Robot {
           defaultFrequency 12
           rotatingHead Solid {
             translation 0 0 -0.0314
+            rotation 0 0 -1 1.7090264035528404
             children [
               Shape {
                 appearance PBRAppearance {
@@ -3011,6 +3034,8 @@ Robot {
     mass 2.331
   }
   radarCrossSection 100
-  controller "controller_jaune"
+  controller "marcsrover"
   customData "0.257 0.15 0.15 0.04 0.04 700 5 E 0.0234 32 1 13800 150 0.1 0 0.25 3000 1000 2 4 -0.62 0.62 none "
+  linearVelocity 1.8288395075085077e-12 -2.731616720551465e-15 1.0623098449894778e-10
+  angularVelocity 5.500659096083455e-16 2.2456448118424244e-11 1.6647760046061213e-15
 }

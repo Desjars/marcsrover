@@ -45,6 +45,9 @@ def run(address_to_connect_to) -> None:
             processes.append(
                 subprocess.Popen(["uv", "run", "monitor"])
             )
+            processes.append(
+                subprocess.Popen(["uv", "run", "joystick-controller"])
+            )
 
             print("Processes started. Press CTRL+C to terminate.")
 

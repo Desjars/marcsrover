@@ -21,8 +21,8 @@ class Node:
         self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
 
         self.video_capture = cv2.VideoCapture("/dev/video0")
-        self.width = 160
-        self.height = 120
+        self.width = 320
+        self.height = 240
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
