@@ -43,12 +43,8 @@ def run(address_to_listen_on) -> None:
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            processes.append(
-                subprocess.Popen(["uv", "run", "lidar"])
-            )
-            processes.append(
-                subprocess.Popen(["uv", "run", "realsense"])
-            )
+            processes.append(subprocess.Popen(["uv", "run", "lidar"]))
+            processes.append(subprocess.Popen(["uv", "run", "realsense"]))
             # processes.append(
             #     subprocess.Popen(["uv", "run", "src/marcsrover/car/rover.py"])
             # )

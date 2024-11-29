@@ -42,12 +42,8 @@ def run(address_to_connect_to) -> None:
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            processes.append(
-                subprocess.Popen(["uv", "run", "monitor"])
-            )
-            processes.append(
-                subprocess.Popen(["uv", "run", "joystick-controller"])
-            )
+            processes.append(subprocess.Popen(["uv", "run", "monitor"]))
+            processes.append(subprocess.Popen(["uv", "run", "joystick-controller"]))
 
             print("Processes started. Press CTRL+C to terminate.")
 

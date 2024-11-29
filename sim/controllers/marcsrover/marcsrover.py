@@ -13,15 +13,18 @@ from pycdr2 import IdlStruct
 from pycdr2.types import float32
 from typing import List
 
+
 @dataclass
 class OpenCVCamera(IdlStruct):
     frame: bytes
+
 
 @dataclass
 class LidarScan(IdlStruct):
     qualities: List[float32]
     angles: List[float32]
     distances: List[float32]
+
 
 class Node:
     def __init__(self):
@@ -53,7 +56,6 @@ class Node:
         self.depth = RangeFinder("realsense_depth")
         self.depth.enable(sensor_time_step)
 
-
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             lidar = session.declare_publisher("marcsrover/lidar")
@@ -65,13 +67,17 @@ class Node:
                     lidar_data = [i * 1000 for i in lidar_data]
 
                     bytes = LidarScan(
-                        qualities=[], angles=[i for i in range (360)], distances=lidar_data
+                        qualities=[],
+                        angles=[i for i in range(360)],
+                        distances=lidar_data,
                     ).serialize()
 
                     lidar.put(bytes)
 
                     camera_data = self.camera.getImage()
-                    image = np.frombuffer(camera_data, dtype=np.uint8).reshape((240, 320, 4))
+                    image = np.frombuffer(camera_data, dtype=np.uint8).reshape(
+                        (240, 320, 4)
+                    )
                     # remove the 4th channel
                     image = image[:, :, 0:3]
 
@@ -96,5 +102,6 @@ class Node:
 def launch_node():
     node = Node()
     node.run()
+
 
 launch_node()
