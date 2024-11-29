@@ -64,9 +64,7 @@ class Node:
         self.mutex.acquire()
 
         self.steering.write_goal_position(np.uint32(steering), "steering")
-        self.speed.write(
-            (f"s0{speed}" + "\n").encode("utf-8")
-        )
+        self.speed.write((f"s0{speed}" + "\n").encode("utf-8"))
 
         self.mutex.release()
 

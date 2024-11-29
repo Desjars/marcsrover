@@ -7,3 +7,9 @@ class Driver:
 
     def getBasicTimeStep(self) -> int:
         pass
+
+    def setSteeringAngle(self, angle: float) -> None:
+        pass
+
+    def setCruisingSpeed(self, speed: float) -> None:
+        pass

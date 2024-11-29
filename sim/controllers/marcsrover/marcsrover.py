@@ -1,5 +1,6 @@
 import zenoh
 import json
+import threading
 
 import numpy as np
 import cv2
@@ -10,7 +11,7 @@ from controller import Lidar, Camera, RangeFinder
 from dataclasses import dataclass
 
 from pycdr2 import IdlStruct
-from pycdr2.types import float32
+from pycdr2.types import float32,int32
 from typing import List
 
 
@@ -24,6 +25,11 @@ class LidarScan(IdlStruct):
     qualities: List[float32]
     angles: List[float32]
     distances: List[float32]
+
+@dataclass
+class RoverControl(IdlStruct):
+    speed: int32
+    steering: int32
 
 
 class Node:
@@ -56,10 +62,16 @@ class Node:
         self.depth = RangeFinder("realsense_depth")
         self.depth.enable(sensor_time_step)
 
+        self.mutex = threading.Lock()
+        self.speed = 0
+        self.steer = 0
+
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             lidar = session.declare_publisher("marcsrover/lidar")
             camera = session.declare_publisher("marcsrover/opencv-camera")
+
+            control = session.declare_subscriber("marcsrover/control", self.control_callback)
 
             try:
                 while self.driver.step() != -1:
@@ -89,15 +101,31 @@ class Node:
 
                     camera.put(bytes)
 
+                    self.mutex.acquire()
+                    self.driver.setSteeringAngle(self.steer)
+                    self.driver.setCruisingSpeed(self.speed)
+
+                    self.mutex.release()
+
             except KeyboardInterrupt:
                 print("Received KeyboardInterrupt")
 
             camera.undeclare()
             lidar.undeclare()
+            control.undeclare()
             session.close()
 
         print("Node stopped")
 
+    def control_callback(self, sample: zenoh.Sample) -> None:
+        motor = RoverControl.deserialize(sample.payload.to_bytes())
+
+        self.mutex.acquire()
+
+        self.speed = motor.speed / 1000
+        self.steer = ((motor.steering + 90) * (16 - (-16)) / 180 + (-16)) * np.pi / 180
+
+        self.mutex.release()
 
 def launch_node():
     node = Node()
