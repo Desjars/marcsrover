@@ -2,7 +2,7 @@ import enum
 
 import numpy as np
 
-from typing import Union
+from typing import Union, Tuple
 
 from dynamixel_sdk import (
     PacketHandler,
@@ -94,7 +94,7 @@ MODEL_CONTROL_TABLE = {
 
 
 class DynamixelBus:
-    def __init__(self, port: str, description: dict[str, str]):
+    def __init__(self, port: str, description: dict[str, Tuple[int, str]]):
         self.port = port
         self.descriptions = description
         self.motor_ctrl = {}

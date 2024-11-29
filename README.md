@@ -18,6 +18,15 @@ Nous avons voulu proposer une plateforme de développement facile et moderne : t
 en python très facilement sans se soucier des dépendances, des versions de python etc... Le projet installera (avec `uv`) tout seul le bon
 python pour le bon système, créera un environnement virtuel et installera les dépendances souhaitées.
 
+## Fast test
+
+Pour tester rapidement le projet, on peut directement l'installer avec `uv pip` :
+
+```bash
+uv pip install git+https://github.com/desjars/marcsrover[host]
+uv run host
+```
+
 ## Sur la voiture
 
 Après avoir cloné le repository il faut éxécuter, **sur la voiture évidemment** :

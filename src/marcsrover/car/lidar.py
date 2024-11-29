@@ -9,6 +9,8 @@ from marcsrover.message import LidarScan
 
 class Node:
     def __init__(self):
+        zenoh.init_log_from_env_or("info")
+
         self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
         self.zenoh_config.insert_json5(

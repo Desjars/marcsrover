@@ -111,11 +111,6 @@ int main(void)
 
 	init_serial();
 
-	Dynamixel_SendPacket(0, 65, 1, 1);
-	Dynamixel_SendPacket(1, 65, 1, 1);
-
-	Dynamixel_SendPacket(0, 64, 1, 1);
-	Dynamixel_SendPacket(1, 64, 1, 1);
 
   /* USER CODE END 2 */
 

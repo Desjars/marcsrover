@@ -31,14 +31,14 @@ uint16_t buffer_index = 0;
 void init_serial()
 {
 	HAL_UART_Receive_IT(&huart2,receive,1);
-	uint8_t Test[] = "Message format: sXXXXXdXXX\\n";
+	uint8_t Test[] = "Message format: sXXXXX\\n";
 	HAL_UART_Transmit(&huart2,Test,sizeof(Test),10);// Sending in normal mode
 	HAL_UART_Receive_IT(&huart2,receive,1);
 }
 
 void processMessage(uint8_t *message)
 {
-    if (message[0] == 's' && message[6] == 'd')
+    if (message[0] == 's')
     {
         char speed_str[6] = {message[1], message[2], message[3], message[4], message[5], '\0'};
         cmd_speed_mm_s = atoi(speed_str) - 4000;
@@ -47,11 +47,14 @@ void processMessage(uint8_t *message)
         cmd_steer = atoi(direction_str) - 90;
 
         watchdog_counter = 0;
-    }
-}
+    } else {
+    	HAL_UART_Receive_IT(&huart2,receive,1);
 
-void move_ax12() {
-	AX12_set_goal(200);
+    	uint8_t Test[] = "Message format: sXXXXX\\n";
+
+    	HAL_UART_Transmit(&huart2,Test,sizeof(Test),10);// Sending in normal mode
+    	HAL_UART_Receive_IT(&huart2,receive,1);
+    }
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)

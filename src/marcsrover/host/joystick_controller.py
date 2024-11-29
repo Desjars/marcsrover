@@ -20,6 +20,8 @@ from marcsrover.message import RoverControl
 
 class Node:
     def __init__(self):
+        zenoh.init_log_from_env_or("info")
+
         self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
         self.zenoh_config.insert_json5(
@@ -28,6 +30,7 @@ class Node:
         self.zenoh_config.insert_json5(
             "listen/endpoints", json.dumps(["udp/0.0.0.0:0"])
         )
+        self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
         pygame.init()
