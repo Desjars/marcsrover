@@ -14,22 +14,22 @@ driver = Driver()
 basicTimeStep = int(driver.getBasicTimeStep())
 sensorTimeStep = 4 * basicTimeStep
 
-#Lidar
+# Lidar
 lidar = Lidar("RpLidarA2")
 lidar.enable(sensorTimeStep)
-lidar.enablePointCloud() 
+lidar.enablePointCloud()
 
-#clavier
+# clavier
 keyboard = driver.getKeyboard()
 keyboard.enable(sensorTimeStep)
 
 # vitesse en km/h
 speed = 0
-maxSpeed = 28 #km/h
+maxSpeed = 28  # km/h
 
 # angle de la direction
 angle = 0
-maxangle = 0.28 #rad (étrange, la voiture est défini pour une limite à 0.31 rad...
+maxangle = 0.28  # rad (étrange, la voiture est défini pour une limite à 0.31 rad...
 
 # mise a zéro de la vitesse et de la direction
 driver.setSteeringAngle(angle)
@@ -38,44 +38,45 @@ driver.setCruisingSpeed(speed)
 modeManuel = False
 modeAuto = False
 print("cliquer sur la vue 3D pour commencer")
-print("m pour mode manuel, a pour mode auto, n pour stop, l pour affichage données lidar")
+print(
+    "m pour mode manuel, a pour mode auto, n pour stop, l pour affichage données lidar"
+)
 print("en mode manuel utiliser les flèches pour accélérer, freiner et diriger")
 
 while driver.step() != -1:
-
     speed = driver.getTargetCruisingSpeed()
 
     while True:
-        #acquisition des donnees du lidar
+        # acquisition des donnees du lidar
         donnees_lidar = lidar.getRangeImage()
-        
+
         # recuperation de la touche clavier
         currentKey = keyboard.getKey()
         if currentKey == -1:
             break
-        if currentKey == ord('m') or currentKey == ord('M'):
+        if currentKey == ord("m") or currentKey == ord("M"):
             if not modeManuel:
                 modeManuel = True
                 modeAuto = False
                 print("------------Mode Manuel Activé---------------")
-        elif currentKey == ord('n') or currentKey == ord('N'):
-            if modeManuel or modeAuto :
+        elif currentKey == ord("n") or currentKey == ord("N"):
+            if modeManuel or modeAuto:
                 modeManuel = False
                 modeAuto = False
                 print("--------Modes Manuel et Auto Désactivé-------")
-        elif currentKey == ord('a') or currentKey == ord('A'):
-            if not modeAuto : 
+        elif currentKey == ord("a") or currentKey == ord("A"):
+            if not modeAuto:
                 modeAuto = True
                 modeManuel = False
                 print("------------Mode Auto Activé-----------------")
-        elif currentKey == ord('l') or currentKey == ord('L'):
-                print("-----donnees du lidar en metres sens horaire au pas de 1°-----")
-                for i in range(len(donnees_lidar)) :
-                    print(f"{donnees_lidar[i]:.3f}   ", end='')
-                    if (i+1)%10 == 0 :        
-                       print()
-                print()
-      
+        elif currentKey == ord("l") or currentKey == ord("L"):
+            print("-----donnees du lidar en metres sens horaire au pas de 1°-----")
+            for i in range(len(donnees_lidar)):
+                print(f"{donnees_lidar[i]:.3f}   ", end="")
+                if (i + 1) % 10 == 0:
+                    print()
+            print()
+
         # Controle en mode manuel
         if modeManuel:
             if currentKey == keyboard.UP:
@@ -90,12 +91,12 @@ while driver.step() != -1:
     if not modeManuel and not modeAuto:
         speed = 0
         angle = 0
-        
+
     if modeAuto:
-        speed = 3 #km/h
-        #l'angle de la direction est la différence entre les mesures des rayons 
-        #du lidar à (-99+18*2)=-63° et (-99+81*2)=63°
-        angle = donnees_lidar[60]-donnees_lidar[300]
+        speed = 3  # km/h
+        # l'angle de la direction est la différence entre les mesures des rayons
+        # du lidar à (-99+18*2)=-63° et (-99+81*2)=63°
+        angle = donnees_lidar[60] - donnees_lidar[300]
 
     # clamp speed and angle to max values
     if speed > maxSpeed:
@@ -109,4 +110,3 @@ while driver.step() != -1:
 
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
-

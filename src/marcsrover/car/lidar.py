@@ -47,27 +47,35 @@ class Node:
 
             lidar_publisher = session.declare_publisher("marcsrover/lidar")
 
+            start_tag = False
+
             try:
                 for count, scan in enumerate(scan_generator()):
                     quality = scan.quality
                     angle = scan.angle
                     distance = scan.distance
 
-                    if (
-                        angle < 1
-                    ):  # When the angle is less than 1, we have a full tour scan
-                        bytes = LidarScan(
-                            qualities=qualities, angles=angles, distances=distances
-                        ).serialize()
-                        lidar_publisher.put(bytes)
+                    if not start_tag:
+                        if angle < 1.0:
+                            start_tag = True
+
+                        continue
+
+                    if angle > 2 and angle < 355: # dead zone but it's necessary to have a full scan
+                        qualities.append(quality)
+                        angles.append(angle)
+                        distances.append(distance)
+                    else:
+                        if len(angles) > 300:
+                            bytes = LidarScan(
+                                qualities=qualities, angles=angles, distances=distances
+                            ).serialize()
+                            lidar_publisher.put(bytes)
 
                         qualities = []
                         angles = []
                         distances = []
 
-                    qualities.append(quality)
-                    angles.append(angle)
-                    distances.append(distance)
             except KeyboardInterrupt:
                 print("LiDAR Received KeyboardInterrupt")
 
