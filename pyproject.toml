@@ -17,6 +17,13 @@ dependencies = [
 host = "marcsrover:main_host"
 car = "marcsrover:main_car"
 
+monitor = "marcsrover:inner_monitor"
+joystick-controller = "marcsrover:inner_joystick_controller"
+opencv-camera = "marcsrover:inner_opencv_camera"
+lidar = "marcsrover:inner_lidar"
+realsense = "marcsrover:inner_realsense"
+rover = "marcsrover:inner_rover"
+
 [project.optional-dependencies]
 host = ["dearpygui==2.0.0", "pygame==2.6.1"]
 car = [

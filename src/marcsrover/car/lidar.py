@@ -61,7 +61,9 @@ class Node:
 
                         continue
 
-                    if angle > 2 and angle < 355: # dead zone but it's necessary to have a full scan
+                    if (
+                        angle > 2 and angle < 355
+                    ):  # dead zone but it's necessary to have a full scan
                         qualities.append(quality)
                         angles.append(angle)
                         distances.append(distance)
@@ -89,5 +91,6 @@ class Node:
         print("LiDAR node stopped")
 
 
-node = Node()
-node.run()
+def launch_node():
+    node = Node()
+    node.run()

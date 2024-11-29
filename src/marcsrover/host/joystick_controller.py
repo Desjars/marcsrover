@@ -107,5 +107,6 @@ class Node:
         print("Joystick node stopped")
 
 
-node = Node()
-node.run()
+def launch_node():
+    node = Node()
+    node.run()

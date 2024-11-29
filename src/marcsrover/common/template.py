@@ -27,5 +27,6 @@ class Node:
         print("Node stopped")
 
 
-node = Node()
-node.run()
+def launch_node():
+    node = Node()
+    node.run()

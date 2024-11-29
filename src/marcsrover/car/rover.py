@@ -28,5 +28,6 @@ class Node:
         print("Rover Node stopped")
 
 
-node = Node()
-node.run()
+def launch_node():
+    node = Node()
+    node.run()

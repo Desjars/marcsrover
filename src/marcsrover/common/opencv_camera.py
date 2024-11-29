@@ -61,5 +61,6 @@ class Node:
         print("Camera stopped")
 
 
-node = Node()
-node.run()
+def launch_node():
+    node = Node()
+    node.run()
