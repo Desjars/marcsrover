@@ -29,8 +29,8 @@ class Node:
 
         config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 15)
         config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 15)
-        # config.enable_stream(rs.stream.accel)
-        # config.enable_stream(rs.stream.gyro)
+        config.enable_stream(rs.stream.accel)
+        config.enable_stream(rs.stream.gyro)
 
         # Start streaming
         self.pipeline.start(config)
@@ -44,18 +44,18 @@ class Node:
 
         depth_frame = frames.get_depth_frame()
         color_frame = frames.get_color_frame()
-        # accel_frame = frames[2].as_motion_frame().get_motion_data()
-        # gyro_frame = frames[3].as_motion_frame().get_motion_data()
+        accel_frame = frames[2].as_motion_frame().get_motion_data()
+        gyro_frame = frames[3].as_motion_frame().get_motion_data()
 
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
-        # accel = np.array([accel_frame.x, accel_frame.y, accel_frame.z])
-        # gyro = np.array([gyro_frame.x, gyro_frame.y, gyro_frame.z])
+        accel = np.array([accel_frame.x, accel_frame.y, accel_frame.z])
+        gyro = np.array([gyro_frame.x, gyro_frame.y, gyro_frame.z])
 
-        if not depth_frame or not color_frame:
+        if not depth_frame or not color_frame or not accel_frame or not gyro_frame:
             return False, None, None, None, None
 
-        return True, depth_image, color_image, None, None
+        return True, depth_image, color_image, accel, gyro
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -102,16 +102,16 @@ class Node:
 
                     realsense.put(bytes)
 
-                    # bytes = IMU(
-                    #     accel_x=accel[0],
-                    #     accel_y=accel[1],
-                    #     accel_z=accel[2],
-                    #     gyro_x=gyro[0],
-                    #     gyro_y=gyro[1],
-                    #     gyro_z=gyro[2],
-                    # ).serialize()
+                    bytes = IMU(
+                        accel_x=accel[0],
+                        accel_y=accel[1],
+                        accel_z=accel[2],
+                        gyro_x=gyro[0],
+                        gyro_y=gyro[1],
+                        gyro_z=gyro[2],
+                    ).serialize()
 
-                    # imu.put(bytes)
+                    imu.put(bytes)
 
             except KeyboardInterrupt:
                 print("Realsense received KeyboardInterrupt")
