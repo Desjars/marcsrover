@@ -3,7 +3,7 @@ import time
 
 from marcsrover.car.servo import DynamixelBus, TorqueMode
 
-bus = DynamixelBus("/dev/ttyUSB0", {"steering": (1, "xl430-w250")})
+bus = DynamixelBus("/dev/ttyACM0", {"steering": (1, "xl430-w250")})
 
 bus.write_torque_enable(TorqueMode.ENABLED, "steering")
 for _ in range(3):
