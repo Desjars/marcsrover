@@ -12,7 +12,7 @@ from marcsrover.message import RoverControl
 
 
 class Node:
-    def __init__(self):
+    def __init__(self, servo_port, microcontroller_port):
         zenoh.init_log_from_env_or("info")
 
         self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
@@ -28,11 +28,11 @@ class Node:
 
         self.mutex = Lock()
 
-        self.steering = DynamixelBus("/dev/ttyACM1", {"steering": (1, "xl430-w250")})
+        self.steering = DynamixelBus(microcontroller_port, {"steering": (1, "xl430-w250")})
 
         self.steering.write_torque_enable(TorqueMode.ENABLED, "steering")
 
-        self.speed = serial.Serial("/dev/ttyACM0", 115200, timeout=1)
+        self.speed = serial.Serial(servo_port, 115200, timeout=1)
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -69,6 +69,6 @@ class Node:
         self.mutex.release()
 
 
-def launch_node():
-    node = Node()
+def launch_node(args):
+    node = Node(args.servo_port, args.microcontroller_port)
     node.run()

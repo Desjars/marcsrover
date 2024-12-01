@@ -25,15 +25,15 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
-def run(address_to_listen_on) -> None:
+def run(args) -> None:
     zenoh.init_log_from_env_or("info")
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
 
     endpoints = ["udp/0.0.0.0:7446"]
 
-    if address_to_listen_on is not None:
-        endpoints.append(f"udp/{address_to_listen_on}:7445")
+    if args.ip is not None:
+        endpoints.append(f"udp/{args.ip}:7445")
 
     router_config.insert_json5("listen/endpoints", json.dumps(endpoints))
     router_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
@@ -43,9 +43,15 @@ def run(address_to_listen_on) -> None:
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            processes.append(subprocess.Popen(["uv", "run", "lidar"]))
             # processes.append(subprocess.Popen(["uv", "run", "realsense"]))
-            processes.append(subprocess.Popen(["uv", "run", "rover"]))
+
+            processes.append(subprocess.Popen(["uv", "run", "lidar",
+                "--lidar-port", args.lidar_port,
+            ]))
+            processes.append(subprocess.Popen(["uv", "run", "rover",
+                "--servo-port", args.servo_port,
+                "--microcontroller-port", args.microcontroller_port,
+            ]))
 
             print("Processes started. Press CTRL+C to terminate.")
 

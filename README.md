@@ -22,9 +22,20 @@ python pour le bon système, créera un environnement virtuel et installera les 
 
 Pour tester rapidement le projet, on peut directement l'installer avec `uv pip` :
 
+### Sur l'ordinateur
+
 ```bash
+uv venv --python 3.10.15
 uv pip install git+https://github.com/desjars/marcsrover[host]
-uv run host
+uv run host --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
+```
+
+### Sur la voiture
+
+```bash
+uv venv --python 3.10.15
+uv pip install git+https://github.com/desjars/marcsrover[car]
+uv run car --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
 ```
 
 ## Sur la voiture
@@ -33,7 +44,7 @@ Après avoir cloné le repository il faut éxécuter, **sur la voiture évidemme
 
 ```bash
 uv sync --extra car
-uv run marcsrover-car IP_ADDRESS_OF_WIFI/ETH_INTERFACE_OF_THE_CAR
+uv run car --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
 ```
 
 ## Sur votre ordinateur
@@ -42,7 +53,7 @@ Après avoir cloné le repository il faut éxécuter :
 
 ```bash
 uv sync --extra host
-uv run marcsrover-host IP_ADDRESS_OF_WIFI/ETH_INTERFACE_OF_THE_CAR
+uv run host --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
 ```
 
 Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.

@@ -24,7 +24,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
-def run(address_to_connect_to) -> None:
+def run(args) -> None:
     zenoh.init_log_from_env_or("info")
 
     router_config: zenoh.Config = zenoh.Config.from_json5("{}")
@@ -33,9 +33,9 @@ def run(address_to_connect_to) -> None:
     router_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
     router_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
-    if address_to_connect_to is not None:
+    if args.ip is not None:
         router_config.insert_json5(
-            "connect/endpoints", json.dumps([f"udp/{address_to_connect_to}:7445"])
+            "connect/endpoints", json.dumps([f"udp/{args.ip}:7445"])
         )
 
     with zenoh.open(router_config) as session:
