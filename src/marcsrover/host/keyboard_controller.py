@@ -5,10 +5,13 @@ import pygame
 import numpy as np
 
 
-from pygame.constants import (
+from pygame.locals import (
+    QUIT,
+    MOUSEMOTION,
+    MOUSEBUTTONUP,
+    MOUSEBUTTONDOWN,
     KEYDOWN,
     KEYUP,
-    QUIT,
 )
 
 from marcsrover.message import RoverControl
@@ -58,21 +61,6 @@ class Node:
 
                     self.update_controls()
 
-                    # steering_x = self.axis[1]
-                    # steering_y = self.axis[0]
-
-                    # steering = int(np.arctan2(steering_y, 1 - steering_x) * 180 / np.pi)
-
-                    # dec = self.button[6]
-                    # inc = self.button[7]
-
-                    # if dec and self.gear >= 2:
-                    #     self.gear -= 1
-                    # if inc and self.gear <= 9:
-                    #     self.gear += 1
-
-                    # speed = int(-self.axis[3] * (self.gear * 200))
-
                     bytes = RoverControl(self.speed, self.steering).serialize()
 
                     rover_control.put(bytes)
@@ -85,30 +73,30 @@ class Node:
 
         print("Keyboard control node stopped")
 
-def update_controls(self):
-        # Direction : Gauche/Droite
-        if pygame.K_LEFT in self.keys_pressed:
-            self.steering = max(self.steering - 5, -90)  # Limite : -90° (complètement à gauche)
-        elif pygame.K_RIGHT in self.keys_pressed:
-            self.steering = min(self.steering + 5, 90)  # Limite : 90° (complètement à droite)
-        else:
-            self.steering = 0  # Retour au neutre
+    def update_controls(self):
+            # Direction : Gauche/Droite
+            if pygame.K_LEFT in self.keys_pressed:
+                self.steering = max(self.steering - 5, -90)  # Limite : -90° (complètement à gauche)
+            elif pygame.K_RIGHT in self.keys_pressed:
+                self.steering = min(self.steering + 5, 90)  # Limite : 90° (complètement à droite)
+            else:
+                self.steering = 0  # Retour au neutre
 
-        # Vitesse : Avant/Arrière
-        if pygame.K_UP in self.keys_pressed:
-            self.speed = self.gear * 200  # Avancer en fonction de la vitesse
-        elif pygame.K_DOWN in self.keys_pressed:
-            self.speed = -self.gear * 200  # Reculer en fonction de la vitesse
-        else:
-            self.speed = 0  # Arrêt
+            # Vitesse : Avant/Arrière
+            if pygame.K_UP in self.keys_pressed:
+                self.speed = self.gear * 200  # Avancer en fonction de la vitesse
+            elif pygame.K_DOWN in self.keys_pressed:
+                self.speed = -self.gear * 200  # Reculer en fonction de la vitesse
+            else:
+                self.speed = 0  # Arrêt
 
-        # Changement de vitesse
-        if pygame.K_q in self.keys_pressed and self.gear > 1:  # Décélération (limite à 1)
-            self.gear -= 1
-            self.keys_pressed.discard(pygame.K_q)  # Pour éviter une répétition rapide
-        if pygame.K_e in self.keys_pressed and self.gear < 9:  # Accélération (limite à 9)
-            self.gear += 1
-            self.keys_pressed.discard(pygame.K_e)  # Pour éviter une répétition rapide
+            # Changement de vitesse
+            if pygame.K_q in self.keys_pressed and self.gear > 1:  # Décélération (limite à 1)
+                self.gear -= 1
+                self.keys_pressed.discard(pygame.K_q)  # Pour éviter une répétition rapide
+            if pygame.K_e in self.keys_pressed and self.gear < 9:  # Accélération (limite à 9)
+                self.gear += 1
+                self.keys_pressed.discard(pygame.K_e)  # Pour éviter une répétition rapide
 
 
 
