@@ -8,7 +8,7 @@ from marcsrover.message import LidarScan
 
 
 class Node:
-    def __init__(self):
+    def __init__(self, lidar_port):
         zenoh.init_log_from_env_or("info")
 
         self.zenoh_config: zenoh.Config = zenoh.Config.from_json5("{}")
@@ -23,7 +23,7 @@ class Node:
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
         self.lidar = PyRPlidar()
-        self.lidar.connect("/dev/ttyUSB0", 256000, 3)
+        self.lidar.connect(lidar_port, 256000, 3)
 
         # The LiDAR may not have been stopped properly, so we need to reset it
 
@@ -35,7 +35,7 @@ class Node:
 
         # Now we can start
 
-        self.lidar.connect("/dev/ttyUSB0", 256000, 3)
+        self.lidar.connect(lidar_port, 256000, 3)
         self.lidar.set_motor_pwm(500)
 
     def run(self) -> None:
@@ -93,6 +93,6 @@ class Node:
         print("LiDAR node stopped")
 
 
-def launch_node():
-    node = Node()
+def launch_node(args):
+    node = Node(args.lidar_port)
     node.run()

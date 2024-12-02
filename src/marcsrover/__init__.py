@@ -1,20 +1,15 @@
-import sys
-
+from marcsrover.arguments import lidar_args, main_args, rover_args
 
 def main_host() -> None:
     from marcsrover.host import run as run_host
 
-    address_to_connect_to = sys.argv[1] if len(sys.argv) > 1 else None
-
-    run_host(address_to_connect_to)
+    run_host(main_args())
 
 
 def main_car() -> None:
     from marcsrover.car import run as run_car
 
-    address_to_listen_on = sys.argv[1] if len(sys.argv) > 1 else None
-
-    run_car(address_to_listen_on)
+    run_car(main_args())
 
 
 def inner_monitor() -> None:
@@ -40,7 +35,7 @@ def inner_opencv_camera() -> None:
 def inner_lidar() -> None:
     from marcsrover.car.lidar import launch_node as launch_lidar
 
-    launch_lidar()
+    launch_lidar(lidar_args())
 
 
 def inner_realsense() -> None:
@@ -52,4 +47,4 @@ def inner_realsense() -> None:
 def inner_rover() -> None:
     from marcsrover.car.rover import launch_node as launch_rover
 
-    launch_rover()
+    launch_rover(rover_args())
