@@ -25,6 +25,13 @@ def inner_joystick_controller() -> None:
 
     launch_joystick_controller()
 
+def inner_keyboard_controller() -> None:
+    from marcsrover.host.keyboard_controller import (
+        launch_node as launch_keyboard_controller,
+    )
+
+    launch_keyboard_controller()
+
 
 def inner_opencv_camera() -> None:
     from marcsrover.common.opencv_camera import launch_node as launch_opencv_camera

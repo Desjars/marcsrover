@@ -19,6 +19,7 @@ car = "marcsrover:main_car"
 
 monitor = "marcsrover:inner_monitor"
 joystick-controller = "marcsrover:inner_joystick_controller"
+keyboard-controller = "marcsrover:inner_keyboard_controller"
 opencv-camera = "marcsrover:inner_opencv_camera"
 lidar = "marcsrover:inner_lidar"
 realsense = "marcsrover:inner_realsense"
