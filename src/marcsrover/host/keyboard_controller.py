@@ -1,7 +1,7 @@
+from pygame.constants import KEYDOWN, KEYUP
 import zenoh
 import json
 import pygame
-import numpy as np
 from marcsrover.message import RoverControl
 
 
@@ -21,49 +21,55 @@ class Node:
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
         pygame.init()
-        pygame.display.set_mode((400, 300))  # Crée une fenêtre pour que Pygame fonctionne
-        pygame.event.set_blocked((pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN))
+        pygame.display.set_mode((300, 300))
 
-        self.gear = 5  # Vitesse initiale
-        self.steering = 0  # Angle initial de direction
-        self.speed = 0  # Vitesse initiale
+        pygame.event.set_blocked(
+            (pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN)
+        )
+
+        self.keys = {
+            pygame.K_UP: False,
+            pygame.K_DOWN: False,
+            pygame.K_LEFT: False,
+            pygame.K_RIGHT: False,
+        }
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             rover_control = session.declare_publisher("marcsrover/control")
+
             try:
                 while True:
-                    for event in pygame.event.get():
+                    events = pygame.event.get()
+
+                    num_events = len(events)
+                    if num_events == 0:
+                        continue
+
+                    for event in events:
                         if event.type == pygame.QUIT:
-                            raise KeyboardInterrupt
+                            break
+                        elif event.type == KEYDOWN:
+                            if event.key in self.keys:
+                                self.keys[event.key] = True
+                        elif event.type == KEYUP:
+                            if event.key in self.keys:
+                                self.keys[event.key] = False
 
-                    # Récupérer l'état des touches
-                    keys = pygame.key.get_pressed()
+                    speed = 0
+                    steering = 0
 
-                    # Contrôle de la direction (flèches gauche et droite)
-                    if keys[pygame.K_LEFT]:
-                        self.steering = max(self.steering - 5, -45)  # Limite à -45 degrés
-                    elif keys[pygame.K_RIGHT]:
-                        self.steering = min(self.steering + 5, 45)  # Limite à 45 degrés
-                    else:
-                        self.steering = 0  # Retour au centre
+                    if self.keys[pygame.K_UP]:
+                        speed = 3000
+                    elif self.keys[pygame.K_DOWN]:
+                        speed = -3000
 
-                    # Contrôle de la vitesse (flèches haut et bas)
-                    if keys[pygame.K_UP]:
-                        self.speed = min(self.speed + self.gear * 20, 1000)  # Limite supérieure
-                    elif keys[pygame.K_DOWN]:
-                        self.speed = max(self.speed - self.gear * 20, -1000)  # Limite inférieure
-                    else:
-                        self.speed = 0  # Arrêt progressif
+                    if self.keys[pygame.K_LEFT]:
+                        steering = -45
+                    elif self.keys[pygame.K_RIGHT]:
+                        steering = 45
 
-                    # Changer la vitesse maximale (gear) avec touches +/- ou autres
-                    if keys[pygame.K_MINUS] and self.gear > 1:
-                        self.gear -= 1
-                    if keys[pygame.K_PLUS] and self.gear < 9:
-                        self.gear += 1
-
-                    # Envoyer les commandes au rover
-                    bytes = RoverControl(self.speed, self.steering).serialize()
+                    bytes = RoverControl(speed, steering).serialize()
                     rover_control.put(bytes)
 
             except KeyboardInterrupt:
@@ -71,6 +77,7 @@ class Node:
 
             rover_control.undeclare()
             session.close()
+            pygame.quit()
 
 
 def launch_node():

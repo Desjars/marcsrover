@@ -28,7 +28,9 @@ class Node:
 
         self.mutex = Lock()
 
-        self.steering = DynamixelBus(microcontroller_port, {"steering": (1, "xl430-w250")})
+        self.steering = DynamixelBus(
+            microcontroller_port, {"steering": (1, "xl430-w250")}
+        )
 
         self.steering.write_torque_enable(TorqueMode.ENABLED, "steering")
 

@@ -8,31 +8,32 @@ def main_args():
         "--ip",
         type=str,
         required=True,
-        help="IP address to either listen on or connect to. Should be the same for both the host and the car."
+        help="IP address to either listen on or connect to. Should be the same for both the host and the car.",
     )
 
     parser.add_argument(
         "--servo-port",
         type=str,
         default="/dev/ttyACM1",
-        help="Serial port for the connection to the servo motor."
+        help="Serial port for the connection to the servo motor.",
     )
 
     parser.add_argument(
         "--microcontroller-port",
         type=str,
         default="/dev/ttyACM0",
-        help="Serial port for the connection to the microcontroller."
+        help="Serial port for the connection to the microcontroller.",
     )
 
     parser.add_argument(
         "--lidar-port",
         type=str,
         default="/dev/ttyUSB0",
-        help="Serial port for the connection to the LiDAR."
+        help="Serial port for the connection to the LiDAR.",
     )
 
     return parser.parse_args()
+
 
 def lidar_args():
     parser = argparse.ArgumentParser(description="Configuration of the LiDAR.")
@@ -41,10 +42,11 @@ def lidar_args():
         "--lidar-port",
         type=str,
         default="/dev/ttyUSB0",
-        help="Serial port for the connection to the LiDAR."
+        help="Serial port for the connection to the LiDAR.",
     )
 
     return parser.parse_args()
+
 
 def rover_args():
     parser = argparse.ArgumentParser(description="Configuration of the rover.")
@@ -53,14 +55,14 @@ def rover_args():
         "--servo-port",
         type=str,
         default="/dev/ttyACM1",
-        help="Serial port for the connection to the servo motor."
+        help="Serial port for the connection to the servo motor.",
     )
 
     parser.add_argument(
         "--microcontroller-port",
         type=str,
         default="/dev/ttyACM0",
-        help="Serial port for the connection to the microcontroller."
+        help="Serial port for the connection to the microcontroller.",
     )
 
     return parser.parse_args()

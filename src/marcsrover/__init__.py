@@ -1,5 +1,6 @@
 from marcsrover.arguments import lidar_args, main_args, rover_args
 
+
 def main_host() -> None:
     from marcsrover.host import run as run_host
 
@@ -24,6 +25,7 @@ def inner_joystick_controller() -> None:
     )
 
     launch_joystick_controller()
+
 
 def inner_keyboard_controller() -> None:
     from marcsrover.host.keyboard_controller import (
