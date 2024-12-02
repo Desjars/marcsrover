@@ -4,15 +4,11 @@ import pygame
 
 import numpy as np
 
+
 from pygame.constants import (
-    JOYAXISMOTION,
-    JOYBALLMOTION,
-    JOYBUTTONDOWN,
-    JOYBUTTONUP,
-    JOYHATMOTION,
-    MOUSEBUTTONDOWN,
-    MOUSEBUTTONUP,
-    MOUSEMOTION,
+    KEYDOWN,
+    KEYUP,
+    QUIT,
 )
 
 from marcsrover.message import RoverControl
@@ -37,25 +33,9 @@ class Node:
         pygame.event.set_blocked((MOUSEMOTION, MOUSEBUTTONUP, MOUSEBUTTONDOWN))
 
         self.gear = 5
-
-        self.joy = pygame.joystick.Joystick(0)
-        self.joy.init()
-
-        self.axis = []
-        for i in range(self.joy.get_numaxes()):
-            self.axis.append(self.joy.get_axis(i))
-
-        self.ball = []
-        for i in range(self.joy.get_numballs()):
-            self.ball.append(self.joy.get_ball(i))
-
-        self.button = []
-        for i in range(self.joy.get_numbuttons()):
-            self.button.append(self.joy.get_button(i))
-
-        self.hat = []
-        for i in range(self.joy.get_numhats()):
-            self.hat.append(self.joy.get_hat(i))
+        self.speed = 0
+        self.steering = 0
+        self.keys_pressed = set()
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -69,45 +49,67 @@ class Node:
                         continue
 
                     for event in events:
-                        if event.type == pygame.QUIT:
+                        if event.type == QUIT:
                             break
-                        elif event.type == JOYAXISMOTION:
-                            self.axis[event.axis] = event.value
-                        elif event.type == JOYBALLMOTION:
-                            self.ball[event.ball] = event.rel
-                        elif event.type == JOYHATMOTION:
-                            self.hat[event.hat] = event.value
-                        elif event.type == JOYBUTTONUP:
-                            self.button[event.button] = 0
-                        elif event.type == JOYBUTTONDOWN:
-                            self.button[event.button] = 1
+                        elif event.type == KEYDOWN:
+                            self.keys_pressed.add(event.key)
+                        elif event.type == KEYUP:
+                            self.keys_pressed.discard(event.key)
 
-                    steering_x = self.axis[1]
-                    steering_y = self.axis[0]
+                    self.update_controls()
 
-                    steering = int(np.arctan2(steering_y, 1 - steering_x) * 180 / np.pi)
+                    # steering_x = self.axis[1]
+                    # steering_y = self.axis[0]
 
-                    dec = self.button[6]
-                    inc = self.button[7]
+                    # steering = int(np.arctan2(steering_y, 1 - steering_x) * 180 / np.pi)
 
-                    if dec and self.gear >= 2:
-                        self.gear -= 1
-                    if inc and self.gear <= 9:
-                        self.gear += 1
+                    # dec = self.button[6]
+                    # inc = self.button[7]
 
-                    speed = int(-self.axis[3] * (self.gear * 200))
+                    # if dec and self.gear >= 2:
+                    #     self.gear -= 1
+                    # if inc and self.gear <= 9:
+                    #     self.gear += 1
 
-                    bytes = RoverControl(speed, steering).serialize()
+                    # speed = int(-self.axis[3] * (self.gear * 200))
+
+                    bytes = RoverControl(self.speed, self.steering).serialize()
 
                     rover_control.put(bytes)
             except KeyboardInterrupt:
-                print("Joystick node received KeyboardInterrupt")
+                print("Keyboard control node received KeyboardInterrupt")
 
             rover_control.undeclare()
 
             session.close()
 
-        print("Joystick node stopped")
+        print("Keyboard control node stopped")
+
+def update_controls(self):
+        # Direction : Gauche/Droite
+        if pygame.K_LEFT in self.keys_pressed:
+            self.steering = max(self.steering - 5, -90)  # Limite : -90° (complètement à gauche)
+        elif pygame.K_RIGHT in self.keys_pressed:
+            self.steering = min(self.steering + 5, 90)  # Limite : 90° (complètement à droite)
+        else:
+            self.steering = 0  # Retour au neutre
+
+        # Vitesse : Avant/Arrière
+        if pygame.K_UP in self.keys_pressed:
+            self.speed = self.gear * 200  # Avancer en fonction de la vitesse
+        elif pygame.K_DOWN in self.keys_pressed:
+            self.speed = -self.gear * 200  # Reculer en fonction de la vitesse
+        else:
+            self.speed = 0  # Arrêt
+
+        # Changement de vitesse
+        if pygame.K_q in self.keys_pressed and self.gear > 1:  # Décélération (limite à 1)
+            self.gear -= 1
+            self.keys_pressed.discard(pygame.K_q)  # Pour éviter une répétition rapide
+        if pygame.K_e in self.keys_pressed and self.gear < 9:  # Accélération (limite à 9)
+            self.gear += 1
+            self.keys_pressed.discard(pygame.K_e)  # Pour éviter une répétition rapide
+
 
 
 def launch_node():
