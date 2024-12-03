@@ -36,6 +36,14 @@ class RoverControl(IdlStruct):
 
 
 @dataclass
+class SLAM(IdlStruct):
+    x: int32
+    y: int32
+
+    cloud_points: bytes  # This is a B&W image 1024x780
+
+
+@dataclass
 class LidarScan(IdlStruct):
     qualities: List[float32]
     angles: List[float32]
