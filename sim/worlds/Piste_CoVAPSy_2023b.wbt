@@ -2381,8 +2381,6 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -0.0017993543939838843 0.0007362472977852105 -3.2350394923729713e-11
-                angularVelocity -0.018408061978084353 -0.04498828288036117 6.177061543151076e-11
               }
             }
           }
@@ -2540,8 +2538,6 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -0.00179935439840053 0.0007362472996625973 3.2350945430781116e-11
-                angularVelocity -0.018407942597648008 -0.04498833172798293 7.642162954613252e-11
               }
             }
           }
@@ -2684,8 +2680,6 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -0.0017993543898947022 0.0007362472987330032 -3.235164863849808e-11
-                angularVelocity -0.018408061978047972 -0.04498828288005813 6.167433589995367e-11
               }
             }
           }
@@ -2827,8 +2821,6 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -0.001799354397952328 0.0007362473070737627 3.2351958037497134e-11
-                angularVelocity -0.01840794259778852 -0.04498833172814088 7.625734050939225e-11
               }
             }
           }
@@ -3007,7 +2999,7 @@ Robot {
               }
               geometry Mesh {
                 url [
-                  "C:/Users/Tom/Desktop/marcssim/protos/ChevroletCamaroLight.stl"
+                  "../protos/ChevroletCamaroLight.stl"
                 ]
               }
               castShadows FALSE
@@ -3038,6 +3030,4 @@ Robot {
   radarCrossSection 100
   controller "marcsrover"
   customData "0.257 0.15 0.15 0.04 0.04 700 5 E 0.0234 32 1 13800 150 0.1 0 0.25 3000 1000 2 4 -0.62 0.62 none "
-  linearVelocity -0.0017993543872763995 0.0007362473198261354 -4.940953042029934e-16
-  angularVelocity -4.4906915036001927e-10 1.8373612746601864e-10 -2.8721739890182166e-11
 }
