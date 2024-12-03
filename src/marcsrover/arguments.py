@@ -7,7 +7,7 @@ def main_args():
     parser.add_argument(
         "--ip",
         type=str,
-        required=True,
+        default="127.0.0.1",
         help="IP address to either listen on or connect to. Should be the same for both the host and the car.",
     )
 
