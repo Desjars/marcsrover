@@ -1,16 +1,17 @@
 # MarCSRover : la plateforme de développement pour les véhicules autonomes 100% Python 3.10.15
 
 Marcs Rover est un projet du pôle projet Véhicule Autonome de CentraleSupélec. Nous utilisons pour ce projet un ordinateur embarqué
-de chez Qualcomm, le RB5. Ce projet est un projet de recherche et développement, et a pour but de développer un véhicule autonome
+la raspberry PI 3 Model B. Ce projet est un projet de recherche et développement, et a pour but de développer un véhicule autonome
 capable de se déplacer dans un environnement urbain et de fournir une véritable **plateforme de développement** pour les étudiants
 facilement utilisable et modifiable.
-
-Nous tenons à remercier Qualcomm pour leur soutien et leur aide dans ce projet.
 
 # Modernité
 
 Nous avons voulu proposer une plateforme de développement facile et moderne : tout se fait en Python 3.10.15, avec un outil de gestion
 (`uv`), un framework de communication IPC (`zenoh`) qui permet de développer la plateforme sous la forme d'un graph de tâches.
+
+**Note**: `uv` permet de s'assurer que l'utilisation du projet est simple et rapide, il permet de gérer les dépendances, les environnements virtuels
+et de lancer les différents composants du projet.
 
 # Documentation
 
@@ -18,46 +19,77 @@ Nous avons voulu proposer une plateforme de développement facile et moderne : t
 en python très facilement sans se soucier des dépendances, des versions de python etc... Le projet installera (avec `uv`) tout seul le bon
 python pour le bon système, créera un environnement virtuel et installera les dépendances souhaitées.
 
-## Fast test
+## Tester le véhicule sans modifier le code
 
-Pour tester rapidement le projet, on peut directement l'installer avec `uv pip` :
+Pour tester le véhicule sans modifier le code, c'est très simple. Mettons que vous ayez une voiture fonctionnelle avec le bon programme
+dans le microcontrolleur et une Raspberry PI avec `uv` d'installer (se fier à la documentation). Alors, il suffit **sur la voiture** de :
 
-### Sur l'ordinateur
+1. De créer un dossier de test
 
 ```bash
-uv venv --python 3.10.15
-uv pip install git+https://github.com/desjars/marcsrover[host]
-uv run host --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
+cd ~/Documents
+mkdir test-marcsrover && cd test-marcsrover
 ```
 
-### Sur la voiture
+2. Créer un environnement virtuel et installer le projet
 
 ```bash
 uv venv --python 3.10.15
 uv pip install git+https://github.com/desjars/marcsrover[car]
-uv run car --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
 ```
 
-## Sur la voiture
-
-Après avoir cloné le repository il faut éxécuter, **sur la voiture évidemment** :
+3. Lancer le programme
 
 ```bash
-uv sync --extra car
-uv run car --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
+uv run car
 ```
 
-## Sur votre ordinateur
-
-Après avoir cloné le repository il faut éxécuter :
+Si tout est bien configuré la voiture devrait être capable de se déplacer toute seule. Il est possible de changer certains paramètres
 
 ```bash
-uv sync --extra host
-uv run host --ip <ADDRESS OF THE INTERFACE YOU WANT TO USE>
+uv run car --lidar-port <PORT OF LIDAR> --servo-port <PORT OF SERVO> --microcontroller-port <PORT OF MICROCONTROLLER>
 ```
 
-Merci de suivre la [documentation](documentation/src/SUMMARY.md) pour plus d'informations sur le projet.
+où `PORT OF LIDAR`, `PORT OF SERVO` et `PORT OF MICROCONTROLLER` sont les ports respectifs des composants. Par défaut, les ports sont respectivement
+`/dev/ttyUSB0`, `/dev/ttyACM1` et `/dev/ttyACM0`.
 
-# Version 1.0: Véhicule non autonome
+## Tester le véhicule sans modifier le code **et** en monitorant les données
 
-![image](documentation/src/architecture.jpeg)
+Pour tester le véhicule sans modifier le code et en monitorant les données, c'est très simple. Il faut que la Raspberry PI soit connectée
+au même réseau (Wifi ou Ethernet) qu'un ordinateur. Il faut ensuite récupérer l'adresse IP de la Raspberry PI (par exemple `10.0.0.10`) sur ce réseau.
+
+Ensuite, vous devez suivre les étapes précédentes et lancer le programme avec le paramètre `--ip` :
+
+```bash
+uv run car --ip <IP OF RASPBERRY PI>
+```
+
+Ensuite vous devez faire presque les mêmes étapes sur votre ordinateur !
+
+1. Créer un dossier de test
+
+```bash
+cd ~/Documents
+mkdir test-marcsrover && cd test-marcsrover
+```
+
+2. Créer un environnement virtuel et installer le projet
+
+```bash
+uv venv --python 3.10.15
+uv pip install git+https://github.com/desjars/marcsrover[host]
+```
+
+3. Lancer le programme
+
+```bash
+uv run host --ip <IP OF RASPBERRY PI>
+```
+
+## Développer le véhicule
+
+Merci de suivre la [documentation](documentation/src/SUMMARY.md) spécifique.
+
+# Contribution
+
+Toutes les contributions sont les bienvenues. Pour contribuer, merci de suivre les [instructions](CONTRIBUTING.md).
