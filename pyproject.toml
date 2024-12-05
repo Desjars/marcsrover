@@ -24,18 +24,16 @@ opencv-camera = "marcsrover:inner_opencv_camera"
 lidar = "marcsrover:inner_lidar"
 realsense = "marcsrover:inner_realsense"
 rover = "marcsrover:inner_rover"
+imu = "marcsrover:inner_imu"
 
 [project.optional-dependencies]
-host = [
-    "dearpygui==2.0.0",
-    "pygame==2.6.1",
-    "pynput>=1.7.7",
-]
+host = ["dearpygui==2.0.0", "pygame==2.6.1", "pynput>=1.7.7"]
 car = [
     "dynamixel-sdk==3.7.31",
     "pyrealsense2==2.55.1.6486",
     "pyrplidar==0.1.2",
     "pyserial==3.5",
+    "smbus>=1.1.post2",
 ]
 
 [build-system]

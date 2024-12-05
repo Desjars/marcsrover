@@ -43,7 +43,7 @@ def run(args) -> None:
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            processes.append(subprocess.Popen(["uv", "run", "realsense"]))
+            # processes.append(subprocess.Popen(["uv", "run", "realsense"]))
 
             # processes.append(
             #     subprocess.Popen(
@@ -69,6 +69,16 @@ def run(args) -> None:
             #         ]
             #     )
             # )
+
+            processes.append(
+                subprocess.Popen(
+                    [
+                        "uv",
+                        "run",
+                        "imu",
+                    ]
+                )
+            )
 
             print("Processes started. Press CTRL+C to terminate.")
 

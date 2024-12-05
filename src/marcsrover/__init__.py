@@ -57,3 +57,9 @@ def inner_rover() -> None:
     from marcsrover.car.rover import launch_node as launch_rover
 
     launch_rover(rover_args())
+
+
+def inner_imu() -> None:
+    from marcsrover.car.imu import launch_node as launch_imu
+
+    launch_imu()
