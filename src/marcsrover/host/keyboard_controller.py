@@ -1,8 +1,9 @@
-from pygame.constants import KEYDOWN, KEYUP
 import zenoh
 import json
-import pygame
+
 from marcsrover.message import RoverControl
+
+from pynput import keyboard
 
 
 class Node:
@@ -20,18 +21,18 @@ class Node:
         self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
-        pygame.init()
-        pygame.display.set_mode((300, 300))
-
-        pygame.event.set_blocked(
-            (pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN)
-        )
-
         self.keys = {
-            pygame.K_UP: False,
-            pygame.K_DOWN: False,
-            pygame.K_LEFT: False,
-            pygame.K_RIGHT: False,
+            keyboard.Key.up: False,
+            keyboard.Key.down: False,
+            keyboard.Key.left: False,
+            keyboard.Key.right: False,
+        }
+
+        self.table = {
+            "up": keyboard.Key.up,
+            "down": keyboard.Key.down,
+            "left": keyboard.Key.left,
+            "right": keyboard.Key.right,
         }
 
     def run(self) -> None:
@@ -39,45 +40,41 @@ class Node:
             rover_control = session.declare_publisher("marcsrover/control")
 
             try:
-                while True:
-                    events = pygame.event.get()
-
-                    num_events = len(events)
-                    if num_events == 0:
-                        continue
-
+                with keyboard.Events() as events:
                     for event in events:
-                        if event.type == pygame.QUIT:
-                            break
-                        elif event.type == KEYDOWN:
-                            if event.key in self.keys:
-                                self.keys[event.key] = True
-                        elif event.type == KEYUP:
-                            if event.key in self.keys:
-                                self.keys[event.key] = False
+                        str_event = f"{event}"
+                        type = str_event.split("(")[0]
+                        key = (str_event.split("(")[1].split(")")[0]).split(".")[1]
 
-                    speed = 0
-                    steering = 0
+                        if key not in self.table:
+                            continue
 
-                    if self.keys[pygame.K_UP]:
-                        speed = 3000
-                    elif self.keys[pygame.K_DOWN]:
-                        speed = -3000
+                        speed = 0
+                        steering = 0
 
-                    if self.keys[pygame.K_LEFT]:
-                        steering = -45
-                    elif self.keys[pygame.K_RIGHT]:
-                        steering = 45
+                        if type == "Press":
+                            self.keys[self.table[key]] = True
+                        elif type == "Release":
+                            self.keys[self.table[key]] = False
 
-                    bytes = RoverControl(speed, steering).serialize()
-                    rover_control.put(bytes)
+                        if self.keys[keyboard.Key.up]:
+                            speed = 3000
+                        elif self.keys[keyboard.Key.down]:
+                            speed = -3000
+
+                        if self.keys[keyboard.Key.left]:
+                            steering = -90
+                        elif self.keys[keyboard.Key.right]:
+                            steering = 90
+
+                        bytes = RoverControl(speed, steering).serialize()
+                        rover_control.put(bytes)
 
             except KeyboardInterrupt:
                 print("Keyboard control node stopped")
 
             rover_control.undeclare()
             session.close()
-            pygame.quit()
 
 
 def launch_node():

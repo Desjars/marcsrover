@@ -26,7 +26,11 @@ realsense = "marcsrover:inner_realsense"
 rover = "marcsrover:inner_rover"
 
 [project.optional-dependencies]
-host = ["dearpygui==2.0.0", "pygame==2.6.1"]
+host = [
+    "dearpygui==2.0.0",
+    "pygame==2.6.1",
+    "pynput>=1.7.7",
+]
 car = [
     "dynamixel-sdk==3.7.31",
     "pyrealsense2==2.55.1.6486",

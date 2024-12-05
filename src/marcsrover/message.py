@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from pycdr2 import IdlStruct
-from pycdr2.types import int32, float32, uint32
+from pycdr2.types import int32, float32
 from typing import List
 
 
@@ -9,9 +9,6 @@ from typing import List
 class D435I(IdlStruct):
     rgb: bytes
     depth: bytes
-    width: uint32
-    height: uint32
-    depth_factor: float32
 
 
 @dataclass
@@ -25,14 +22,22 @@ class IMU(IdlStruct):
 
 
 @dataclass
-class OpenCVCamera(IdlStruct):
-    frame: bytes
+class BytesMessage(IdlStruct):
+    data: bytes
 
 
 @dataclass
 class RoverControl(IdlStruct):
     speed: int32
     steering: int32
+
+
+@dataclass
+class SLAM(IdlStruct):
+    x: int32
+    y: int32
+
+    cloud_points: bytes  # This is a B&W image 1024x780
 
 
 @dataclass

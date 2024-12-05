@@ -95,7 +95,7 @@ class Node:
                     if inc and self.gear <= 9:
                         self.gear += 1
 
-                    speed = int(-self.axis[3] * (self.gear * 200))
+                    speed = int(-self.axis[3] * (self.gear * 400))
 
                     bytes = RoverControl(speed, steering).serialize()
 

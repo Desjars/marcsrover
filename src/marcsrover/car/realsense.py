@@ -9,6 +9,9 @@ from marcsrover.message import D435I, IMU
 from typing import Tuple
 
 
+from marcsrover.common.realsense_depth import z16_to_XY8
+
+
 class Node:
     def __init__(self):
         zenoh.init_log_from_env_or("info")
@@ -80,24 +83,17 @@ class Node:
                     color_frame = cv2.resize(color_frame, (320, 240))
                     depth_frame = cv2.resize(depth_frame, (320, 240))
 
+                    depth_frame = z16_to_XY8(depth_frame)
+
                     color_frame = cv2.imencode(
-                        ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 40]
+                        ".jpg", color_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 60]
                     )[1].tobytes()
 
-                    min, max, _, _ = cv2.minMaxLoc(depth_frame)
-                    cv2.normalize(
-                        depth_frame, depth_frame, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1
-                    )
-                    depth_frame = cv2.imencode(
-                        ".jpg", depth_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 40]
-                    )[1].tobytes()
+                    depth_frame = depth_frame.ravel().tobytes()
 
                     bytes = D435I(
                         rgb=color_frame,
                         depth=depth_frame,
-                        width=320,
-                        height=240,
-                        depth_factor=max / 255.0,
                     ).serialize()
 
                     realsense.put(bytes)

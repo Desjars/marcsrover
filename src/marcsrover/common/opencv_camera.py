@@ -5,7 +5,7 @@ import cv2
 
 import numpy as np
 
-from marcsrover.message import OpenCVCamera
+from marcsrover.message import BytesMessage
 
 
 class Node:
@@ -49,7 +49,7 @@ class Node:
                         ".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 50]
                     )[1].tobytes()
 
-                    bytes = OpenCVCamera(jpg_frame).serialize()
+                    bytes = BytesMessage(jpg_frame).serialize()
 
                     camera.put(bytes)
             except KeyboardInterrupt:
