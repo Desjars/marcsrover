@@ -43,32 +43,32 @@ def run(args) -> None:
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            # processes.append(subprocess.Popen(["uv", "run", "realsense"]))
+            processes.append(subprocess.Popen(["uv", "run", "realsense"]))
 
-            processes.append(
-                subprocess.Popen(
-                    [
-                        "uv",
-                        "run",
-                        "lidar",
-                        "--lidar-port",
-                        args.lidar_port,
-                    ]
-                )
-            )
-            processes.append(
-                subprocess.Popen(
-                    [
-                        "uv",
-                        "run",
-                        "rover",
-                        "--servo-port",
-                        args.servo_port,
-                        "--microcontroller-port",
-                        args.microcontroller_port,
-                    ]
-                )
-            )
+            # processes.append(
+            #     subprocess.Popen(
+            #         [
+            #             "uv",
+            #             "run",
+            #             "lidar",
+            #             "--lidar-port",
+            #             args.lidar_port,
+            #         ]
+            #     )
+            # )
+            # processes.append(
+            #     subprocess.Popen(
+            #         [
+            #             "uv",
+            #             "run",
+            #             "rover",
+            #             "--servo-port",
+            #             args.servo_port,
+            #             "--microcontroller-port",
+            #             args.microcontroller_port,
+            #         ]
+            #     )
+            # )
 
             print("Processes started. Press CTRL+C to terminate.")
 

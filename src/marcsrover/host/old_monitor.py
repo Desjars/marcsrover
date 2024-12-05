@@ -6,7 +6,35 @@ import time
 import numpy as np
 import dearpygui.dearpygui as dpg
 
-from marcsrover.message import D435I, LidarScan, OpenCVCamera, RoverControl
+from marcsrover.message import D435I, LidarScan, BytesMessage, RoverControl
+
+
+"""
+angle = math.radians(i * angle_step)  # Convertir en radians
+x = int(center[0] + radius * math.cos(angle))
+y = int(center[1] + radius * math.sin(angle))
+
+# Dessiner un petit cercle à la position de la note
+pygame.draw.circle(background, WHITE, (x, y), 5)
+
+pygame.draw.line(background, WHITE, center, (x, y), 2)
+
+# remove the "./samples/" from the beginning of the note
+note = note.split("/")[2]
+# remove ".wav" from the note
+note = note.split(".")[0]
+# remove vH or vL from the note
+note = note.split("v")[0]
+text = font.render(note, True, WHITE)
+# center text on the position of the note
+x, y = x - text.get_width() // 2, y - text.get_height() // 2
+
+# then add a gap with cos/sin of the angle and text size/2
+gap_x = math.cos(angle) * text.get_width() // 2 + 10 * np.sign(math.cos(angle))
+gap_y = math.sin(angle) * text.get_height() // 2 + 10 * np.sign(math.sin(angle))
+
+background.blit(text, (x + gap_x, y + gap_y))
+"""
 
 
 class Node:
@@ -117,8 +145,8 @@ class Node:
         print("Monitor stopped")
 
     def opencv_camera_callback(self, sample: zenoh.Sample) -> None:
-        image: OpenCVCamera = OpenCVCamera.deserialize(sample.payload.to_bytes())
-        rgb = np.frombuffer(bytes(image.frame), dtype=np.uint8)
+        image: BytesMessage = BytesMessage.deserialize(sample.payload.to_bytes())
+        rgb = np.frombuffer(bytes(image.data), dtype=np.uint8)
         rgb = cv2.imdecode(rgb, cv2.IMREAD_COLOR)
         rgb = cv2.resize(rgb, (640, 480))
         rgb = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
