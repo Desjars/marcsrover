@@ -45,7 +45,7 @@ def run(args) -> None:
             processes.append(subprocess.Popen(["uv", "run", "monitor"]))
             # processes.append(subprocess.Popen(["uv", "run", "opencv-camera"]))
             # processes.append(subprocess.Popen(["uv", "run", "joystick-controller"]))
-            # processes.append(subprocess.Popen(["uv", "run", "keyboard-controller"]))
+            processes.append(subprocess.Popen(["uv", "run", "keyboard-controller"]))
 
             print("Processes started. Press CTRL+C to terminate.")
 

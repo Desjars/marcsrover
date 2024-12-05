@@ -20,9 +20,12 @@ def XY8_to_z16(depth_image) -> np.ndarray:
     height = depth_image.shape[0]
 
     z16_depth = np.zeros((height, width), dtype=np.uint16)
-    z16_depth = ((depth_image[:, :, 1].astype(np.uint16) << 8) | depth_image[:, :, 0].astype(np.uint16))
+    z16_depth = (depth_image[:, :, 1].astype(np.uint16) << 8) | depth_image[
+        :, :, 0
+    ].astype(np.uint16)
 
     return z16_depth
+
 
 def XY8_to_BGR8(depth_image) -> np.ndarray:
     width = depth_image.shape[1]

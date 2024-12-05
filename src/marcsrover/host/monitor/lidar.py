@@ -45,13 +45,15 @@ def lidar_draw(sample: LidarScan) -> None:
         angle = sample.angles[i]
         distance = sample.distances[i]
 
-        if distance < 0 or distance > radius:
+        distance = distance * 0.2
+
+        if distance > radius:
             continue
 
-        x = center[0] + distance * np.cos(np.deg2rad(angle)) * 0.5
-        y = center[1] + distance * np.sin(np.deg2rad(angle)) * 0.5
+        x = center[0] + distance * np.cos(np.deg2rad(angle))
+        y = center[1] + distance * np.sin(np.deg2rad(angle))
 
-        cv2.circle(frame, (int(x), int(y)), 1, (0.0, 0.0, 1.0, 1.0), 1)
+        cv2.circle(frame, (int(x), int(y)), 1, (0.0, 0.0, 1.0, 1.0), 2)
 
     try:
         dpg.set_value("visualizer", frame)

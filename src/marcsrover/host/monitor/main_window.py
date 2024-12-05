@@ -9,7 +9,7 @@ from marcsrover.host.monitor.lidar import lidar_draw
 from marcsrover.host.monitor.opencv import opencv_draw
 from marcsrover.message import D435I, SLAM, LidarScan, BytesMessage
 
-callback_to_call = "realsense"
+callback_to_call = "lidar"
 mutex = threading.Lock()
 
 
