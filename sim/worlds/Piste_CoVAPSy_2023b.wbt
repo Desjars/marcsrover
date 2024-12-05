@@ -6,8 +6,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.4591839645218227 0.14736771629057283 -0.8760324439889897 2.2494996744492886
-  position 3.3296884336264227 5.3465250952901044 1.810575729076422
+  orientation 0.26687242406214257 0.07169775594545237 -0.9610611536565102 2.6820500562220455
+  position 5.631738981619485 5.147277227310434 1.5365662414919312
   followType "Mounted Shot"
 }
 TexturedBackground {
@@ -2833,9 +2833,7 @@ Robot {
     }
     Group {
       children [
-        InertialUnit {
-          translation 0.13 0 0.11
-          name "imu"
+        Gyro {
         }
         Camera {
           translation 0.13 0 0.11
