@@ -38,9 +38,9 @@ class Node:
         # Initialisation du module
         self.i2cbus = smbus.SMBus(1)
         time.sleep(0.5)
-        data = self.i2cbus.read_i2c_block_data(ADDRESS, 0x3F, 1)
-        print(data[0])
-        data[0] = 0x20
+        # data = self.i2cbus.read_i2c_block_data(ADDRESS, 0x3F, 1)
+        # print(data[0])
+        # data[0] = 0x20
         time.sleep(0.5)
         # i2cbus.write_byte_data(ADDRESS,0x3F,32)
         time.sleep(2)
