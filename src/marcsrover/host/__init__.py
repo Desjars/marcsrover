@@ -44,7 +44,7 @@ def run(args) -> None:
         try:
             processes.append(subprocess.Popen(["uv", "run", "monitor"]))
             processes.append(subprocess.Popen(["uv", "run", "keyboard-controller"]))
-            processes.append(subprocess.Popen(["uv", "run", "auto-pilot"]))
+            # processes.append(subprocess.Popen(["uv", "run", "auto-pilot"]))
 
             # processes.append(subprocess.Popen(["uv", "run", "opencv-camera"]))
             # processes.append(subprocess.Popen(["uv", "run", "joystick-controller"]))
