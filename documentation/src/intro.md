@@ -26,6 +26,7 @@ Voici les différentes étapes que vous pourrez suivre pour commencer à dévelo
 - Setup de la Raspberry PI : [Setup de la Raspberry PI](sbc.md)
 - Setup du microcontrolleur : [Setup du STM32](microcontroller.md)
 - Setup de l'ordinateur de développement : [Setup de l'ordinateur de développement](devpc.md)
+- Configuration du simulateur : [Configuration du simulateur](simulator.md)
 
 - Qu'est ce que c'est Zenoh ? : [Zenoh](zenoh.md)
 - Qu'est ce que c'est UV ? : [UV](uv.md)
