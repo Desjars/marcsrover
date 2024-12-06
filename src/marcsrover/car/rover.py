@@ -61,7 +61,7 @@ class Node:
         speed = 4000 + motor.speed
 
         # at the moment going backward is not really supported, so we will just ignore it and max speed is now 1500
-        speed = min(1000, speed)
+        speed = min(5000, speed)
         speed = max(2500, speed)
 
         self.mutex.acquire()
