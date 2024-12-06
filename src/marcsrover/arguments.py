@@ -14,21 +14,21 @@ def main_args():
     parser.add_argument(
         "--servo-port",
         type=str,
-        default="/dev/tty_SERVO",
+        default="/dev/ttyUSB_SERVO",
         help="Serial port for the connection to the servo motor.",
     )
 
     parser.add_argument(
         "--microcontroller-port",
         type=str,
-        default="/dev/tty_STM32",
+        default="/dev/ttyUSB_STM32",
         help="Serial port for the connection to the microcontroller.",
     )
 
     parser.add_argument(
         "--lidar-port",
         type=str,
-        default="/dev/tty_LIDAR",
+        default="/dev/ttyUSB_LIDAR",
         help="Serial port for the connection to the LiDAR.",
     )
 
@@ -41,7 +41,7 @@ def lidar_args():
     parser.add_argument(
         "--lidar-port",
         type=str,
-        default="/dev/ttyUSB0",
+        default="/dev/ttyUSB_LIDAR",
         help="Serial port for the connection to the LiDAR.",
     )
 
@@ -54,14 +54,14 @@ def rover_args():
     parser.add_argument(
         "--servo-port",
         type=str,
-        default="/dev/ttyACM1",
+        default="/dev/ttyUSB_SERVO",
         help="Serial port for the connection to the servo motor.",
     )
 
     parser.add_argument(
         "--microcontroller-port",
         type=str,
-        default="/dev/ttyACM0",
+        default="/dev/ttyUSB_STM32",
         help="Serial port for the connection to the microcontroller.",
     )
 
