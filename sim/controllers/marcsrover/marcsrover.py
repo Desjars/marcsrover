@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 from vehicle import Driver
-from controller import Lidar, Camera, RangeFinder
+from controller import Lidar, Camera, RangeFinder, Accelerometer, Gyro
 
 from dataclasses import dataclass
 
@@ -31,6 +31,15 @@ class LidarScan(IdlStruct):
 class RoverControl(IdlStruct):
     speed: int32
     steering: int32
+
+@dataclass
+class IMU(IdlStruct):
+    accel_x: float32
+    accel_y: float32
+    accel_z: float32
+    gyro_x: float32
+    gyro_y: float32
+    gyro_z: float32
 
 
 class Node:
@@ -63,6 +72,14 @@ class Node:
         self.depth = RangeFinder("realsense_depth")
         self.depth.enable(sensor_time_step)
 
+        # Accelerometer
+        self.accel = Accelerometer("accelerometer")
+        self.accel.enable(sensor_time_step)
+
+        # Gyro
+        self.gyro = Gyro("gyro")
+        self.gyro.enable(sensor_time_step)
+
         self.mutex = threading.Lock()
         self.speed = 0
         self.steer = 0
@@ -75,6 +92,8 @@ class Node:
             control = session.declare_subscriber(
                 "marcsrover/control", self.control_callback
             )
+
+            imu = session.declare_publisher("marcsrover/imu")
 
             try:
                 while self.driver.step() != -1:
@@ -104,6 +123,20 @@ class Node:
 
                     camera.put(bytes)
 
+                    accel = self.accel.getValues()
+                    gyro = self.gyro.getValues()
+
+                    bytes = IMU(
+                        accel_x=accel[0],
+                        accel_y=accel[1],
+                        accel_z=accel[2],
+                        gyro_x=gyro[0],
+                        gyro_y=gyro[1],
+                        gyro_z=gyro[2],
+                    ).serialize()
+
+                    imu.put(bytes)
+
                     self.mutex.acquire()
                     self.driver.setSteeringAngle(self.steer)
                     self.driver.setCruisingSpeed(self.speed)
@@ -115,6 +148,7 @@ class Node:
 
             camera.undeclare()
             lidar.undeclare()
+            imu.undeclare()
             control.undeclare()
             session.close()
 

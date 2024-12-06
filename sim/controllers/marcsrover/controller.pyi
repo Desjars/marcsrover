@@ -29,3 +29,23 @@ class RangeFinder:
 
     def enable(self, sensor_time_step: int) -> None:
         pass
+
+class Accelerometer:
+    def __init__(self, name: str) -> None:
+        pass
+
+    def enable(self, sensor_time_step: int) -> None:
+        pass
+
+    def getValues(self) -> List[float]:
+        pass
+
+class Gyro:
+    def __init__(self, name: str) -> None:
+        pass
+
+    def enable(self, sensor_time_step: int) -> None:
+        pass
+
+    def getValues(self) -> List[float]:
+        pass
