@@ -27,8 +27,9 @@ Voici les différentes étapes que vous pourrez suivre pour commencer à dévelo
 - Setup du microcontrolleur : [Setup du STM32](microcontroller.md)
 - Setup de l'ordinateur de développement : [Setup de l'ordinateur de développement](devpc.md)
 
-- Archiecture du projet : [Architecture](architecture.md)
 - Qu'est ce que c'est Zenoh ? : [Zenoh](zenoh.md)
+- Qu'est ce que c'est UV ? : [UV](uv.md)
+- Archiecture du projet : [Architecture](architecture.md)
 
 # Contribution
 
