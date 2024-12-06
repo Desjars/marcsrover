@@ -88,7 +88,7 @@ uv run host --ip <IP OF RASPBERRY PI>
 
 ## Développer le véhicule
 
-Merci de suivre la [documentation](documentation/src/SUMMARY.md) spécifique.
+Merci de suivre la [documentation](documentation/src/intro.md) spécifique.
 
 # Contribution
 

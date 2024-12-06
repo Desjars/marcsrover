@@ -67,8 +67,7 @@ class Node:
 
         # steering control : On fait deux moyenne, l'une entre 45 et 90 degrés, l'autre entre 270 et 315 degrés. On fait la différence
         # entre les deux moyennes, cela donne la direction dans laquelle on doit tourner. Si la différence est négative, on tourne à
-        # gauche, si elle est positive on tourne à droite. On va dire que si la différence est inférieure à 10 degrés, on ne tourne pas
-        # et si elle est supérieure à 30 degrés, on tourne à fond.
+        # gauche, si elle est positive on tourne à droite.
 
         indices1 = np.where((angles >= 45) & (angles <= 90))
         indices2 = np.where((angles >= 270) & (angles <= 315))

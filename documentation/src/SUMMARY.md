@@ -1,10 +1,10 @@
 # Summary
 
-- [Présentation](./Presentation.md)
-- [Flash RB5](./FlashRB5.md)
-- [Wifi](./Wifi.md)
-- [User](./User.md)
-- [Installation RB5](./InstallationRB5.md)
-- [Installation des outils](Installation.md)
-- [Test du robot](TestRobot.md)
-- [Noeuds](Nodes.md)
+- [Introduction](intro.md)
+- [Hardware](hardware.md)
+- [Setup de la Raspberry PI](sbc.md)
+- [Setup du STM32](microcontroller.md)
+- [Setup de l'ordinateur de développement](devpc.md)
+- [Zenoh](zenoh.md)
+- [UV](uv.md)
+- [Architecture](architecture.md)
