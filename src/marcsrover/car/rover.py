@@ -60,8 +60,8 @@ class Node:
         steering = 1630 + (motor.steering + 90) * (2048 - 1630) / 180
         speed = 4000 + motor.speed
 
-        # at the moment going backward is not really supported, so we will just ignore it
-        speed = max(4000, speed)
+        # at the moment going backward is not really supported, so we will just ignore it and max speed is now 1500
+        speed = max(1500, speed)
 
         self.mutex.acquire()
 

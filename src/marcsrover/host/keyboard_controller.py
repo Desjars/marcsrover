@@ -58,9 +58,9 @@ class Node:
                             self.keys[self.table[key]] = False
 
                         if self.keys[keyboard.Key.up]:
-                            speed = 3000
+                            speed = 1500
                         elif self.keys[keyboard.Key.down]:
-                            speed = -3000
+                            speed = -1500
 
                         if self.keys[keyboard.Key.left]:
                             steering = -90
