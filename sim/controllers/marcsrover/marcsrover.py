@@ -32,6 +32,7 @@ class RoverControl(IdlStruct):
     speed: int32
     steering: int32
 
+
 @dataclass
 class IMU(IdlStruct):
     accel_x: float32

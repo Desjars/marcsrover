@@ -25,6 +25,7 @@ lidar = "marcsrover:inner_lidar"
 realsense = "marcsrover:inner_realsense"
 rover = "marcsrover:inner_rover"
 imu = "marcsrover:inner_imu"
+auto-pilot = "marcsrover:inner_auto_pilot"
 
 [project.optional-dependencies]
 host = ["dearpygui==2.0.0", "pygame==2.6.1", "pynput>=1.7.7"]

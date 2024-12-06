@@ -63,3 +63,9 @@ def inner_imu() -> None:
     from marcsrover.car.imu import launch_node as launch_imu
 
     launch_imu()
+
+
+def inner_auto_pilot() -> None:
+    from marcsrover.host.auto_pilot import launch_node as launch_auto_pilot
+
+    launch_auto_pilot()
