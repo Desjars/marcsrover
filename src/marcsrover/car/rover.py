@@ -61,11 +61,11 @@ class Node:
         speed = 4000 + motor.speed
 
         # at the moment going backward is not really supported, so we will just ignore it and max speed is now 1500
-        speed = max(1500, speed)
+        speed = min(1000, speed)
+        speed = max(2500, speed)
 
         self.mutex.acquire()
 
-        print (steering)
         self.steering.write_goal_position(np.uint32(steering), "steering")
         self.speed.write((f"s0{speed}" + "\n").encode("utf-8"))
 
