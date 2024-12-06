@@ -29,12 +29,12 @@ class Node:
         self.mutex = Lock()
 
         self.steering = DynamixelBus(
-            microcontroller_port, {"steering": (1, "xl430-w250")}
+            servo_port, {"steering": (1, "xl430-w250")}
         )
 
         self.steering.write_torque_enable(TorqueMode.ENABLED, "steering")
 
-        self.speed = serial.Serial(servo_port, 115200, timeout=1)
+        self.speed = serial.Serial(microcontroller_port, 115200, timeout=1)
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
