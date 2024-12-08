@@ -1,9 +1,10 @@
 import zenoh
 import json
+import threading
 
 import numpy as np
 
-from marcsrover.message import LidarScan, RoverControl
+from marcsrover.message import AutoPilot, LidarScan, RoverControl
 
 
 class Node:
@@ -23,9 +24,38 @@ class Node:
 
         self.rover_control = None
 
+        self.min_speed = 500
+        self.max_speed = 2000
+        self.back_speed = 1500
+        self.steering = 90
+        self.back_treshold = 0.5
+        self.fwd_treshold = 0.5
+        self.steering_treshold = 0.5
+        self.steering_min_angle = 45
+        self.steering_max_angle = 90
+
+        self.mutex = threading.Lock()
+
+    def callback(self, sample: zenoh.Sample):
+        with self.mutex:
+            config = AutoPilot.deserialize(sample.payload.to_bytes())
+
+            self.min_speed = config.min_speed
+            self.max_speed = config.max_speed
+            self.back_speed = config.back_speed
+            self.steering = config.steering
+            self.back_treshold = config.back_treshold
+            self.fwd_treshold = config.fwd_treshold
+            self.steering_treshold = config.steering_treshold
+            self.steering_min_angle = config.steering_min_angle
+            self.steering_max_angle = config.steering_max_angle
+
+
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             self.rover_control = session.declare_publisher("marcsrover/control")
+
+            self.config = session.declare_subscriber("marcsrover/autopilot/config", self.callback)
 
             lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
 
@@ -46,51 +76,49 @@ class Node:
         if self.rover_control is None:
             return
 
-        lidar = LidarScan.deserialize(sample.payload.to_bytes())
+        with self.mutex:
+            lidar = LidarScan.deserialize(sample.payload.to_bytes())
 
-        # speed control : On fait une moyenne des espaces angles entre 350 et 10 degrés, cela donne la vitesse à laquelle on doit avancer
-        angles = np.array(lidar.angles)
-        indices = np.where((angles >= 350) | (angles <= 10))
-        distances = np.array(lidar.distances)[indices]
-        mean = np.mean(distances) / 1000
+            # speed control : On fait une moyenne des espaces angles entre 350 et 10 degrés, cela donne la vitesse à laquelle on doit avancer
+            angles = np.array(lidar.angles)
+            indices = np.where((angles >= 350) | (angles <= 10))
+            distances = np.array(lidar.distances)[indices]
+            mean = np.mean(distances) / 1000
 
-        speed = 0
+            speed = 0
 
-        if mean < 0.5:
-            speed = -1500
-        elif mean < 1:
-            speed = 2000
-        elif mean < 2:
-            speed = 3000
-        else:
-            speed = 4000
+            if mean < self.back_treshold:
+                speed = -self.back_speed
+            elif mean < self.fwd_treshold:
+                speed = self.min_speed
+            else:
+                speed = self.max_speed
 
-        # steering control : On fait deux moyenne, l'une entre 45 et 90 degrés, l'autre entre 270 et 315 degrés. On fait la différence
-        # entre les deux moyennes, cela donne la direction dans laquelle on doit tourner. Si la différence est négative, on tourne à
-        # gauche, si elle est positive on tourne à droite.
+            # steering control : On fait deux moyenne, l'une entre 45 et 90 degrés, l'autre entre 270 et 315 degrés. On fait la différence
+            # entre les deux moyennes, cela donne la direction dans laquelle on doit tourner. Si la différence est négative, on tourne à
+            # gauche, si elle est positive on tourne à droite.
+            indices1 = np.where((angles >= self.steering_min_angle) & (angles <= self.steering_max_angle))
+            indices2 = np.where((angles >= 360 - self.steering_max_angle) & (angles <= 360 - self.steering_min_angle))
 
-        indices1 = np.where((angles >= 45) & (angles <= 90))
-        indices2 = np.where((angles >= 270) & (angles <= 315))
+            distances1 = np.array(lidar.distances)[indices1]
+            distances2 = np.array(lidar.distances)[indices2]
 
-        distances1 = np.array(lidar.distances)[indices1]
-        distances2 = np.array(lidar.distances)[indices2]
+            mean1 = np.mean(distances1) / 1000
+            mean2 = np.mean(distances2) / 1000
 
-        mean1 = np.mean(distances1) / 1000
-        mean2 = np.mean(distances2) / 1000
+            steering = 0
 
-        steering = 0
+            if mean1 - mean2 < -self.steering_treshold:
+                steering = -self.steering
+            elif mean1 - mean2 > self.steering_treshold:
+                steering = self.steering
 
-        if mean1 - mean2 < -0.5:
-            steering = -90
-        elif mean1 - mean2 > 0.5:
-            steering = 90
+            if mean < self.back_treshold:
+                steering = -steering
 
-        if mean < 0.5:
-            steering = -steering
+            bytes = RoverControl(speed, steering).serialize()
 
-        bytes = RoverControl(speed, steering).serialize()
-
-        self.rover_control.put(bytes)
+            self.rover_control.put(bytes)
 
 
 def launch_node():

@@ -7,6 +7,7 @@ import dearpygui.dearpygui as dpg
 from marcsrover.host.monitor.IMU import init_imu
 from marcsrover.host.monitor.controller import init_controller
 from marcsrover.host.monitor.main_window import init_main_window
+from marcsrover.host.monitor.auto_pilot import init_autopilot
 
 
 class Node:
@@ -39,6 +40,7 @@ class Node:
             init_controller(session)
             init_main_window(session)
             init_imu(session)
+            init_autopilot(session)
 
             dpg.show_viewport()
             try:

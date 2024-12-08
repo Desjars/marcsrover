@@ -45,3 +45,18 @@ class LidarScan(IdlStruct):
     qualities: List[float32]
     angles: List[float32]
     distances: List[float32]
+
+@dataclass
+class AutoPilot(IdlStruct):
+    min_speed: int32 # 500 - 2000: 1000
+    max_speed: int32 # 500 - 2000: 1400
+    back_speed: int32 # # 500 - 2000: 1500
+    steering: int32 # -100 - 100: 90
+
+    back_treshold: float32 # 0 - 1: 0.5
+    fwd_treshold: float32 # 0 - 1: 0.5
+
+    steering_treshold: float32 # 0 - 1: 0.5
+
+    steering_min_angle: int32 # 0 - 90: 45
+    steering_max_angle: int32 # 0 - 90: 90

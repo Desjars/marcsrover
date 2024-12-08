@@ -22,7 +22,7 @@ def imu_callback(sample: zenoh.Sample) -> None:
 def init_imu(session: zenoh.Session) -> None:
     _ = session.declare_subscriber("marcsrover/imu", imu_callback)
 
-    with dpg.window(label="IMU", width=256, height=592, pos=(1024, 128)):
+    with dpg.window(label="IMU", width=256, height=256, pos=(1024, 128)):
         dpg.add_slider_float(
             label="Accel X",
             tag="Accel X",

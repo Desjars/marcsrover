@@ -160,7 +160,7 @@ class Node:
 
         self.mutex.acquire()
 
-        self.speed = motor.speed / 1000
+        self.speed = motor.speed / 1000 * 1.5
         self.steer = ((motor.steering + 90) * (16 - (-16)) / 180 + (-16)) * np.pi / 180
 
         self.mutex.release()
