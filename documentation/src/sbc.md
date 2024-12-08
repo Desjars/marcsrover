@@ -43,3 +43,25 @@ uv sync --extra car
 ```
 
 **Voici un lien utile pour mettre des noms aux ports du LiDAR, du servo moteur et du microcontrolleur** : [ici](https://www.freva.com/assign-fixed-usb-port-names-to-your-raspberry-pi/)
+
+Vous pouvez ensuite établir une connexion `vnc` pour avoir une interface graphique sur la Raspberry PI.
+
+```bash
+sudo raspi-config
+```
+
+Et ensuite activer `VNC` dans `Interfacing Options`.
+
+**Voici un lien utile pour se connecter depuis un autre ordinateur** : [ici](https://raspberry-pi.fr/vnc-raspberry-pi/)
+
+**Attention** il est possible que vous ayez besoin de redémarrer la Raspberry PI pour que les changements soient pris en compte.
+
+Je recommande également d'établir une connexion Ethernet entre la Raspberry PI et l'ordinateur pour éviter les problèmes de connexion.
+
+Dans la Raspberry PI avec l'accès graphique VNC, vous devez modifier les connexions réseau, chercher "Wired Connection" et modifier les paramètres IPv4 pour mettre une adresse IP statique.
+
+Par exemple, une adresse : 192.168.4.1 et un masque de sous-réseau : 255.255.255.0
+
+Faites de même sur votre ordinateur, mais avec une adresse IP différente, par exemple : 192.168.4.2
+
+Ensuite vous pouvez ssh et vnc sur la Raspberry PI avec l'adresse IP et la connexion éthernet.
