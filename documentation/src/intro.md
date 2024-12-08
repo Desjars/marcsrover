@@ -31,7 +31,3 @@ Voici les différentes étapes que vous pourrez suivre pour commencer à dévelo
 - Qu'est ce que c'est Zenoh ? : [Zenoh](zenoh.md)
 - Qu'est ce que c'est UV ? : [UV](uv.md)
 - Archiecture du projet : [Architecture](architecture.md)
-
-# Contribution
-
-Toutes les contributions sont les bienvenues. Pour contribuer, merci de suivre les [instructions](CONTRIBUTING.md).
