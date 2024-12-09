@@ -18,6 +18,8 @@ static uint8_t flag = 0;
 float measured_speed_m_s = 0;
 float measured_speed_mm_s = 0;
 
+float command = 0;
+
 uint32_t watchdog_counter = 0;
 uint32_t backward_counter = 0;
 
@@ -166,7 +168,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     error = setpoint - current_speed;
 
     // PI controller calculation (Proportional-Integral controller)
-    float command = 0;
+    command = 0;
 
     // Motor control logic
     if (setpoint == 0)

@@ -24,9 +24,9 @@ class Node:
 
         self.rover_control = None
 
-        self.min_speed = 500
-        self.max_speed = 2000
-        self.back_speed = 1500
+        self.min_speed = 0
+        self.max_speed = 0
+        self.back_speed = 0
         self.steering = 90
         self.back_treshold = 0.5
         self.fwd_treshold = 0.5
@@ -115,6 +115,8 @@ class Node:
 
             if mean < self.back_treshold:
                 steering = -steering
+
+            speed = min(1000, speed)
 
             bytes = RoverControl(speed, steering).serialize()
 

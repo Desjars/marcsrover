@@ -60,7 +60,7 @@ class Node:
         steering = 1630 + (motor.steering + 90) * (2048 - 1630) / 180
         speed = 4000 + motor.speed
 
-        speed = max(4000, min(5500, speed)) # Limit speed to [4000, 5500] (ie, only going forward at 1.5 m/s)
+        speed = max(1500, min(5000, speed))
 
         self.mutex.acquire()
 

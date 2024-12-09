@@ -27,7 +27,7 @@ def init_autopilot(session: zenoh.Session) -> None:
             width=150,
             min_value=0,
             max_value=2000,
-            default_value=1000,
+            default_value=0,
         )
         dpg.add_slider_int(
             label="max_speed",
@@ -35,15 +35,15 @@ def init_autopilot(session: zenoh.Session) -> None:
             width=150,
             min_value=0,
             max_value=2000,
-            default_value=1400,
+            default_value=0,
         )
         dpg.add_slider_int(
             label="back_speed",
             tag="back_speed",
             width=150,
             min_value=0,
-            max_value=2000,
-            default_value=1500,
+            max_value=3000,
+            default_value=0,
         )
         dpg.add_slider_int(
             label="steering",
