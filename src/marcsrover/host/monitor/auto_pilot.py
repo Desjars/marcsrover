@@ -2,10 +2,11 @@ import zenoh
 
 import dearpygui.dearpygui as dpg
 
-from marcsrover.message import AutoPilot
+from marcsrover.message import AutoPilotConfig
+
 
 def callback(session: zenoh.Session) -> None:
-    bytes = AutoPilot(
+    bytes = AutoPilotConfig(
         min_speed=dpg.get_value("min_speed"),
         max_speed=dpg.get_value("max_speed"),
         back_speed=dpg.get_value("back_speed"),
@@ -19,8 +20,9 @@ def callback(session: zenoh.Session) -> None:
 
     session.put("marcsrover/autopilot/config", bytes)
 
+
 def init_autopilot(session: zenoh.Session) -> None:
-    with dpg.window(label="autopilot", width=256, height=256, pos=(1024, 128+256)):
+    with dpg.window(label="autopilot", width=256, height=256, pos=(1024, 128 + 256)):
         dpg.add_slider_int(
             label="min_speed",
             tag="min_speed",
@@ -93,4 +95,4 @@ def init_autopilot(session: zenoh.Session) -> None:
             max_value=90,
             default_value=90,
         )
-        dpg.add_button(label="send", width=150, callback=lambda:callback(session))
+        dpg.add_button(label="send", width=150, callback=lambda: callback(session))

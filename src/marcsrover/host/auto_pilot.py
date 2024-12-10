@@ -4,7 +4,7 @@ import threading
 
 import numpy as np
 
-from marcsrover.message import AutoPilot, LidarScan, RoverControl
+from marcsrover.message import AutoPilotConfig, LidarScan, RoverControl
 
 
 class Node:
@@ -38,7 +38,7 @@ class Node:
 
     def callback(self, sample: zenoh.Sample):
         with self.mutex:
-            config = AutoPilot.deserialize(sample.payload.to_bytes())
+            config = AutoPilotConfig.deserialize(sample.payload.to_bytes())
 
             self.min_speed = config.min_speed
             self.max_speed = config.max_speed
@@ -50,12 +50,13 @@ class Node:
             self.steering_min_angle = config.steering_min_angle
             self.steering_max_angle = config.steering_max_angle
 
-
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
             self.rover_control = session.declare_publisher("marcsrover/control")
 
-            self.config = session.declare_subscriber("marcsrover/autopilot/config", self.callback)
+            self.config = session.declare_subscriber(
+                "marcsrover/autopilot/config", self.callback
+            )
 
             lidar = session.declare_subscriber("marcsrover/lidar", self.lidar_callback)
 
@@ -97,8 +98,14 @@ class Node:
             # steering control : On fait deux moyenne, l'une entre 45 et 90 degrés, l'autre entre 270 et 315 degrés. On fait la différence
             # entre les deux moyennes, cela donne la direction dans laquelle on doit tourner. Si la différence est négative, on tourne à
             # gauche, si elle est positive on tourne à droite.
-            indices1 = np.where((angles >= self.steering_min_angle) & (angles <= self.steering_max_angle))
-            indices2 = np.where((angles >= 360 - self.steering_max_angle) & (angles <= 360 - self.steering_min_angle))
+            indices1 = np.where(
+                (angles >= self.steering_min_angle)
+                & (angles <= self.steering_max_angle)
+            )
+            indices2 = np.where(
+                (angles >= 360 - self.steering_max_angle)
+                & (angles <= 360 - self.steering_min_angle)
+            )
 
             distances1 = np.array(lidar.distances)[indices1]
             distances2 = np.array(lidar.distances)[indices2]

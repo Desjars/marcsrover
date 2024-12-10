@@ -1,11 +1,11 @@
 import zenoh
 import json
-import smbus
-import time
+
+import pyrealsense2 as rs
+import numpy as np
 
 from marcsrover.message import IMU
-
-ADDRESS = 0x28  # adresse 7 bits du BNO055
+from typing import Tuple
 
 
 class Node:
@@ -23,39 +23,30 @@ class Node:
         self.zenoh_config.insert_json5("scouting/multicast/enabled", json.dumps(False))
         self.zenoh_config.insert_json5("scouting/gossip/enabled", json.dumps(True))
 
-        PAGE_SWAP = 0x07
-        ACC_CONF = 0x08
-        GYR_CONF_0 = 0x0A
-        GYR_CONF_1 = 0x0B
-        MAG_CONF = 0x09
-        TEMP_SOURCE = 0x40
-        UNIT_SEL = 0x3B
-        PWR_MODE = 0x3E
-        HEADING = 0x1A
-        MODE_REG = 0x3D
-        FUSION_MODE = 0x0C
+        self.pipeline = rs.pipeline()
+        config = rs.config()
 
-        # Initialisation du module
-        self.i2cbus = smbus.SMBus(1)
-        time.sleep(0.5)
-        # data = self.i2cbus.read_i2c_block_data(ADDRESS, 0x3F, 1)
-        # print(data[0])
-        # data[0] = 0x20
-        time.sleep(0.5)
-        # i2cbus.write_byte_data(ADDRESS,0x3F,32)
-        time.sleep(2)
+        config.enable_stream(rs.stream.accel)
+        config.enable_stream(rs.stream.gyro)
 
-        # A envoyer lors du premier test
-        self.i2cbus.write_byte_data(ADDRESS, PAGE_SWAP, 1)
-        self.i2cbus.write_byte_data(ADDRESS, ACC_CONF, 0x08)
-        self.i2cbus.write_byte_data(ADDRESS, GYR_CONF_0, 0x23)
-        self.i2cbus.write_byte_data(ADDRESS, GYR_CONF_1, 0x00)
-        self.i2cbus.write_byte_data(ADDRESS, MAG_CONF, 0x1B)
-        self.i2cbus.write_byte_data(ADDRESS, PAGE_SWAP, 0)
-        self.i2cbus.write_byte_data(ADDRESS, TEMP_SOURCE, 0x01)
-        self.i2cbus.write_byte_data(ADDRESS, UNIT_SEL, 0x01)
-        self.i2cbus.write_byte_data(ADDRESS, PWR_MODE, 0x00)
-        self.i2cbus.write_byte_data(ADDRESS, MODE_REG, FUSION_MODE)
+        # Start streaming
+        self.pipeline.start(config)
+
+    def get_frame(
+        self,
+    ) -> Tuple[bool, np.ndarray | None, np.ndarray | None]:
+        frames = self.pipeline.wait_for_frames()
+
+        accel_frame = frames[0].as_motion_frame().get_motion_data()
+        gyro_frame = frames[1].as_motion_frame().get_motion_data()
+
+        accel = np.array([accel_frame.x, accel_frame.y, accel_frame.z])
+        gyro = np.array([gyro_frame.x, gyro_frame.y, gyro_frame.z])
+
+        if not accel_frame or not gyro_frame:
+            return False, None, None
+
+        return True, accel, gyro
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -63,31 +54,33 @@ class Node:
 
             try:
                 while True:
-                    accel_x = self.i2cbus.read_word_data(ADDRESS, 0x08)
-                    accel_y = self.i2cbus.read_word_data(ADDRESS, 0x0A)
-                    accel_z = self.i2cbus.read_word_data(ADDRESS, 0x0C)
-                    gyro_x = self.i2cbus.read_word_data(ADDRESS, 0x14)
-                    gyro_y = self.i2cbus.read_word_data(ADDRESS, 0x16)
-                    gyro_z = self.i2cbus.read_word_data(ADDRESS, 0x18)
+                    ret, accel, gyro = self.get_frame()
+
+                    if not ret:
+                        continue
+
+                    if accel is None or gyro is None:
+                        continue
 
                     bytes = IMU(
-                        accel_x,
-                        accel_y,
-                        accel_z,
-                        gyro_x,
-                        gyro_y,
-                        gyro_z,
+                        accel_x=accel[0],
+                        accel_y=accel[1],
+                        accel_z=accel[2],
+                        gyro_x=gyro[0],
+                        gyro_y=gyro[1],
+                        gyro_z=gyro[2],
                     ).serialize()
 
                     imu.put(bytes)
 
             except KeyboardInterrupt:
-                print("Realsense received KeyboardInterrupt")
+                print("Realsense IMU received KeyboardInterrupt")
 
+            self.pipeline.stop()
             imu.undeclare()
             session.close()
 
-        print("Realsense node stopped")
+        print("Realsense IMU node stopped")
 
 
 def launch_node():
