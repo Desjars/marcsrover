@@ -33,6 +33,7 @@ class Node:
         self.steering_treshold = 0.5
         self.steering_min_angle = 45
         self.steering_max_angle = 90
+        self.enable = True
 
         self.mutex = threading.Lock()
 
@@ -49,6 +50,7 @@ class Node:
             self.steering_treshold = config.steering_treshold
             self.steering_min_angle = config.steering_min_angle
             self.steering_max_angle = config.steering_max_angle
+            self.enable = config.enable
 
     def run(self) -> None:
         with zenoh.open(self.zenoh_config) as session:
@@ -78,6 +80,9 @@ class Node:
             return
 
         with self.mutex:
+            if not self.enable:
+                return
+
             lidar = LidarScan.deserialize(sample.payload.to_bytes())
 
             # speed control : On fait une moyenne des espaces angles entre 350 et 10 degrés, cela donne la vitesse à laquelle on doit avancer

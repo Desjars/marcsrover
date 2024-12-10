@@ -61,3 +61,5 @@ class AutoPilotConfig(IdlStruct):
 
     steering_min_angle: int32  # 0 - 90: 45
     steering_max_angle: int32  # 0 - 90: 90
+
+    enable: bool  # True or False: True
