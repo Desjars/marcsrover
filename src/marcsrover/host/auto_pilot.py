@@ -128,8 +128,6 @@ class Node:
             if mean < self.back_treshold:
                 steering = -steering
 
-            speed = min(1000, speed)
-
             bytes = RoverControl(speed, steering).serialize()
 
             self.rover_control.put(bytes)
