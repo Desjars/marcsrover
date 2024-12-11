@@ -93,70 +93,74 @@ class Node:
 
             lidar = LidarScan.deserialize(sample.payload.to_bytes())
 
-            # speed control : On fait une moyenne des espaces angles entre 350 et 10 degrés, cela donne la vitesse à laquelle on doit avancer
-            angles = np.array(lidar.angles)
-            indices = np.where((angles >= 350) | (angles <= 10))
-            distances = np.array(lidar.distances)[indices]
-            mean = np.mean(distances) / 1000
+            distances = np.array(lidar.distances)
+            indices = np.where(distances < 10000)
+            distances = distances[indices]
+            angles = np.array(lidar.angles)[indices]
+
+            front = (
+                np.mean(distances[np.where((angles >= 350) | (angles <= 10))]) / 1000
+            )
 
             speed = 0
             steering = 0
 
-            if mean < self.back_treshold:
-                speed = -2500
+            if front < self.back_treshold:
+                speed = -1000
             else:
                 # limit to max speed if mean is greater than fwd_treshold, otherwise linearly interpolate
-                if mean > self.fwd_treshold:
+                if front > self.fwd_treshold:
                     speed = self.max_speed
                 else:
                     speed = int(
                         self.min_speed
-                        + (mean - self.back_treshold)
+                        + (front - self.back_treshold)
                         * (self.max_speed - self.min_speed)
                         / (self.fwd_treshold - self.back_treshold)
                     )
 
-            indices1 = np.where(
+            indices_right = np.where(
                 (angles >= self.steering_1_min_angle)
                 & (angles <= self.steering_1_max_angle)
             )
-            indices2 = np.where(
+            indices_left = np.where(
                 (angles >= 360 - self.steering_1_max_angle)
                 & (angles <= 360 - self.steering_1_min_angle)
             )
 
-            distances1 = np.array(lidar.distances)[indices1]
-            distances2 = np.array(lidar.distances)[indices2]
+            distances_right = np.array(distances)[indices_right]
+            distances_left = np.array(distances)[indices_left]
 
-            mean1 = np.mean(distances1) / 1000
-            mean2 = np.mean(distances2) / 1000
+            mean1 = np.mean(distances_right) / 1000
+            mean2 = np.mean(distances_left) / 1000
 
-            if mean1 - mean2 < -self.steering_1_treshold:
-                steering = -90
-            elif mean1 - mean2 > self.steering_1_treshold:
-                steering = 90
-            else:
-                indices1 = np.where(
-                    (angles >= self.steering_2_min_angle)
-                    & (angles <= self.steering_2_max_angle)
-                )
-                indices2 = np.where(
-                    (angles >= 360 - self.steering_2_max_angle)
-                    & (angles <= 360 - self.steering_2_min_angle)
-                )
+            # compute the difference as a percentage of the max mean
+            diff = (mean1 - mean2) / np.max(np.abs(np.array(mean1, mean2)))
+            steering = int(45 * diff * 2)
 
-                distances1 = np.array(lidar.distances)[indices1]
-                distances2 = np.array(lidar.distances)[indices2]
+            indices_right = np.where(
+                (angles >= self.steering_2_min_angle)
+                & (angles <= self.steering_2_max_angle)
+            )
+            indices_left = np.where(
+                (angles >= 360 - self.steering_2_max_angle)
+                & (angles <= 360 - self.steering_2_min_angle)
+            )
 
-                mean1 = np.mean(distances1) / 1000
-                mean2 = np.mean(distances2) / 1000
+            distances_right = np.array(distances)[indices_right]
+            distances_left = np.array(distances)[indices_left]
 
-                if mean1 - mean2 < -self.steering_2_treshold:
-                    steering = -90
-                elif mean1 - mean2 > self.steering_2_treshold:
-                    steering = 90
+            mean1 = np.mean(distances_right) / 1000
+            mean2 = np.mean(distances_left) / 1000
 
-            if mean < self.back_treshold:
+            # compute the difference as a percentage of the max mean
+            diff = (mean1 - mean2) / np.max(np.abs(np.array(mean1, mean2)))
+
+            if np.abs(diff) > self.steering_2_treshold:
+                steering = int(90 * np.sign(diff))
+                speed = self.min_speed
+
+            if front < self.back_treshold:
                 steering = -steering
 
             bytes = RoverControl(speed, steering).serialize()

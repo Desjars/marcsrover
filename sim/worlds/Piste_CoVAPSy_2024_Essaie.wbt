@@ -6,8 +6,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.32820752476110726 0.09164641121258843 0.9401493264381144 2.4105798621998122
-  position 9.156153973070268 -7.45681298681383 8.616763713720125
+  orientation 0.49294284955806184 0.09290359505880562 -0.8650874343641383 2.9568289820047453
+  position 13.3102464651866 7.324789323944411 27.147185642795495
   followType "Mounted Shot"
 }
 TexturedBackground {
@@ -165,6 +165,82 @@ Group {
         }
       ]
       name "droit_1m_rouge(9)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.8 8.15 0.1
+      rotation 0 0 1 1.01503e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(33)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.31 8.15 0.1
+      rotation 0 0 1 1.01503e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(36)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.32 -3.17 0.1
+      rotation 0 0 1 1.01503e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(34)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.91 -3.17 0.1
+      rotation 0 0 1 1.01503e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(35)"
       boundingObject Box {
         size 1 0.1 0.2
       }
@@ -336,6 +412,82 @@ Group {
         }
       ]
       name "droit_1m_rouge(7)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1.85 0.08 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(17)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1.85 -1.86 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(19)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1.85 -0.88 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(20)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1.85 1.05 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge(18)"
       boundingObject Box {
         size 1 0.1 0.2
       }
@@ -755,20 +907,400 @@ Solid {
       appearance PBRAppearance {
       }
       geometry Box {
-        size 10 10 0.1
+        size 20 20 0.1
       }
     }
   ]
   name "sol_piste"
   boundingObject Shape {
     geometry Box {
-      size 10 10 0.1
+      size 20 20 0.1
     }
   }
 }
+Solid {
+  translation -3.35 7.71 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(44)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 6.91 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(43)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 7.67 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(40)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 6.94 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(39)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 3.98 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(30)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 4.93 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(41)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 5.94 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(42)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 -1.74 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(29)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 -0.89 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(28)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 3 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(27)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.36 0.0799995 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(25)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 1.02 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(24)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 -2.73 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(31)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 -2.73 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(32)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -3.35 2.04 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(26)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 3.98 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(23)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 4.96 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(37)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 5.95 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(38)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 3.03 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(22)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+Solid {
+  translation -1.85 2.05 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(21)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
 Robot {
-  translation 0.7756261484674286 2.5023350584379624 0.03928978199573811
-  rotation 5.256594018609173e-05 -0.0019092876757181925 0.999998175927033 0.05498573508041139
+  translation -0.11938841700485897 -0.9960197410572125 0.03923976843042442
+  rotation 0.00022816904319137202 -0.00019324263424306322 0.9999999552980852 2.7274874769805297
   children [
     Pose {
       translation 0.257 0.075 0
@@ -776,14 +1308,14 @@ Robot {
       children [
         DEF LEFT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
-            position -1.8466057890287863e-17
+            position 0.22423922904053972
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
-            position 2866.5606560315073
+            position 10461.693227269207
             axis 0 -1 0
             dampingConstant 5
           }
@@ -819,7 +1351,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation 1.6555233214682556e-13 -1 -1.4333543477349503e-13 1.4281559576158074
+                rotation 0.07247474580332133 0.6436947058347087 0.7618428557787438 5.9897319998034035
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -922,8 +1454,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -1.9868450347092827e-15 2.555221979613907e-16 1.211790751312351e-16
-                angularVelocity -2.618334273130349e-14 -2.876919961871504e-15 2.4748149898741045e-15
+                linearVelocity -0.40866561535996165 0.29716911483045666 -0.000490609926751021
+                angularVelocity -7.550641940134778 -10.353744551058876 -0.8256282344293537
               }
             }
           }
@@ -935,14 +1467,14 @@ Robot {
       children [
         DEF RIGHT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
-            position 1.1608473115501236e-16
+            position 0.27849453062671187
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
-            position 2683.1563932227923
+            position 9618.597285646094
             axis 0 1 0
             dampingConstant 5
           }
@@ -978,7 +1510,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation -5.804236557750618e-17 -0.9999999999999999 4.890407553593315e-16 6.04691825007071
+                rotation 0.13410692456005555 0.9568520638453378 0.25777792903963154 5.287195723844471
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1081,8 +1613,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 1.7815385125898884e-15 1.1084115912951517e-15 -2.022893813921294e-16
-                angularVelocity -9.90355986158243e-15 -2.280662930926683e-15 2.4884653647137563e-15
+                linearVelocity -0.34798819950910787 0.2711738749282627 -0.0002716520091873277
+                angularVelocity -6.926701437447832 -8.516169675810719 -0.728086535707086
               }
             }
           }
@@ -1095,7 +1627,7 @@ Robot {
       children [
         DEF LEFT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
-            position 2816.7857677918746
+            position 10190.40322501233
             axis 0 -1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -1122,7 +1654,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation -2.1195483387227478e-13 -1 3.0228705798693796e-13 1.9187501754197107
+                rotation 0 1 0 0.9233432329601351
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1225,8 +1757,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 1.2912042978268343e-15 4.179389177329775e-15 -1.0502769594905924e-15
-                angularVelocity 1.6665975917856238e-14 -1.2944713424704781e-15 2.4304698014178073e-15
+                linearVelocity -0.45326382851721964 0.19306291556340444 0.00029237698948178314
+                angularVelocity -4.853152949210438 -11.406566526154249 -0.4704442440834218
               }
             }
           }
@@ -1238,7 +1770,7 @@ Robot {
       children [
         DEF RIGHT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
-            position 2624.3870303322365
+            position 9411.10439294949
             axis 0 1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -1265,7 +1797,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation -2.4524937450726635e-13 -0.9999999999999999 3.7556749480037827e-13 1.9844280688306768
+                rotation 0 -0.9999999999999999 0 1.107197205530622
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1368,8 +1900,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity -1.4434135512798454e-15 -4.8652591063504485e-15 5.654047471436136e-16
-                angularVelocity 1.5939126590958523e-14 -1.724597207173261e-15 2.4244850113189606e-15
+                linearVelocity -0.3925765749303111 0.16706071590722446 0.0005107522645069404
+                angularVelocity -4.1055805317894185 -9.644726071519578 -0.4643396377719484
               }
             }
           }
@@ -1507,7 +2039,7 @@ Robot {
           defaultFrequency 12
           rotatingHead Solid {
             translation 0 0 -0.0314
-            rotation 0 0 1 1.3069025438933657
+            rotation 0 0 -0.9999999999999999 1.7592918860102824
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1581,6 +2113,6 @@ Robot {
   radarCrossSection 100
   controller "marcsrover"
   customData "0.257 0.15 0.15 0.04 0.04 700 5 E 0.0234 32 1 13800 150 0.1 0 0.25 3000 1000 2 4 -0.62 0.62 none "
-  linearVelocity -1.2769141181448781e-15 -4.338434315580663e-15 4.4917754927544853e-17
-  angularVelocity 2.571117741740292e-15 -1.436652352361013e-15 2.5059466805716053e-15
+  linearVelocity -0.4013387844055289 0.230853998555266 2.093049052361049e-05
+  angularVelocity 5.306004579636915e-05 -0.0037766580061278825 -0.4404179058774433
 }

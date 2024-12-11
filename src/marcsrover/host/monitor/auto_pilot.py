@@ -148,7 +148,7 @@ def draw_background(center, radius, frame) -> None:
         )
 
 
-def draw_auto_pilot(sample: LidarScan) -> None:
+def draw_auto_pilot_2(sample: LidarScan) -> None:
     frame = np.zeros((720, 1024, 4), dtype=np.float32)
 
     center = (512, 380)
@@ -257,158 +257,30 @@ def draw_auto_pilot(sample: LidarScan) -> None:
         print("ERROR")
 
 
-def draw_auto_pilot_2(sample: LidarScan) -> None:
-    center = (512, 380)
-    radius = 300
-
+def draw_auto_pilot(sample: LidarScan) -> None:
     frame = np.zeros((720, 1024, 4), dtype=np.float32)
 
-    cv2.circle(frame, center, 5, (1.0, 0.0, 0.0, 1.0), 1)
-    cv2.circle(frame, center, radius, (1.0, 1.0, 1.0, 1.0), 1)
+    center = (512, 380)
+    radius = 300
+    scale = 0.1
 
-    # post processing, keep only values with distances < 10000
+    draw_background(center, radius, frame)
 
     distances = np.array(sample.distances)
-    indices = np.where(distances < 10000)
+    angles = np.array(sample.angles)
 
-    distances = distances[indices]
-    angles = np.array(sample.angles)[indices]
-
-    for i in range(0, 360, 30):
-        angle = np.deg2rad(i)
-
-        x = int(center[0] + radius * np.cos(angle))
-        y = int(center[1] + radius * np.sin(angle))
-
-        cv2.line(frame, center, (x, y), (1.0, 1.0, 1.0, 1.0), 1)
-
-        x, y = x - len(str(i)) * 6, y + 2
-        x, y = (
-            x + np.cos(angle) * len(str(i)) * 6 + 10 * np.sign(np.cos(angle)),
-            y + np.sin(angle) * len(str(i)) * 6 + 10 * np.sign(np.sin(angle)),
-        )
-        x, y = int(x), int(y)
-
-        cv2.putText(
-            frame,
-            str(i),
-            (x, y),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.5,
-            (1.0, 1.0, 1.0, 1.0),
-            1,
-        )
-
-    for i in range(len(angles)):
-        angle = angles[i]
-        distance = distances[i]
-
-        distance = distance * 0.1
-
-        if distance > radius:
-            continue
-
-        x = center[0] + distance * np.cos(np.deg2rad(angle))
-        y = center[1] + distance * np.sin(np.deg2rad(angle))
-
-        cv2.circle(frame, (int(x), int(y)), 1, (0.0, 0.0, 1.0, 1.0), 2)
-
-    # only keep values for angles between [0, 90] and [270, 360]
-    indices = np.where(
-        (angles >= 0) & (angles <= 90) | (angles >= 270) & (angles <= 360)
-    )
-
+    indices = np.where(distances * scale < radius)
     distances = distances[indices]
     angles = angles[indices]
 
-    indices = np.where(distances < radius * 10)
-
-    distances = distances[indices]
-    angles = angles[indices]
-
-    extended_distances = np.concatenate([distances[-5:], distances, distances[:5]])
-
-    local_means = np.array(
-        [np.mean(extended_distances[i : i + 2 * 5 + 1]) for i in range(len(distances))]
-    )
-
-    disc = np.where(np.abs(distances - local_means) > 500)
-
-    new_angles = angles[disc]
-    new_distances = distances[disc]
-
-    for i in range(len(new_angles)):
-        angle = new_angles[i]
-        distance = new_distances[i]
-
-        distance = distance * 0.1
-
-        if distance > radius:
-            continue
-
-        x = center[0] + distance * np.cos(np.deg2rad(angle))
-        y = center[1] + distance * np.sin(np.deg2rad(angle))
-
-        cv2.circle(frame, (int(x), int(y)), 1, (1.0, 0.0, 0.0, 1.0), 2)
-
-    angles_rad = np.deg2rad(new_angles)
-
-    x = new_distances * np.cos(angles_rad)
-    y = new_distances * np.sin(angles_rad)
+    x = center[0] + distances * scale * np.cos(np.deg2rad(angles))
+    y = center[1] + distances * scale * np.sin(np.deg2rad(angles))
 
     points = np.vstack((x, y)).T
 
-    if len(points) >= 1:
-        clusters = DBSCAN(eps=100, min_samples=1).fit(points)
+    for point in points:
+        cv2.circle(frame, (int(point[0]), int(point[1])), 1, (0.0, 0.0, 1.0, 1.0), 2)
 
-        for i in range(len(np.unique(clusters.labels_))):
-            indices = np.where(clusters.labels_ == i)
-
-            cluster = points[indices]
-
-            if len(cluster) < 2:
-                continue
-
-            x = np.mean(cluster[:, 0])
-            y = np.mean(cluster[:, 1])
-
-            cv2.circle(
-                frame,
-                (int(center[0] + x * 0.1), int(center[1] + y * 0.1)),
-                5,
-                (0.0, 1.0, 0.0, 1.0),
-                2,
-            )
-
-        if len(np.unique(clusters.labels_)) >= 2:
-            mean = np.mean(points, axis=0)
-
-            cv2.circle(
-                frame,
-                (int(center[0] + mean[0] * 0.1), int(center[1] + mean[1] * 0.1)),
-                5,
-                (1.0, 1.0, 0.0, 1.0),
-                2,
-            )
-            cv2.polylines(
-                frame,
-                [
-                    np.array(
-                        [
-                            center,
-                            (
-                                int(center[0] + mean[0] * 0.1),
-                                int(center[1] + mean[1] * 0.1),
-                            ),
-                        ]
-                    )
-                ],
-                False,
-                (1.0, 1.0, 0.0, 1.0),
-                2,
-            )
-
-    """
     steering_1_min = dpg.get_value("steering_1_min_angle")
     steering_1_max = dpg.get_value("steering_1_max_angle")
 
@@ -422,11 +294,11 @@ def draw_auto_pilot_2(sample: LidarScan) -> None:
     cv2.line(
         frame,
         (
-            center[0] + int(back_treshold * 1000 * 0.2),
+            center[0] + int(back_treshold * 1000 * 0.1),
             center[1] - 15,
         ),
         (
-            center[0] + int(back_treshold * 1000 * 0.2),
+            center[0] + int(back_treshold * 1000 * 0.1),
             center[1] + 15,
         ),
         (0.0, 0.0, 1.0, 1.0),
@@ -435,11 +307,11 @@ def draw_auto_pilot_2(sample: LidarScan) -> None:
     cv2.line(
         frame,
         (
-            center[0] + int(fwd_treshold * 1000 * 0.2),
+            center[0] + int(fwd_treshold * 1000 * 0.1),
             center[1] - 15,
         ),
         (
-            center[0] + int(fwd_treshold * 1000 * 0.2),
+            center[0] + int(fwd_treshold * 1000 * 0.1),
             center[1] + 15,
         ),
         (0.0, 1.0, 1.0, 1.0),
@@ -529,50 +401,89 @@ def draw_auto_pilot_2(sample: LidarScan) -> None:
         4,
     )
 
-    angles = np.array(sample.angles)
-
-    indices1 = np.where(
-    (angles >= steering_1_min)
-    & (angles <= steering_1_max)
-    )
+    indices1 = np.where((angles >= steering_1_min) & (angles <= steering_1_max))
     indices2 = np.where(
-    (angles >= 360 - steering_1_max)
-    & (angles <= 360 - steering_1_min)
+        (angles >= 360 - steering_1_max) & (angles <= 360 - steering_1_min)
     )
 
-    distances1 = np.array(sample.distances)[indices1]
-    distances2 = np.array(sample.distances)[indices2]
+    distances1 = np.array(distances)[indices1]
+    distances2 = np.array(distances)[indices2]
 
     mean1 = np.mean(distances1) / 1000
     mean2 = np.mean(distances2) / 1000
-    mean3 = mean1 - mean2
+
+    mean3 = (mean1 - mean2) / np.max(np.abs(np.array(mean1, mean2)))
+
     # keep 2 decimal places
-    cv2.putText(frame, f"RED right: {mean1:.2f}", (40, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
-    cv2.putText(frame, f"RED left: {mean2:.2f}", (40, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
-    cv2.putText(frame, f"RED diff: {mean3:.2f}", (40, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
-
-    indices1 = np.where(
-    (angles >= steering_2_min)
-    & (angles <= steering_2_max)
+    cv2.putText(
+        frame,
+        f"RED right: {mean1:.2f}",
+        (40, 80),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (1.0, 0.0, 0.0, 1.0),
+        2,
     )
+    cv2.putText(
+        frame,
+        f"RED left: {mean2:.2f}",
+        (40, 120),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (1.0, 0.0, 0.0, 1.0),
+        2,
+    )
+    cv2.putText(
+        frame,
+        f"RED diff: {mean3:.2f}",
+        (40, 160),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (1.0, 0.0, 0.0, 1.0),
+        2,
+    )
+
+    indices1 = np.where((angles >= steering_2_min) & (angles <= steering_2_max))
     indices2 = np.where(
-    (angles >= 360 - steering_2_max)
-    & (angles <= 360 - steering_2_min)
+        (angles >= 360 - steering_2_max) & (angles <= 360 - steering_2_min)
     )
 
-    distances1 = np.array(sample.distances)[indices1]
-    distances2 = np.array(sample.distances)[indices2]
+    distances1 = np.array(distances)[indices1]
+    distances2 = np.array(distances)[indices2]
 
     mean1 = np.mean(distances1) / 1000
     mean2 = np.mean(distances2) / 1000
-    mean3 = mean1 - mean2
+    mean3 = (mean1 - mean2) / np.max(np.abs(np.array(mean1, mean2)))
+
     # keep 2 decimal places
-    cv2.putText(frame, f"GREEN right: {mean1:.2f}", (40, 220), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
-    cv2.putText(frame, f"GREEN left: {mean2:.2f}", (40, 260), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
-    cv2.putText(frame, f"GREEN diff: {mean3:.2f}", (40, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
+    cv2.putText(
+        frame,
+        f"GREEN right: {mean1:.2f}",
+        (40, 220),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (0.0, 1.0, 0.0, 1.0),
+        2,
+    )
+    cv2.putText(
+        frame,
+        f"GREEN left: {mean2:.2f}",
+        (40, 260),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (0.0, 1.0, 0.0, 1.0),
+        2,
+    )
+    cv2.putText(
+        frame,
+        f"GREEN diff: {mean3:.2f}",
+        (40, 300),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.5,
+        (0.0, 1.0, 0.0, 1.0),
+        2,
+    )
 
-
-    """
     try:
         dpg.set_value("visualizer", frame)
     except:
