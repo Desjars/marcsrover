@@ -7,6 +7,10 @@ from marcsrover.message import LidarScan
 
 
 def lidar_draw(sample: LidarScan) -> None:
+    
+    with open("Lidar.csv", "a") as file:
+        file.write(f"{str(sample.distances).replace('[','').replace(']','')}\n")
+        
     frame = np.zeros((720, 1024, 4))
     frame = np.asarray(frame, dtype=np.float32)
 

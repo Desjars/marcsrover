@@ -15,6 +15,10 @@ def imu_callback(sample: zenoh.Sample) -> None:
         dpg.set_value("Gyro X", motor.gyro_x)
         dpg.set_value("Gyro Y", motor.gyro_y)
         dpg.set_value("Gyro Z", motor.gyro_z)
+        
+        with open("IMU.csv", "a") as file:
+            file.write(f"{motor.accel_x},{motor.accel_y},{motor.accel_z},{motor.gyro_x},{motor.gyro_y},{motor.gyro_z}\n")
+        
     except:
         print("error while setting IMU values to dearpygui")
 
