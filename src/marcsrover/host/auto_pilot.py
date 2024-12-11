@@ -40,7 +40,7 @@ class Node:
         self.steering_2_min_angle = 15
         self.steering_2_max_angle = 45
 
-        self.enable = True
+        self.enable = False
 
         self.mutex = threading.Lock()
 
