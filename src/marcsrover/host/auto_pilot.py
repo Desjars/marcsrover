@@ -1,6 +1,7 @@
 import zenoh
 import json
 import threading
+import time
 
 import numpy as np
 
@@ -26,13 +27,19 @@ class Node:
 
         self.min_speed = 0
         self.max_speed = 0
-        self.back_speed = 0
-        self.steering = 90
+
         self.back_treshold = 0.5
-        self.fwd_treshold = 0.5
-        self.steering_treshold = 0.5
-        self.steering_min_angle = 45
-        self.steering_max_angle = 90
+        self.fwd_treshold = 1.5
+
+        self.steering_1_treshold = 0.3
+        self.steering_2_treshold = 0.3
+
+        self.steering_1_min_angle = 45
+        self.steering_1_max_angle = 90
+
+        self.steering_2_min_angle = 15
+        self.steering_2_max_angle = 45
+
         self.enable = True
 
         self.mutex = threading.Lock()
@@ -43,13 +50,14 @@ class Node:
 
             self.min_speed = config.min_speed
             self.max_speed = config.max_speed
-            self.back_speed = config.back_speed
-            self.steering = config.steering
             self.back_treshold = config.back_treshold
             self.fwd_treshold = config.fwd_treshold
-            self.steering_treshold = config.steering_treshold
-            self.steering_min_angle = config.steering_min_angle
-            self.steering_max_angle = config.steering_max_angle
+            self.steering_1_treshold = config.steering_1_treshold
+            self.steering_2_treshold = config.steering_2_treshold
+            self.steering_1_min_angle = config.steering_1_min_angle
+            self.steering_1_max_angle = config.steering_1_max_angle
+            self.steering_2_min_angle = config.steering_2_min_angle
+            self.steering_2_max_angle = config.steering_2_max_angle
             self.enable = config.enable
 
     def run(self) -> None:
@@ -64,7 +72,7 @@ class Node:
 
             try:
                 while True:
-                    pass
+                    time.sleep(5)
 
             except KeyboardInterrupt:
                 print("Auto Pilot node received KeyboardInterrupt")
@@ -92,24 +100,29 @@ class Node:
             mean = np.mean(distances) / 1000
 
             speed = 0
+            steering = 0
 
             if mean < self.back_treshold:
-                speed = -self.back_speed
-            elif mean < self.fwd_treshold:
-                speed = self.min_speed
+                speed = -2500
             else:
-                speed = self.max_speed
+                # limit to max speed if mean is greater than fwd_treshold, otherwise linearly interpolate
+                if mean > self.fwd_treshold:
+                    speed = self.max_speed
+                else:
+                    speed = int(
+                        self.min_speed
+                        + (mean - self.back_treshold)
+                        * (self.max_speed - self.min_speed)
+                        / (self.fwd_treshold - self.back_treshold)
+                    )
 
-            # steering control : On fait deux moyenne, l'une entre 45 et 90 degrés, l'autre entre 270 et 315 degrés. On fait la différence
-            # entre les deux moyennes, cela donne la direction dans laquelle on doit tourner. Si la différence est négative, on tourne à
-            # gauche, si elle est positive on tourne à droite.
             indices1 = np.where(
-                (angles >= self.steering_min_angle)
-                & (angles <= self.steering_max_angle)
+                (angles >= self.steering_1_min_angle)
+                & (angles <= self.steering_1_max_angle)
             )
             indices2 = np.where(
-                (angles >= 360 - self.steering_max_angle)
-                & (angles <= 360 - self.steering_min_angle)
+                (angles >= 360 - self.steering_1_max_angle)
+                & (angles <= 360 - self.steering_1_min_angle)
             )
 
             distances1 = np.array(lidar.distances)[indices1]
@@ -118,18 +131,35 @@ class Node:
             mean1 = np.mean(distances1) / 1000
             mean2 = np.mean(distances2) / 1000
 
-            steering = 0
+            if mean1 - mean2 < -self.steering_1_treshold:
+                steering = -90
+            elif mean1 - mean2 > self.steering_1_treshold:
+                steering = 90
+            else:
+                indices1 = np.where(
+                    (angles >= self.steering_2_min_angle)
+                    & (angles <= self.steering_2_max_angle)
+                )
+                indices2 = np.where(
+                    (angles >= 360 - self.steering_2_max_angle)
+                    & (angles <= 360 - self.steering_2_min_angle)
+                )
 
-            if mean1 - mean2 < -self.steering_treshold:
-                steering = -self.steering
-            elif mean1 - mean2 > self.steering_treshold:
-                steering = self.steering
+                distances1 = np.array(lidar.distances)[indices1]
+                distances2 = np.array(lidar.distances)[indices2]
+
+                mean1 = np.mean(distances1) / 1000
+                mean2 = np.mean(distances2) / 1000
+
+                if mean1 - mean2 < -self.steering_2_treshold:
+                    steering = -90
+                elif mean1 - mean2 > self.steering_2_treshold:
+                    steering = 90
 
             if mean < self.back_treshold:
                 steering = -steering
 
             bytes = RoverControl(speed, steering).serialize()
-
             self.rover_control.put(bytes)
 
 

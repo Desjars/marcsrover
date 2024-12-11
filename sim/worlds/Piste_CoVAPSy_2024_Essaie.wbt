@@ -6,8 +6,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.47498021225139664 -0.0948347368140188 0.8748715166600372 3.123442211752013
-  position 8.480331888675282 0.5944516229974611 10.980655913955866
+  orientation -0.32820752476110726 0.09164641121258843 0.9401493264381144 2.4105798621998122
+  position 9.156153973070268 -7.45681298681383 8.616763713720125
   followType "Mounted Shot"
 }
 TexturedBackground {
@@ -767,8 +767,8 @@ Solid {
   }
 }
 Robot {
-  translation 0.7611646975839702 2.5024085641406257 0.03932769503568153
-  rotation -0.033583376506441574 -0.002860123745597848 0.9994318268469273 0.05528722399791908
+  translation 0.7756261484674286 2.5023350584379624 0.03928978199573811
+  rotation 5.256594018609173e-05 -0.0019092876757181925 0.999998175927033 0.05498573508041139
   children [
     Pose {
       translation 0.257 0.075 0
@@ -776,14 +776,14 @@ Robot {
       children [
         DEF LEFT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
-            position 0.15336377589598416
+            position -1.8466057890287863e-17
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
-            position 2866.5606413936275
+            position 2866.5606560315073
             axis 0 -1 0
             dampingConstant 5
           }
@@ -819,7 +819,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation -0.07630920607170681 -0.9931886205925476 -0.08805264899012592 1.4349098121772756
+                rotation 1.6555233214682556e-13 -1 -1.4333543477349503e-13 1.4281559576158074
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -922,8 +922,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 0.9554312572965779 -0.11904331242996499 4.9070829808851796e-05
-                angularVelocity 2.0878189900249997 24.145425747382085 -1.8440415346353525
+                linearVelocity -1.9868450347092827e-15 2.555221979613907e-16 1.211790751312351e-16
+                angularVelocity -2.618334273130349e-14 -2.876919961871504e-15 2.4748149898741045e-15
               }
             }
           }
@@ -935,14 +935,14 @@ Robot {
       children [
         DEF RIGHT_STEER_HINGE2 Hinge2Joint {
           jointParameters HingeJointParameters {
-            position 0.2219581197572718
+            position 1.1608473115501236e-16
             axis 0 0 -1
             suspensionSpringConstant 100000
             suspensionDampingConstant 4000
             suspensionAxis 0 0 1
           }
           jointParameters2 JointParameters {
-            position 2683.1563724044163
+            position 2683.1563932227923
             axis 0 1 0
             dampingConstant 5
           }
@@ -978,7 +978,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation -0.08096964136108069 -0.7265960923047119 0.6822770960726887 5.959382656820791
+                rotation -5.804236557750618e-17 -0.9999999999999999 4.890407553593315e-16 6.04691825007071
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1081,8 +1081,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 0.8422016685952424 -0.12662824474210138 -2.591989986200197e-05
-                angularVelocity 3.200630337852662 20.513771189148034 -1.6028798160865634
+                linearVelocity 1.7815385125898884e-15 1.1084115912951517e-15 -2.022893813921294e-16
+                angularVelocity -9.90355986158243e-15 -2.280662930926683e-15 2.4884653647137563e-15
               }
             }
           }
@@ -1095,7 +1095,7 @@ Robot {
       children [
         DEF LEFT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
-            position 2816.7857672158875
+            position 2816.7857677918746
             axis 0 -1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -1122,7 +1122,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation 0 -1 0 1.918749599432776
+                rotation -2.1195483387227478e-13 -1 3.0228705798693796e-13 1.9187501754197107
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1225,8 +1225,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 0.9424304156490586 0.07490637594488386 -5.116785828267094e-05
-                angularVelocity -1.8412911829599232 23.384441433252636 -0.8701528060444994
+                linearVelocity 1.2912042978268343e-15 4.179389177329775e-15 -1.0502769594905924e-15
+                angularVelocity 1.6665975917856238e-14 -1.2944713424704781e-15 2.4304698014178073e-15
               }
             }
           }
@@ -1238,7 +1238,7 @@ Robot {
       children [
         DEF RIGHT_REAR_WHEEL_HINGE HingeJoint {
           jointParameters HingeJointParameters {
-            position 2624.3870304307006
+            position 2624.3870303322365
             axis 0 1 0
             dampingConstant 5
             suspensionSpringConstant 100000
@@ -1265,7 +1265,7 @@ Robot {
             endPoint Slot {
               type "vehicle wheel"
               endPoint Solid {
-                rotation 0 -1 0 1.9844279703665137
+                rotation -2.4524937450726635e-13 -0.9999999999999999 3.7556749480037827e-13 1.9844280688306768
                 children [
                   DEF WHEEL_SLOT Group {
                   }
@@ -1368,8 +1368,8 @@ Robot {
                 }
                 physics Physics {
                 }
-                linearVelocity 0.8292191992756738 0.06732264714551545 -0.0001457641020371475
-                angularVelocity -1.5524117090247032 19.773284451710957 -0.8611889142701312
+                linearVelocity -1.4434135512798454e-15 -4.8652591063504485e-15 5.654047471436136e-16
+                angularVelocity 1.5939126590958523e-14 -1.724597207173261e-15 2.4244850113189606e-15
               }
             }
           }
@@ -1507,7 +1507,7 @@ Robot {
           defaultFrequency 12
           rotatingHead Solid {
             translation 0 0 -0.0314
-            rotation 0 0 -1 1.2566370614359164
+            rotation 0 0 1 1.3069025438933657
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1581,6 +1581,6 @@ Robot {
   radarCrossSection 100
   controller "marcsrover"
   customData "0.257 0.15 0.15 0.04 0.04 700 5 E 0.0234 32 1 13800 150 0.1 0 0.25 3000 1000 2 4 -0.62 0.62 none "
-  linearVelocity 0.8922084645883608 -0.023540624464573653 -4.474344188485962e-05
-  angularVelocity 0.0006233771851798439 -0.0003831460095150116 -0.7552878490191895
+  linearVelocity -1.2769141181448781e-15 -4.338434315580663e-15 4.4917754927544853e-17
+  angularVelocity 2.571117741740292e-15 -1.436652352361013e-15 2.5059466805716053e-15
 }

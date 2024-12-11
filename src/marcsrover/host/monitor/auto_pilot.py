@@ -11,13 +11,14 @@ def callback(session: zenoh.Session) -> None:
     bytes = AutoPilotConfig(
         min_speed=dpg.get_value("min_speed"),
         max_speed=dpg.get_value("max_speed"),
-        back_speed=dpg.get_value("back_speed"),
-        steering=dpg.get_value("steering"),
         back_treshold=dpg.get_value("back_treshold"),
         fwd_treshold=dpg.get_value("fwd_treshold"),
-        steering_treshold=dpg.get_value("steering_treshold"),
-        steering_min_angle=dpg.get_value("steering_min_angle"),
-        steering_max_angle=dpg.get_value("steering_max_angle"),
+        steering_1_treshold=dpg.get_value("steering_1_treshold"),
+        steering_2_treshold=dpg.get_value("steering_2_treshold"),
+        steering_1_min_angle=dpg.get_value("steering_1_min_angle"),
+        steering_1_max_angle=dpg.get_value("steering_1_max_angle"),
+        steering_2_min_angle=dpg.get_value("steering_2_min_angle"),
+        steering_2_max_angle=dpg.get_value("steering_2_max_angle"),
         enable=dpg.get_value("enable"),
     ).serialize()
 
@@ -25,13 +26,15 @@ def callback(session: zenoh.Session) -> None:
 
 
 def init_autopilot(session: zenoh.Session) -> None:
-    with dpg.window(label="autopilot", width=256, height=720-128-256, pos=(1024, 128 + 256)):
+    with dpg.window(
+        label="autopilot", width=256, height=720 - 128 - 256, pos=(1024, 128 + 256)
+    ):
         dpg.add_slider_int(
             label="min_speed",
             tag="min_speed",
             width=150,
             min_value=0,
-            max_value=2000,
+            max_value=3000,
             default_value=0,
         )
         dpg.add_slider_int(
@@ -39,31 +42,16 @@ def init_autopilot(session: zenoh.Session) -> None:
             tag="max_speed",
             width=150,
             min_value=0,
-            max_value=2000,
-            default_value=0,
-        )
-        dpg.add_slider_int(
-            label="back_speed",
-            tag="back_speed",
-            width=150,
-            min_value=0,
             max_value=3000,
             default_value=0,
         )
-        dpg.add_slider_int(
-            label="steering",
-            tag="steering",
-            width=150,
-            min_value=0,
-            max_value=90,
-            default_value=90,
-        )
+
         dpg.add_slider_float(
             label="back_treshold",
             tag="back_treshold",
             width=150,
             min_value=0,
-            max_value=2,
+            max_value=4,
             default_value=0.5,
         )
         dpg.add_slider_float(
@@ -71,35 +59,65 @@ def init_autopilot(session: zenoh.Session) -> None:
             tag="fwd_treshold",
             width=150,
             min_value=0,
-            max_value=2,
-            default_value=0.5,
+            max_value=4,
+            default_value=1.5,
         )
+
         dpg.add_slider_float(
-            label="steering_treshold",
-            tag="steering_treshold",
+            label="steering_1_treshold",
+            tag="steering_1_treshold",
             width=150,
             min_value=0,
-            max_value=2,
-            default_value=0.5,
+            max_value=1,
+            default_value=0.3,
         )
+
+        dpg.add_slider_float(
+            label="steering_2_treshold",
+            tag="steering_2_treshold",
+            width=150,
+            min_value=0,
+            max_value=1,
+            default_value=0.3,
+        )
+
         dpg.add_slider_int(
-            label="steering_min_angle",
-            tag="steering_min_angle",
+            label="steering_1_min_angle",
+            tag="steering_1_min_angle",
             width=150,
             min_value=0,
             max_value=90,
             default_value=45,
         )
         dpg.add_slider_int(
-            label="steering_max_angle",
-            tag="steering_max_angle",
+            label="steering_1_max_angle",
+            tag="steering_1_max_angle",
             width=150,
             min_value=0,
             max_value=90,
             default_value=90,
         )
+
+        dpg.add_slider_int(
+            label="steering_2_min_angle",
+            tag="steering_2_min_angle",
+            width=150,
+            min_value=0,
+            max_value=90,
+            default_value=15,
+        )
+        dpg.add_slider_int(
+            label="steering_2_max_angle",
+            tag="steering_2_max_angle",
+            width=150,
+            min_value=0,
+            max_value=90,
+            default_value=45,
+        )
+
         dpg.add_checkbox(label="enable", tag="enable", default_value=True)
         dpg.add_button(label="send", width=150, callback=lambda: callback(session))
+
 
 def draw_auto_pilot(sample: LidarScan) -> None:
     center = (512, 380)
@@ -149,16 +167,50 @@ def draw_auto_pilot(sample: LidarScan) -> None:
 
         cv2.circle(frame, (int(x), int(y)), 1, (0.0, 0.0, 1.0, 1.0), 2)
 
-    steering_min = dpg.get_value("steering_min_angle")
-    steering_max = dpg.get_value("steering_max_angle")
+    steering_1_min = dpg.get_value("steering_1_min_angle")
+    steering_1_max = dpg.get_value("steering_1_max_angle")
+
+    steering_2_min = dpg.get_value("steering_2_min_angle")
+    steering_2_max = dpg.get_value("steering_2_max_angle")
+
+    back_treshold = dpg.get_value("back_treshold")
+    fwd_treshold = dpg.get_value("fwd_treshold")
+
+    # draw line for tresholds
+    cv2.line(
+        frame,
+        (
+            center[0] + int(back_treshold * 1000 * 0.2),
+            center[1] - 15,
+        ),
+        (
+            center[0] + int(back_treshold * 1000 * 0.2),
+            center[1] + 15,
+        ),
+        (0.0, 0.0, 1.0, 1.0),
+        4,
+    )
+    cv2.line(
+        frame,
+        (
+            center[0] + int(fwd_treshold * 1000 * 0.2),
+            center[1] - 15,
+        ),
+        (
+            center[0] + int(fwd_treshold * 1000 * 0.2),
+            center[1] + 15,
+        ),
+        (0.0, 1.0, 1.0, 1.0),
+        4,
+    )
 
     # draw steering range
     cv2.line(
         frame,
         center,
         (
-            int(center[0] + radius * np.cos(np.deg2rad(steering_min))),
-            int(center[1] + radius * np.sin(np.deg2rad(steering_min))),
+            int(center[0] + radius * np.cos(np.deg2rad(steering_1_min))),
+            int(center[1] + radius * np.sin(np.deg2rad(steering_1_min))),
         ),
         (1.0, 0.0, 0.0, 1.0),
         4,
@@ -167,8 +219,8 @@ def draw_auto_pilot(sample: LidarScan) -> None:
         frame,
         center,
         (
-            int(center[0] + radius * np.cos(np.deg2rad(steering_max))),
-            int(center[1] + radius * np.sin(np.deg2rad(steering_max))),
+            int(center[0] + radius * np.cos(np.deg2rad(steering_1_max))),
+            int(center[1] + radius * np.sin(np.deg2rad(steering_1_max))),
         ),
         (1.0, 0.0, 0.0, 1.0),
         4,
@@ -177,8 +229,8 @@ def draw_auto_pilot(sample: LidarScan) -> None:
         frame,
         center,
         (
-            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_max))),
-            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_max))),
+            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_1_max))),
+            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_1_max))),
         ),
         (1.0, 0.0, 0.0, 1.0),
         4,
@@ -187,68 +239,96 @@ def draw_auto_pilot(sample: LidarScan) -> None:
         frame,
         center,
         (
-            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_min))),
-            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_min))),
+            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_1_min))),
+            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_1_min))),
         ),
         (1.0, 0.0, 0.0, 1.0),
+        4,
+    )
+
+    cv2.line(
+        frame,
+        center,
+        (
+            int(center[0] + radius * np.cos(np.deg2rad(steering_2_min))),
+            int(center[1] + radius * np.sin(np.deg2rad(steering_2_min))),
+        ),
+        (0.0, 1.0, 0.0, 1.0),
+        4,
+    )
+    cv2.line(
+        frame,
+        center,
+        (
+            int(center[0] + radius * np.cos(np.deg2rad(steering_2_max))),
+            int(center[1] + radius * np.sin(np.deg2rad(steering_2_max))),
+        ),
+        (0.0, 1.0, 0.0, 1.0),
+        4,
+    )
+    cv2.line(
+        frame,
+        center,
+        (
+            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_2_max))),
+            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_2_max))),
+        ),
+        (0.0, 1.0, 0.0, 1.0),
+        4,
+    )
+    cv2.line(
+        frame,
+        center,
+        (
+            int(center[0] + radius * np.cos(np.deg2rad(360 - steering_2_min))),
+            int(center[1] + radius * np.sin(np.deg2rad(360 - steering_2_min))),
+        ),
+        (0.0, 1.0, 0.0, 1.0),
         4,
     )
 
     angles = np.array(sample.angles)
-    indices = np.where((angles >= 350) | (angles <= 10))
-    distances = np.array(sample.distances)[indices]
-    mean = np.mean(distances) / 1000
 
-    indices1 = np.where((angles >= steering_min) & (angles <= steering_max))
-    indices2 = np.where((angles >= 360 - steering_max) & (angles <= 360 - steering_min))
+    indices1 = np.where(
+    (angles >= steering_1_min)
+    & (angles <= steering_1_max)
+    )
+    indices2 = np.where(
+    (angles >= 360 - steering_1_max)
+    & (angles <= 360 - steering_1_min)
+    )
 
     distances1 = np.array(sample.distances)[indices1]
     distances2 = np.array(sample.distances)[indices2]
 
     mean1 = np.mean(distances1) / 1000
     mean2 = np.mean(distances2) / 1000
+    mean3 = mean1 - mean2
+    # keep 2 decimal places
+    cv2.putText(frame, f"RED right: {mean1:.2f}", (40, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
+    cv2.putText(frame, f"RED left: {mean2:.2f}", (40, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
+    cv2.putText(frame, f"RED diff: {mean3:.2f}", (40, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (1.0, 0.0, 0.0, 1.0), 2)
 
-    angle_indicator = mean1 - mean2
-
-    cv2.putText(
-        frame,
-        f"Mean: {mean:.2f}m",
-        (10, 100),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.5,
-        (1.0, 1.0, 1.0, 1.0),
-        1,
+    indices1 = np.where(
+    (angles >= steering_2_min)
+    & (angles <= steering_2_max)
+    )
+    indices2 = np.where(
+    (angles >= 360 - steering_2_max)
+    & (angles <= 360 - steering_2_min)
     )
 
-    cv2.putText(
-        frame,
-        f"Mean1: {mean1:.2f}m",
-        (10, 120),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.5,
-        (1.0, 1.0, 1.0, 1.0),
-        1,
-    )
+    distances1 = np.array(sample.distances)[indices1]
+    distances2 = np.array(sample.distances)[indices2]
 
-    cv2.putText(
-        frame,
-        f"Mean2: {mean2:.2f}m",
-        (10, 140),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.5,
-        (1.0, 1.0, 1.0, 1.0),
-        1,
-    )
+    mean1 = np.mean(distances1) / 1000
+    mean2 = np.mean(distances2) / 1000
+    mean3 = mean1 - mean2
+    # keep 2 decimal places
+    cv2.putText(frame, f"GREEN right: {mean1:.2f}", (40, 220), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
+    cv2.putText(frame, f"GREEN left: {mean2:.2f}", (40, 260), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
+    cv2.putText(frame, f"GREEN diff: {mean3:.2f}", (40, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0.0, 1.0, 0.0, 1.0), 2)
 
-    cv2.putText(
-        frame,
-        f"Angle: {angle_indicator:.2f}m",
-        (10, 160),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.5,
-        (1.0, 1.0, 1.0, 1.0),
-        1,
-    )
 
     try:
         dpg.set_value("visualizer", frame)

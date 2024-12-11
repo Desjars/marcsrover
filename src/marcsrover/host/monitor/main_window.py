@@ -25,6 +25,7 @@ def slam_callback(sample: zenoh.Sample) -> None:
     if frame_name != "slam":
         return
 
+
 def change_frame(name: str) -> None:
     global mutex, frame_name
     with mutex:
