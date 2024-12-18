@@ -6,7 +6,7 @@ import dearpygui.dearpygui as dpg
 
 from marcsrover.message import AutoPilotConfig, LidarScan
 
-from sklearn.cluster import DBSCAN
+# from sklearn.cluster import DBSCAN
 
 
 def callback(session: zenoh.Session) -> None:
@@ -148,113 +148,113 @@ def draw_background(center, radius, frame) -> None:
         )
 
 
-def draw_auto_pilot_2(sample: LidarScan) -> None:
-    frame = np.zeros((720, 1024, 4), dtype=np.float32)
+# def draw_auto_pilot_2(sample: LidarScan) -> None:
+#     frame = np.zeros((720, 1024, 4), dtype=np.float32)
 
-    center = (512, 380)
-    radius = 300
-    scale = 0.1
+#     center = (512, 380)
+#     radius = 300
+#     scale = 0.1
 
-    draw_background(center, radius, frame)
+#     draw_background(center, radius, frame)
 
-    distances = np.array(sample.distances)
-    angles = np.array(sample.angles)
+#     distances = np.array(sample.distances)
+#     angles = np.array(sample.angles)
 
-    indices = np.where(distances * scale < radius)
-    distances = distances[indices]
-    angles = angles[indices]
+#     indices = np.where(distances * scale < radius)
+#     distances = distances[indices]
+#     angles = angles[indices]
 
-    x = center[0] + distances * scale * np.cos(np.deg2rad(angles))
-    y = center[1] + distances * scale * np.sin(np.deg2rad(angles))
+#     x = center[0] + distances * scale * np.cos(np.deg2rad(angles))
+#     y = center[1] + distances * scale * np.sin(np.deg2rad(angles))
 
-    points = np.vstack((x, y)).T
+#     points = np.vstack((x, y)).T
 
-    for point in points:
-        cv2.circle(frame, (int(point[0]), int(point[1])), 1, (0.0, 0.0, 1.0, 1.0), 2)
+#     for point in points:
+#         cv2.circle(frame, (int(point[0]), int(point[1])), 1, (0.0, 0.0, 1.0, 1.0), 2)
 
-    indices = np.where(
-        (angles >= 0) & (angles <= 90) | (angles >= 270) & (angles <= 360)
-    )
-    distances = distances[indices]
-    angles = angles[indices]
-    points = points[indices]
+#     indices = np.where(
+#         (angles >= 0) & (angles <= 90) | (angles >= 270) & (angles <= 360)
+#     )
+#     distances = distances[indices]
+#     angles = angles[indices]
+#     points = points[indices]
 
-    local_means = np.array(
-        [
-            np.mean(
-                np.concatenate(
-                    [
-                        distances[-5:],
-                        distances,
-                        distances[:5],
-                    ]
-                )[i : i + 2 * 5 + 1]
-            )
-            for i in range(len(distances))
-        ]
-    )
+#     local_means = np.array(
+#         [
+#             np.mean(
+#                 np.concatenate(
+#                     [
+#                         distances[-5:],
+#                         distances,
+#                         distances[:5],
+#                     ]
+#                 )[i : i + 2 * 5 + 1]
+#             )
+#             for i in range(len(distances))
+#         ]
+#     )
 
-    disc = np.where(np.abs(distances - local_means) > 500)
-    critical_points = points[disc]
+#     disc = np.where(np.abs(distances - local_means) > 500)
+#     critical_points = points[disc]
 
-    for point in critical_points:
-        cv2.circle(frame, (int(point[0]), int(point[1])), 1, (1.0, 0.0, 0.0, 1.0), 2)
+#     for point in critical_points:
+#         cv2.circle(frame, (int(point[0]), int(point[1])), 1, (1.0, 0.0, 0.0, 1.0), 2)
 
-    if len(critical_points) >= 1:
-        clusters = DBSCAN(eps=100, min_samples=1).fit(critical_points)
+#     if len(critical_points) >= 1:
+#         clusters = DBSCAN(eps=100, min_samples=1).fit(critical_points)
 
-        for i in range(len(np.unique(clusters.labels_))):
-            indices = np.where(clusters.labels_ == i)
+#         for i in range(len(np.unique(clusters.labels_))):
+#             indices = np.where(clusters.labels_ == i)
 
-            cluster = critical_points[indices]
+#             cluster = critical_points[indices]
 
-            if len(cluster) < 2:
-                continue
+#             if len(cluster) < 2:
+#                 continue
 
-            x = int(np.mean(cluster[:, 0]))
-            y = int(np.mean(cluster[:, 1]))
+#             x = int(np.mean(cluster[:, 0]))
+#             y = int(np.mean(cluster[:, 1]))
 
-            cv2.circle(
-                frame,
-                (x, y),
-                5,
-                (0.0, 1.0, 0.0, 1.0),
-                2,
-            )
+#             cv2.circle(
+#                 frame,
+#                 (x, y),
+#                 5,
+#                 (0.0, 1.0, 0.0, 1.0),
+#                 2,
+#             )
 
-        if len(np.unique(clusters.labels_)) >= 2:
-            mean = np.mean(critical_points, axis=0)
+#         if len(np.unique(clusters.labels_)) >= 2:
+#             mean = np.mean(critical_points, axis=0)
 
-            cv2.circle(
-                frame,
-                (int(mean[0]), int(mean[1])),
-                5,
-                (1.0, 1.0, 0.0, 1.0),
-                2,
-            )
+#             cv2.circle(
+#                 frame,
+#                 (int(mean[0]), int(mean[1])),
+#                 5,
+#                 (1.0, 1.0, 0.0, 1.0),
+#                 2,
+#             )
 
-            cv2.polylines(
-                frame,
-                [
-                    np.array(
-                        [
-                            center,
-                            (
-                                int(mean[0]),
-                                int(mean[1]),
-                            ),
-                        ]
-                    )
-                ],
-                False,
-                (1.0, 1.0, 0.0, 1.0),
-                2,
-            )
+#             cv2.polylines(
+#                 frame,
+#                 [
+#                     np.array(
+#                         [
+#                             center,
+#                             (
+#                                 int(mean[0]),
+#                                 int(mean[1]),
+#                             ),
+#                         ]
+#                     )
+#                 ],
+#                 False,
+#                 (1.0, 1.0, 0.0, 1.0),
+#                 2,
+#             )
 
-    try:
-        dpg.set_value("visualizer", frame)
-    except:
-        print("ERROR")
+#     try:
+#         dpg.set_value("visualizer", frame)
+#     except:
+#         print("ERROR")
 
 
 def draw_auto_pilot(sample: LidarScan) -> None:

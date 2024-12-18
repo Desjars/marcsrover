@@ -7,5 +7,5 @@ centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: -1
 consoles: Console:All:All
-renderingDevicePerspectives: TT02_jaune_python:realsense_camera;1;1;0;0
-renderingDevicePerspectives: TT02_jaune_python:realsense_depth;1;1;0;0
+renderingDevicePerspectives: TT02_jaune_python:realsense_camera;0;1;0;0
+renderingDevicePerspectives: TT02_jaune_python:realsense_depth;0;1;0;0
